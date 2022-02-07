@@ -1,0 +1,1314 @@
+﻿/*
+    DEMO STYLE
+*/
+
+/*@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";*/
+@font-face {
+  font-family: "Oswald";
+  src: url("../fonts/oswald/Oswald-ExtraLight.ttf") format("truetype");
+}
+body {
+  font-family: 'Oswald' , sans-serif ;
+  background: #fafafa;
+  background-image: url("../images/2.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  letter-spacing: 1px !important;
+}
+h1,h2,h3,h4,h5,h5,span,p,button,label,.alert{
+  font-family: 'Oswald' , sans-serif;
+}
+select option{
+  background-color: #fff !important;
+  color: #000 !important;
+}
+input {
+  background-color: rgb(255,255,255,0.3) !important;
+  color: #fff;
+}
+.error{
+  font-size: 15px;
+  font-weight: bold;
+}
+.wrapper {
+  display: flex;
+  width: 100%;
+}
+.showHideSpan {
+  float: right;
+  margin-right: 6px;
+  margin-top: -29px;
+  position: relative;
+  z-index: 2;
+}
+.checkbox-label {
+  display: block;
+  position: relative;
+  margin: auto;
+  cursor: pointer;
+  clear: both;
+}
+
+.checkbox-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.panal
+{
+  height: 500px !important;
+  width:100%;
+  flex-direction: column;
+  font-family: 'Outfit', sans-serif;
+  padding: 10;
+
+}
+.buySellCard div
+{
+  height: 500px !important;
+  
+}
+.head
+{
+  color: white;
+  font-size:20px ;
+  text-align: initial !important;
+}
+.note{
+  font-size:13px;
+  color: rgba(202, 200, 200, 0.5);
+  text-align: initial !important;
+  padding-top: 10px;
+
+}
+.textwhite
+{
+  color: white !important;
+}
+.card1
+{
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.time{
+  color: rgba(202, 200, 200, 0.5);
+  font-size: 14px;
+  text-align: initial !important;
+}
+.time1{
+  color:black;
+  font-size: 20px;
+  text-align: initial !important;
+}
+.time2{
+  color:white;
+  font-size: 20px;
+  text-align: initial !important;
+  white-space: nowrap !important;
+}
+.MuiFormControl-fullWidth
+{
+  width: 80% !important;
+}
+.note1{
+ 
+  color: rgba(202, 200, 200, 0.5);
+  text-align: initial !important;
+  padding-top: 33px;
+
+}
+.checkbox-label .checkbox-custom {
+  position: absolute;
+  top: 2px;
+  left: 90px;
+  height: 20px;
+  width: 20px;
+  background-color: transparent;
+  border-radius: 5px;
+  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  border: 2px solid #ffffff;
+}
+
+.checkbox-label .checkbox-custom::after {
+  position: absolute;
+  content: "";
+  border-radius: 5px;
+  border-width: 0 3px 3px 0;
+}
+
+.checkbox-label input:checked ~ .checkbox-custom::after {
+  -webkit-transform: rotate(45deg) scale(1);
+  -ms-transform: rotate(45deg) scale(1);
+  transform: rotate(45deg) scale(1);
+  opacity: 1;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 12px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.main {
+  /* width: 33%; */
+  text-align: center;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  display: block !important;
+  padding: 58px 0;
+  margin: 20px auto;
+}
+.left-inner-addon {
+  position: relative;
+  width: 75%;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: auto;
+}
+
+.left-inner-addon input {
+  padding-left: 35px !important;
+}
+.NFT-immage{
+  width: 200px;
+   border-radius: 10px;
+}
+.left-inner-addon i.left {
+  position: absolute;
+  padding: 10px 10px;
+  pointer-events: none;
+  left: 0;
+}
+.left-inner-addon i.right {
+  position: absolute;
+  padding: 10px 10px;
+  pointer-events: none;
+  right: 0;
+  top: 0;
+}
+.text1 {
+  margin-top: 30px;
+}
+.text1 a {
+  color: white;
+  text-decoration: none;
+}
+.text3 {
+  margin-top: 10px;
+}
+.text3 a {
+  color: white;
+  text-decoration: none;
+}
+/* .text2{
+    margin-top:20px;
+    color:white;
+}.text2 label{
+    font-weight:200;
+} */
+.create-btn {
+  background-color: rgb(255,255,255,0.3);
+  color: white;
+  padding: 9px 19px;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  width: 100%;
+}
+.top-row {
+  margin-top: 10px;
+  height: 15px;
+  margin-bottom: 30px;
+  margin-left: 0;
+  margin-right: 0;
+}
+.top-row a {
+  color: white;
+  text-decoration: none;
+}
+.top-row i {
+  padding-right: 10px;
+}
+.heading-div {
+  width: 50%;
+  margin: auto;
+  color: white;
+  text-align: center;
+}
+.label-div {
+  color: white;
+  font-weight: 200;
+  margin-top: 20px;
+}
+.label-div label {
+  font-weight: 200;
+}
+.margin-t {
+  margin-top: 5px !important;
+}
+.fa-question-circle {
+  color: white;
+  padding-left: 10px;
+}
+
+.card {
+  position: relative;
+  display: -ms-flexbox;
+  /*display: flex;*/
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: none;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.card > hr {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.card > .list-group:first-child .list-group-item:first-child {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.card > .list-group:last-child .list-group-item:last-child {
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
+.card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+
+.card-title {
+  margin-bottom: 0.75rem;
+}
+
+.card-subtitle {
+  margin-top: -0.375rem;
+  margin-bottom: 0;
+}
+
+.card-text:last-child {
+  margin-bottom: 0;
+}
+
+.card-link:hover {
+  text-decoration: none;
+}
+
+.card-link + .card-link {
+  margin-left: 1.25rem;
+}
+
+.card-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header:first-child {
+  border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+
+.card-header + .list-group .list-group-item:first-child {
+  border-top: 0;
+}
+
+.card-footer {
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-footer:last-child {
+  border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px);
+}
+
+.card-header-tabs {
+  margin-right: -0.625rem;
+  margin-bottom: -0.75rem;
+  margin-left: -0.625rem;
+  border-bottom: 0;
+}
+
+.card-header-pills {
+  margin-right: -0.625rem;
+  margin-left: -0.625rem;
+}
+
+.card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1.25rem;
+}
+
+.card-img,
+.card-img-bottom,
+.card-img-top {
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.card-img,
+.card-img-top {
+  border-top-left-radius: calc(0.25rem - 1px);
+  border-top-right-radius: calc(0.25rem - 1px);
+}
+
+.card-img,
+.card-img-bottom {
+  border-bottom-right-radius: calc(0.25rem - 1px);
+  border-bottom-left-radius: calc(0.25rem - 1px);
+}
+
+.card-deck .card {
+  margin-bottom: 15px;
+}
+
+@media (min-width: 576px) {
+  .card-deck {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+
+  .card-deck .card {
+    -ms-flex: 1 0 0%;
+    flex: 1 0 0%;
+    margin-right: 15px;
+    margin-bottom: 0;
+    margin-left: 15px;
+  }
+}
+
+.card-group > .card {
+  margin-bottom: 15px;
+}
+
+@media (min-width: 576px) {
+  .card-group {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+  }
+
+  .card-group > .card {
+    -ms-flex: 1 0 0%;
+    flex: 1 0 0%;
+    margin-bottom: 0;
+  }
+
+  .card-group > .card + .card {
+    margin-left: 0;
+    border-left: 0;
+  }
+
+  .card-group > .card:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .card-group > .card:not(:last-child) .card-header,
+  .card-group > .card:not(:last-child) .card-img-top {
+    border-top-right-radius: 0;
+  }
+
+  .card-group > .card:not(:last-child) .card-footer,
+  .card-group > .card:not(:last-child) .card-img-bottom {
+    border-bottom-right-radius: 0;
+  }
+
+  .card-group > .card:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .card-group > .card:not(:first-child) .card-header,
+  .card-group > .card:not(:first-child) .card-img-top {
+    border-top-left-radius: 0;
+  }
+
+  .card-group > .card:not(:first-child) .card-footer,
+  .card-group > .card:not(:first-child) .card-img-bottom {
+    border-bottom-left-radius: 0;
+  }
+}
+
+.card-columns .card {
+  margin-bottom: 0.75rem;
+}
+.verificationCard {
+  margin-top: 55px;
+}
+@media (min-width: 576px) {
+  .card-columns {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+    -webkit-column-gap: 1.25rem;
+    -moz-column-gap: 1.25rem;
+    column-gap: 1.25rem;
+    orphans: 1;
+    widows: 1;
+  }
+
+  .card-columns .card {
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+.accordion > .card {
+  overflow: hidden;
+}
+
+.accordion > .card:not(:last-of-type) {
+  border-bottom: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.accordion > .card:not(:first-of-type) {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.accordion > .card > .card-header {
+  border-radius: 0;
+  margin-bottom: -1px;
+}
+
+/* <---------------------OverView--------------------> */
+
+.recent-transaction {
+  font-size: 14px;
+}
+.chartCard {
+  padding: 5%;
+}
+.chartCard img {
+  width: 77%;
+}
+.accumulativeCardBody {
+  height: 105px;
+}
+.accumulativeCardBody .div1 {
+  display: inline-block;
+}
+.accumulativeCardBody .div1 h5 {
+  text-align: left;
+  color: white;
+  font-family: 'Oswald' , sans-serif;;
+}
+.accumulativeCardBody .div1 span {
+  color: white;
+  font-family: 'Oswald' , sans-serif;
+}
+.accumulativeCardBody .div2 {
+  display: inline-block;
+  float: right;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+.buySellCard {
+  margin-top: 8px;
+  font-family: 'Oswald' , sans-serif;
+  font-weight: bold;
+}
+.buySellCard div {
+  /* min-width: 220px;  */
+  height: 445px;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  padding-top: 8px;
+}
+.recentCard {
+  height: 105px;
+}
+.recentCard .div1 {
+  display: inline-block;
+}
+.recentCard .div1 h5 {
+  color: white;
+}
+.recentCard .div1 span {
+  color: white;
+  font-family: 'Oswald' , sans-serif;;
+}
+.recentCard .div2 {
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+/* .recentCard .div2 img {
+  padding-top: 6px;
+} */
+.profileCard {
+  margin-top: 8px;
+  font-family: 'Oswald' , sans-serif;
+  font-weight: bold;
+}
+.profileCard .card-header {
+  color: white;
+  text-align: left;
+}
+.profileCard .card-body {
+  height: 395px;
+}
+#profile-background {
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  margin: auto;
+}
+.profileImg {
+  height: auto;
+  width: 100%;
+}
+.walaPay {
+  color: #fff;
+}
+.chartCard {
+  /* position: relative; */
+  /* height: 100%; */
+  height: 533px;
+  /* width:100%; */
+}
+/* canvas{
+        width: 75% !important;
+        height: 75% !important;
+        margin: 15px auto;
+
+    } */
+/* <----------------------Generate Wallets---------------------> */
+
+.walletTab {
+  min-height: 65px;
+  background: #fabf01;
+  border-radius: 15px;
+  display: flex;
+  margin: 11px 30px;
+}
+.walletTab img {
+  width: 120%;
+  padding: 10px;
+}
+.currencyName {
+  margin: auto;
+}
+.rightIcon {
+  font-size: 25px;
+  margin: auto;
+  text-align: right;
+}
+.amount {
+  margin: auto;
+}
+.amount h3 {
+  float: right;
+}
+
+/* <----------------------Send Receive Tabs---------------------> */
+
+.SendReceiveTabs {
+  border-radius: 23px;
+  border: 1px solid black !important;
+  background-color: #fabf01;
+  margin: 15px auto;
+  width: 80% !important;
+  margin-top: 0;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+.SendReceiveTabs:hover {
+  border-radius: 23px;
+}
+.nav-tabs.nav-justified > li > a {
+  border-bottom: none;
+}
+.SendReceiveTabs > li.active > a,
+.SendReceiveTabs > li.active > a:focus,
+.SendReceiveTabs > li.active > a:hover {
+  background-color: transparent;
+  border: none !important;
+}
+.SendReceiveTabs > li > a:focus,
+.SendReceiveTabs > li > a:hover {
+  background-color: transparent;
+  border: none !important;
+}
+.scanQr {
+  color: white;
+}
+.sendButton {
+  color: white;
+  padding: 9px 19px;
+  border-radius: .25rem;
+  width: 100%;
+  background: rgb(255,255,255,0.3);
+  border: 1px solid #fff;
+
+}
+
+.copyButton {
+  color: white;
+  padding: 9px 19px;
+  border-radius: 3px;
+  width: 100%;
+  background: rgb(255,255,255,0.3);
+  border: 1px solid #fff;
+}
+.copiedButton{
+    color: white;
+    padding: 9px 19px;
+    border-radius: 3px;
+    width: 100%;
+    background: #02BA5A;
+    border: 1px solid #fff;
+
+}
+.form-group {
+  margin-bottom: 20px;
+}
+.send-form {
+  margin: 30px 0;
+}
+.send-form input {
+  height: 40px;
+  background: #fff;
+  border-radius: 8px;
+}
+::placeholder {
+  color: white !important;
+  text-align: left;
+  font-weight: bold;
+  font-size: 15px !important;
+}
+
+/* <----------------------WalaGate---------------------> */
+.invoiceHeading{
+  color: #fff;
+  font-family: 'Oswald' , sans-serif;
+  font-weight: bold;
+}
+.invoice-form {
+  margin: 30px 0;
+  color: white;
+}
+.invoice-form input {
+  height: 40px;
+  background: #fff;
+  border-radius: .25rem ;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+.generateQrButton {
+  margin-top: 30px;
+  color: white;
+  padding: 9px 19px;
+  border-radius: .25rem;
+  width: 100%;
+  background: rgb(255,255,255,0.3);
+  border: 1px solid #fff;
+}
+label {
+  cursor: pointer;
+  color: white;
+}
+
+#upload-photo {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+
+button{
+  font-size: .87rem;
+    font-weight: bold;
+}
+
+
+/* <---------------------------KYC---------------------> */
+.kycHeading{
+  color: #fff;
+  font-family: 'Oswald' , sans-serif;
+  font-weight: bold;
+}
+.kyc-form {
+  margin: 30px 0;
+  color: white;
+}
+.saveKycButton{
+  background-color: #02BA5A;
+  border: none;
+    padding: 9px 19px;
+    border-radius: 3px;
+    color: #fff;
+    font-weight: bold;
+}
+/* <----------------------Setting---------------------> */
+
+.setting-heading {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.setting-heading p {
+  font-size: 22px;
+}
+
+.props-divs {
+  font-size: 16px;
+  color: white;
+  margin-top: 15px;
+}
+
+.props-divs p {
+  color: white;
+}
+
+.currency-select {
+  background-color:rgb(255,255,255,0.3);
+  color: black;
+  border-radius: .25rem;
+}
+
+.currency-select p {
+  color: #fff;
+  margin: 0;
+  padding: 6px 12px 6px 12px;
+
+}
+.clientIdCopyButton{
+  float: right;
+    width: 15%;
+    background: rgb(255,255,255,0.3);
+    border: none;
+    color: #fff;
+    border-radius: .25rem;
+    margin-top: -5px;
+    height: 45px;
+}
+.clientIdCopiedButton{
+  float: right;
+    width: 15%;
+    background: #02BA5A;
+    border: none;
+    color: #fff;
+    border-radius: .25rem;
+    margin-top: -5px;
+    height: 45px;
+}
+/*.invoice-form input {
+            height: 40px;
+            background: #fff;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .generateQrButton {
+            margin-top: 30px;
+            background-color: #fabf01;
+            border: none;
+            padding: 12px;
+            color: #fff;
+            border-radius: 12px;
+        }
+
+        label {
+            cursor: pointer;
+            color: white
+        }
+
+        #upload-photo {
+            opacity: 0;
+            position: absolute;
+            z-index: -1;
+        }*/
+.recentInvoiceArrow {
+  float: right;
+  margin: 5px 0px;
+  font-size: large;
+}
+.modal-body {
+  background-color: #000 !important;
+}
+.modal-content {
+  background-color: transparent !important;
+  border: none !important;
+}
+.modal-footer {
+  justify-content: center;
+}
+.modal-dialog {
+  margin: 150px auto !important;
+}
+
+@media (min-width: 991px) and (max-width: 1199px) {
+  .accumulativeCardBody {
+    padding: 20px 8px !important;
+  }
+  .accumulativeCardBody .div1 span {
+    font-size: 12px;
+  }
+  .accumulativeCardBody .div2 img {
+    width: 24px;
+  }
+  /* .buySellCard{
+                font-size: 12px;
+            } */
+  .recentcardBody {
+    padding: 20px 8px !important;
+  }
+  .recent-transaction {
+    font-size: 12px;
+  }
+  .recentcardBody .div2 img {
+    width: 24px;
+  }
+}
+@media (min-width: 320px) and (max-width: 576px) {
+  .wrapperCard {
+    padding: 0 25px;
+  }
+}
+/* <---------------Wallet--------------------> */
+
+.walletRIghtSideBar {
+  display: flex;
+  cursor: pointer;
+  margin: 15px 11px;
+  margin-top: 23px;
+}
+.walletRIghtSideBar img {
+  width: 67px;
+  height: auto;
+  margin-left: 3px;
+    margin-top: 0px;
+}
+.walletRIghtSideBar h4 {
+  padding: 10px;
+  color: #fff;
+}
+.walletRIghtSideBar h4:hover {
+  color: #fff;
+}
+.currencyCard hr {
+  background: #ffffff00;
+}
+.currencyCard {
+  height: 500px;
+  overflow-y: scroll;
+  border-radius: 5px;
+}
+/* Overview right side cards */
+@media (min-width: 320px) and (max-width: 991px) {
+  .rightCards {
+    margin-top: 8px;
+  }
+}
+
+
+/* ----------------------Market Place --------------------------- */
+
+.searchInput{
+  width: 100%;
+  border: none;
+  border-radius: 0px 7px 7px 0px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+.searchCategory{
+  background: rgb(255,255,255,0.4);
+    border-radius: 7px 0px 0px 7px;
+    letter-spacing: 1px;
+    border: none;
+    font-size: 20px;
+}
+.signInSecurely{
+  border: none;
+    background: #fabf01;
+    width: 90%;
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 10px;
+}
+/* .arrowLeft ChevronLeft{
+  width: 70px !important;
+  height: 70px !important;
+} */
+.categoryImage{
+  width: 82%;
+    height: 100px;
+    background: aliceblue;
+}
+.categoryCard{
+  padding: 0 !important;
+  margin: 0 !important;
+  color: #fff
+}
+.column3{
+  background:#fff;
+   margin : 10px ;
+border-radius : 4px ;
+ text-align:center ;
+ padding: 10px
+}
+
+.searchInput::placeholder {
+  font-size: 20px !important;
+}
+@media(min-width:1140px){
+.column3{
+  max-width: 23% !important;
+}
+}
+.badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+#lblCartCount {
+  font-size: 15px;
+  background: #fff;
+  color: red;
+  padding: 0 5px;
+  vertical-align: top;
+  margin-left: -27px;
+  margin-top: 14px;
+}
+ .categoriesRow{
+  margin: 30px;
+}
+.assetRow{
+  margin: 5px;
+}
+.assetImageRow{
+  padding: 25px 0px;
+}
+@media(min-width:1024px) and (max-width:1139px){
+  .categoriesRow{
+    margin: 15px;
+  }
+  .column3{
+    max-width: 22% !important;
+  }
+}
+
+
+
+
+/* /////////////////////////////SubCategory//////////////////////////////////// */
+.checked{
+  color:rgb(250, 191, 1);
+}
+.fa-star{
+  font-size: medium !important;
+}
+.choice{
+  font-size: inherit;
+    background: black;
+    width: fit-content;
+    padding: 2px 5px;
+    margin: auto 20px 0px 0px;
+}
+.categoryList{
+  list-style: none;
+  padding-left: 15px;
+}
+.categoryList li {
+  color: #fff;
+}
+.categoryList li::before {
+  content: "\2022";
+  color: rgb(250, 191, 1);
+  font-weight: bold;
+  display: inline-block; 
+  width: 1em;
+  margin-left: -1em;
+}
+.buyNowContainer {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #fff;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-transform: capitalize;
+}
+
+/* Hide the browser's default radio button */
+.buyNowContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 23px;
+  width: 23px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.buyNowContainer:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.buyNowContainer input:checked ~ .checkmark {
+  background-color: lightgrey;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.buyNowContainer input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.buyNowContainer .checkmark:after {
+ 	top: 5px;
+	left: 5px;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: rgb(250, 191, 1);
+}
+.quantitySelect{
+  width: fit-content;
+  background: lightgray;
+  border-radius: 4px;
+  padding: 2px 15px;
+  font-weight: bold;
+  font-size: 20px;
+}
+.transferButton{
+  background: #ffffff66;
+    padding: 4px;
+    font-size: x-large;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    margin: 8px 0;
+    width: 100%;
+}
+
+.secureTransaction{
+  color: rgb(250, 191, 1);
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.deliverToPakistan{
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.buyUsed{
+  font-size: 15px;
+  font-weight:bold;
+  color: black;
+  background: #ffffff66;
+  padding: 0px 20px;
+}
+
+.productImage{
+  height: 370px;
+    padding: 10px 10px;
+    border-radius: 15px;
+}
+.colorRow{
+  list-style: none;
+  padding:0px;
+  display: flex;
+}
+.colorRow li{
+  margin-right: 10px;
+}
+.colorImage{
+  width: 48px;
+}
+.sizeRow{
+  list-style: none;
+  padding:0px;
+  display: flex;
+}
+.sizeRow li{
+  margin-right: 10px;
+  width: 75px;
+    border: 1px dotted white;
+    height: 43px;
+}
+
+.styleRow{
+  list-style: none;
+  padding:0px;
+  display: flex;
+}
+
+.styleRow li{
+  margin-right: 10px;
+  width: 75px;
+    border: 1px dotted white;
+    height: 43px;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+.smallProductRow{
+  list-style: none;
+  padding:0px 10px;
+  display: flex;
+}
+.smallProductRow li {
+  margin: 0 2px;
+}
+.smallProductImage{
+  width: 48px;
+    height: 65px;
+}
+/* The container */
+.giftContainer {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 15px;
+  text-transform: inherit;
+}
+
+/* Hide the browser's default checkbox */
+.giftContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.giftContainer:hover input ~ .checkmark2 {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.giftContainer input:checked ~ .checkmark2 {
+  background-color: rgb(250, 191, 1);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark2:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.giftContainer input:checked ~ .checkmark2:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.giftContainer .checkmark2:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.transferModal > .modal-dialog{
+  padding: 15px !important;
+  background: black !important;
+}
+
+
+
+
+.noAsset{
+  text-align: center;
+    color: white;
+    font-size: xx-large;
+}
+.modal-body {
+  background-color: #d0c2c275 !important;
+}

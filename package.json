@@ -1,0 +1,68 @@
+{
+  "name": "defi_market_place",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.21.3",
+    "bootstrap": "^4.4.1",
+    "chart.js": "^2.9.3",
+    "crypto-js": "^4.1.1",
+    "font-awesome": "^4.7.0",
+    "galio-framework": "^0.6.3",
+    "highcharts": "^8.1.2",
+    "history": "^4.10.1",
+    "jquery": "^3.5.1",
+    "material-ui-icons": "^1.0.0-beta.36",
+    "moment": "^2.29.1",
+    "password-validator": "^5.0.3",
+    "qrcode.react": "^1.0.0",
+    "raphael": "^2.3.0",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.0.1",
+    "react-bootstrap-tabs": "^1.0.2",
+    "react-chartjs-2": "^2.9.0",
+    "react-datepicker": "^3.0.0",
+    "react-dom": "^16.13.1",
+    "react-dropzone": "^11.0.1",
+    "react-feather": "^2.0.8",
+    "react-iframe": "^1.8.0",
+    "react-loading-overlay": "^1.0.1",
+    "react-minimal-pie-chart": "^8.0.0",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "react-tabs-redux": "^4.0.0",
+    "react-ticker": "^1.2.2",
+    "redux": "^4.0.5",
+    "sweetalert": "^2.1.2",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

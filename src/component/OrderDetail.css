@@ -1,0 +1,10 @@
+.container-fluide{
+    flex-direction: row;
+    display: flex;
+    height: 700;
+    border: 1px solid gray;
+   
+}
+.mapContainer{
+    padding: 0%;
+}
