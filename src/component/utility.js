@@ -25,13 +25,15 @@ export const DeleteAsyncStorage = Key => {
 
 export const SendHttpRequest = async (url = "", data = {}, method) => {
   var options = {}
-  var temToken = "Barear "+getToken();
+  var temToken = "Barear " + getToken();
   var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-myHeaders.append("AUTHORIZATION", temToken)
-data.Auth=temToken;
-data.Channel="web";
-  
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("AUTHORIZATION", temToken)
+  // data.Auth=temToken;
+  // data.Channel="web";
+
+ 
+
   if (method == "GET" || method == "get") {
     options = {
       method: method,
@@ -42,13 +44,12 @@ data.Channel="web";
     options = {
       method: method,
       headers: myHeaders,
-      
+
       body: JSON.stringify(data)
     }
   }
-  let response={};  
-    response = await fetch(url, options);
-const resData = await response.json();
+  let response = {};
+  response = await fetch(url, options);
+  const resData = await response.json();
   return resData;
 };
-

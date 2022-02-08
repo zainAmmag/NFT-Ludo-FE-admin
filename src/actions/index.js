@@ -1,4 +1,18 @@
-import { ADD_WALLETS,SET_FOCUSED,SET_TOKEN,SET_API_INTERVAL,SET_QR,SET_DEFAULTS, SET_INTERVAL_STARTED,SET_QRMERCHANTKEY,SET_IS_LOADER_ACTIVE, SET_ISMERCHANT} from "../Constants/action-types";
+import { SET_IS_LOADER_ACTIVE,METAMASK_CONNECTION,ADD_WALLETS,SET_FOCUSED,SET_TOKEN,SET_API_INTERVAL,SET_QR,SET_DEFAULTS, SET_INTERVAL_STARTED,SET_QRMERCHANTKEY, SET_ISMERCHANT} from "../Constants/action-types";
+
+export function setIsLoaderActive(payload){
+  return {type:SET_IS_LOADER_ACTIVE,payload:payload};
+}
+
+
+export function setMetamaskAction(payload){
+  return {type:METAMASK_CONNECTION,payload:payload};
+}
+
+
+
+
+
 
 export function addWallets(payload) {
   return { type: ADD_WALLETS, payload:payload };
@@ -24,9 +38,7 @@ export function setQR(payload) {
 export function setQRMerchantKey(payload){
   return {type:SET_QRMERCHANTKEY,payload:payload};
 }
-export function setIsLoaderActive(payload){
-  return {type:SET_IS_LOADER_ACTIVE,payload:payload};
-}
+
 export function setIsMerchant(payload){
   return {type:SET_ISMERCHANT,payload:payload};
 }
