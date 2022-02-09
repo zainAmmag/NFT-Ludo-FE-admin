@@ -16,9 +16,11 @@ import ProjectManagement from "./component/ProjectManagement";
 import MenageAccount from './component/MenageAccount'
 import UserDetail from "./component/UserDetail";
 import ManagerOrder from './component/MenageOrder'
+import NFTDetail from "./component/NFTDetail";
 import OrderDetail from "./component/OrderDetail";
 import ManageCollection from "./component/MenageCollection";
 import CreateCollection from "./component/CreateCollection";
+import CreateNFT from "./component/createNFT";
 
 const Pages = () => {
   return (
@@ -64,6 +66,19 @@ const Pages = () => {
                   exact
                   path="/managerOrder"
                   component={ManagerOrder}
+                ></PrivateRoute>{" "}
+
+
+                 <PrivateRoute
+                  exact
+                  path="/nftdetail"
+                  component={NFTDetail}
+                ></PrivateRoute>{" "}
+
+<PrivateRoute
+                  exact
+                  path="/createNFT"
+                  component={CreateNFT}
                 ></PrivateRoute>{" "}
 
                 <PrivateRoute

@@ -9,12 +9,13 @@ import "../../Assets/css/layout.css";
 import Avatar from "@material-ui/core/Avatar";
 import Logout from "../Logout";
 import avator from "../../Assets/images/profilePic.png";
-import { LogOut, Settings } from "react-feather";
+import { LogOut, Settings, Bell } from "react-feather";
 import { getUser } from "../../Utils/Utils";
 import { useDispatch, useSelector } from "react-redux";
 import { setMetamaskAction } from "../../actions";
 import { connectMetaMaskaction } from "../../metamask/metamask";
 import swal from "sweetalert";
+import { Badge } from "@material-ui/core";
 
 const StyledMenu = withStyles({
   paper: {
@@ -61,7 +62,7 @@ function TopNavbar() {
 
   useEffect(() => {
     if (walletDataSelector?.accounts) {
- 
+
       setIsMetamaskConnected(true)
     }
 
@@ -82,6 +83,9 @@ function TopNavbar() {
 
   return (
     <div className="topbarDiv">
+      <Badge badgeContent={4} color="primary" className="mr-3">
+        <Bell />
+      </Badge>
 
       <Button
         className="mr-2"
@@ -100,6 +104,9 @@ function TopNavbar() {
         color="secondary">
         {isMetamaskConnected ? walletDataSelector?.accounts[0].substr(0, 10) : "Connect Metamask"}
       </Button>
+
+
+
 
       <Button
         className="avator-btn"

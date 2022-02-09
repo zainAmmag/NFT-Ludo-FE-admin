@@ -144,6 +144,16 @@ function ResponsiveDrawer(props) {
             <p className="LINK_OVERVIEW">Manage Collection</p>
           </Link>
         </ListItem>
+
+
+
+        <ListItem>
+          <Link to="/createNFT" className="waves-effect">
+          
+            <Clipboard className="sidebarIcons mt-5" color="white" size={30} />
+            <p className="LINK_OVERVIEW">Create NFT</p>
+          </Link>
+        </ListItem>
      
       </List>
       <Divider />

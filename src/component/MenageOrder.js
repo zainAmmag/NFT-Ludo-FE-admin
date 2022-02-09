@@ -211,7 +211,6 @@ class ManagerOrder extends React.Component {
             <div className="card">
                 <div style={{ padding: 10 }}>
                   <h1 style={{textAlign:"center"}}>Order Details</h1>
-                  
                   <table
                     className="table table-striped table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl AccountStatement"
                     style={{ textAlign: "center" }}
