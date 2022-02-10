@@ -172,7 +172,7 @@ class CreateNFT extends React.Component {
             <div className='container'>
                 <h1 className='f-Heading'>Create NFT</h1>
 
-                <div className='container-fluid col-sm-12 col-lg-12 '>
+                <div className='container-fluid-1 col-sm-12 col-lg-12 '>
                     <p style={{ cursor: "pointer", marginTop: "-3%" }}>
                         Upload file!
                     </p>
