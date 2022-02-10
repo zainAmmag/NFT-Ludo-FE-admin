@@ -60,7 +60,7 @@ class ManageCollection extends React.Component {
                                     <Col key={k} style={{ paddingTop: '15px' }} md={2} lg={4}>
                                         <div className="card buysellcard " style={{ width: "350px", margin: "0px 20px", paddingTop: '20px' }}>
                                             <div id="container" >
-                                                <h3> {playerData.name}</h3>
+                                                <h3 style={{textAlign:"center"}}> {playerData.name}</h3>
                                                 <div className="panal">
                                                     <img
                                                         src={coming}
@@ -74,11 +74,11 @@ class ManageCollection extends React.Component {
                                                         Name:.............
 
                                                     </span>
-                                                    <hr />
+                                                    <hr style={{ width: 300 }}  />
 
                                                     <span className="head" style={{ fontSize: "20px", marginTop: '30%' }}>
                                                         Price:............
-                                                        <hr />
+                                                        <hr style={{ width: 300 }}  />
                                                     </span>
 
                                                     <span className="head" style={{ fontSize: "20px", marginTop: '30%' }}>

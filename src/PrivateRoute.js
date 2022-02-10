@@ -14,12 +14,7 @@ class PrivateRoute extends React.Component {
   render(){
     const { component: Component, ...rest }=this.props;
     let t=getToken();
-    // var s=this.props.location;
-    // if((s.pathname+"").includes("ref"))
-    // {
-    //   s.search=(s.pathname+"").split("?ref=")[1];
-    //   s.pathname=""
-    // }
+
   return (
     <Route
       {...rest}
@@ -27,7 +22,6 @@ class PrivateRoute extends React.Component {
         t&&t!==''? (
           <Component {...prop} />
         ) : (
-          // <Redirect to={{pathname:"/SignIn?ref="+s.pathname+s.search }} />
           <Redirect to={{pathname:"/SignIn" }} />
         )
       }

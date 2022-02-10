@@ -17,11 +17,22 @@ import DatePicker from "react-datepicker";
 import { setIsLoaderActive } from "../actions/index";
 // import {Loader} from './Loader'
 import Loader from "../component/shared/loader";
+import TablePagination from "@material-ui/core/TablePagination"
 import { getToken } from "../Utils/Utils";
 import { Link } from "react-router-dom";
 // import { BaseUrl } from "../Constants/BusinessManager";
-import BaseURL from '../component/BaseURL'
 import axios from "axios";
+
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+// import TablePagination from "@material-ui/core/TablePagination";
+import Paper from "@material-ui/core/Paper";
+import { data } from "jquery";
 const mapStateToProps = (state) => {
   return {};
 };
@@ -39,6 +50,8 @@ class MenageAccount extends React.Component {
       dataSource: null,
       ImageModal: false,
       imageUrl: "",
+      split:"",
+     page:0,
       gridView: true,
       tableData: [],
       blockstatus: true,
@@ -57,17 +70,43 @@ class MenageAccount extends React.Component {
       CurrencyName: "",
     };
   }
+  async updateuserblockstatus(id,status,status2)
+  {
+      if(status=="Active") status=true
+      if(status=="Deactive") status=false
+       try 
+       {
+          const data = await SendHttpRequest(
+          BaseUrl + "/Amin/UpdateAccountStatus",
+          {  accountId: id,
+             accountType: status,
+           accountVerified: status2
+          },
+          "PUT"
+        ); 
+      
+      if(data.isSuccess){console.log(data.data) }
+    }
+         catch (error) {
+        localStorage.clear();
+        this.props.setIsLoaderActive(false);
+        return;
+      }
+        
+       
+   this.componentDidMount();
+  }
   async componentDidMount() {
     this.props.setIsLoaderActive(true);
      
     try {
       let t = getToken();
       var data = await SendHttpRequest(
-        BaseUrl + "v1/Pool/GetAllPoolsAdmin",
+        BaseUrl + "/Amin/GetAllAccounts",
         {},
         "GET"
       );
-
+      
       const meta = [
         {
             id:'1',
@@ -96,11 +135,13 @@ class MenageAccount extends React.Component {
               localStorage.setItem("id"+meta[i].id,meta[i].username);
           }
           console.log(localStorage.getItem("id1"));
-      if (data.isSuccess == true) {
-           console.log(...data.data)
-        this.setState({ tableData: meta });
+      if (data.isSuccess) 
+      {
+        this.setState({ tableData: data.data });
+        console.log("data",this.state.tableData);
         this.props.setIsLoaderActive(false);
-      } else {
+      } 
+      else {
         throw new Error("Something went wrong, try to relogin");
       }
     } 
@@ -113,25 +154,12 @@ class MenageAccount extends React.Component {
       });
     }
   }
-
-  // componentDidMount(){
-  //   axios({
-  //     method:"get",
-  //     url:`${BaseURL}/api/v1/Amin/GetAllAccounts`,
-  //     headers:{
-  //       accept: "text/plain",
-  //     }
-  //   }).then((response) => {
-  //     this.setState({
-  //       getUsers:response.data.data
-  //     })
-  //   })
-  //   .catch((error)=>{
-  //     console.log('hdsfhdw' , error);
-  //   })
-  // }
-    render() {
-    return (
+   handleChangePage = (event, newPage) => {
+    this.setState({page:newPage})
+  };
+    render() {  
+      
+     return (
       <div>
         <div className="row">
           <div className="col-lg-12 col-md-12 col-xl-12 col-12 order-2 order-lg-2 order-xl-1">
@@ -139,79 +167,123 @@ class MenageAccount extends React.Component {
                   <h1 style={{textAlign:"center"}}>Manage Account </h1>
               {this.state.tableData.length > 0 ? (
                 <div style={{ padding: 10 }}>
-                  <table
-                    className="table table-striped table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl AccountStatement"
-                    style={{ textAlign: "center" }}
+                    <TableContainer component={Paper} className="Text-white">
+                  <Table
+                    className="table table-striped table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl AccountStatement Text-white"
+                    style={{ textAlign: "center",color:"white" }}
                   >
-                    <thead>
-                      <tr style={{ color: "#fff" }}>
-                        <th>Username</th>
-                        <th>Walletaddress</th>
-                        <th>Bio</th>
-                        <th>Phonenumber</th>
-                        <th>Status</th>
-                        <th>OnlineStatus</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody style={{ color: "#fff" }}>
+                   <TableHead className="Text-white">
+                    <TableRow style={{ color: "#fff" }}>
+                    <TableCell className="Text-white">Username</TableCell>
+                    <TableCell className="Text-white">Walletaddress</TableCell>
+                    <TableCell className="Text-white">CreatedAt</TableCell>
+                    <TableCell className="Text-white">Time</TableCell>
+                    <TableCell className="Text-white">Email</TableCell>
+                    <TableCell className="Text-white">Status</TableCell>
+                    <TableCell className="Text-white">OnlineStatus</TableCell>
+                    <TableCell className="Text-white">Action</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody style={{ color: "#fff" }} className="Text-white">
                       {this.state.tableData &&
                         this.state.tableData.length > 0 &&
                         this.state.tableData
-                          .sort((a, b) => b.id - a.id)
+                        .slice(this.state.page * 5, this.state.page * 5  + 5)
                           .map((value, index) => {
                             return (
-                              <tr key={index} >
-                                {/* {console.log(value)} */}
+                              <TableRow key={index}  className="Text-white">
+                                                                {/* {console.log(value)} */}
 
-                                <td> {value.username}</td>
-                                <td>{value.walletaddress}</td>
-                                <td>{value.balance}</td>
-                                <td>{value.phonenumber}</td>
-                                <td>
-                                  {value.verifiedstatus ? 'Verified' : 'Unverified'}
-                                </td>
-                                <td>   
-                                  {value.Blockstatus ? 'Block' : 'UnBlock' }
-                                </td>
+                                <TableCell className="Text-white">{value.username}</TableCell> 
+                                <TableCell className="Text-white">   {   value.address.slice(0,9)+ '...' } </TableCell>
+                                <TableCell className="Text-white">{value.createdAt.slice(0,10)}</TableCell> 
+                                <TableCell className="Text-white">{value.createdAt.slice(11,19)}</TableCell> 
+                                <TableCell className="Text-white">{ value.email==null? value.email :value.email.slice(1,3)+'...'+value.email.slice(-10)  } </TableCell>
+                                <TableCell className="Text-white">
+                                  { value.isVerfiedAccount ? 'Verified' : 'Unverified'}
+                                  </TableCell>
+                                <TableCell className="Text-white">  
+                                  {value.accountStatus=="Active" ? 'UnBlock' : 'Block' }
+                                  </TableCell>
                                
-                                <td>
+                                <TableCell className="Text-white">
                                 <button
                                     style={{ padding: 8, background: 'transparent', border: 0 }}
-                                    onClick={() => { if(value.Blockstatus){console.log("block"); this.setState({ blockstatus:false});value.Blockstatus=false}else{console.log("unblock"); this.setState({ blockstatus:true});value.Blockstatus=true}} }
+                                    onClick={() => { 
+                                      if(value.accountStatus=="Active")
+                                        {this.updateuserblockstatus(value.id,false,value.isVerfiedAccount );}
+                                       else
+                                         {this.updateuserblockstatus(value.id,true,value.isVerfiedAccount ); }
+                                        
+                                    }}
                                 >
                                   
                                      <MinusCircle
-                                    color={value.Blockstatus ? 'red' : 'white'}
+                                    color={value.accountStatus=="Active" ? 'white': 'red'}
                                     size={16}
                                      />
                                 </button>
                                 <button
                                     style={{ padding: 8, background: 'transparent', border: 0 }}
-                                    onClick={() => { if(value.verifiedstatus){this.setState({ blockstatus:false});value.verifiedstatus=false}else{console.log("unblock"); this.setState({ blockstatus:true});value.verifiedstatus=true}} }
+                                    onClick={() =>{
+                                      if(value.isVerfiedAccount) 
+                                       this.updateuserblockstatus(value.id,value.accountStatus,false );
+                                      else{ 
+                                        this.updateuserblockstatus(value.id,value.accountStatus,true ); 
+                                      }  } }
                                 >
                                   
                                      <CheckSquare
-                                    color={value.verifiedstatus ? 'white' : 'green'}
+                                    color={value.isVerfiedAccount ? 'green' : 'white'}
                                     size={16}
                                      />
                                 </button>
-                         
+                                
                                     
                                 <Link to="/userDetail">
+                                <button
+                                    style={{ padding: 8, background: 'transparent', border: 0 }}
+                                    onClick={() => { 
+                                          console.log(localStorage.getItem('useraddress'))    
+                                           localStorage.setItem("profileImage",value.profileImage)
+                                           localStorage.setItem("address",value.address)
+                                           localStorage.setItem("email",value.email)
+                                           
+                                           localStorage.setItem("username",value.username)
+                                           localStorage.setItem("bio",value.bio)
+                                           localStorage.setItem("twitterLink",value.twitterLink)
+                                           localStorage.setItem("instagramLink",value.instagramLink)
+                                           localStorage.setItem("isVerfiedAccount",value.isVerfiedAccount)
+                                          localStorage.setItem("UserID",47);
+                                         } }
+                                >
                                   <Eye
                                     className="ml-2"
                                     color="white"
                                     size={16}
                                   /> 
+                                  </button>
+                                  
                                 </Link>
                                  
-                                </td>
-                              </tr>
+                                </TableCell>
+                                </TableRow>
                             );
                           })}
-                    </tbody>
-                  </table>
+                   </TableBody>
+                   </Table>
+                   <div className="Text-white1" > 
+                     <TablePagination
+                    component="div"
+                    count={this.state.tableData.length}
+                    rowsPerPage={5}
+                    page={this.state.page}
+                    onChangePage={this.handleChangePage}
+                   /></div>
+
+                  </TableContainer>
+                
+ 
                 </div>
               ) : (
                 <div style={{ alignItems: "center", alignContent: "center" }}>
@@ -237,6 +309,7 @@ const styles = {
   container: {
     flex: 1,
   },
+
   convertButton: {
     backgroundColor: "#000",
     borderWidth: 1,

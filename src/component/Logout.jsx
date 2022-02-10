@@ -3,14 +3,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   AuthenticationTokenId,
-  DefaultCurrencyTokenId,
-  BaseUrl,
-  UserTypeTokenId,
-  UserAuthTokenId,
-  UserProfileTokenId,
 } from "../Constants/BusinessManager";
 import { setIsLoaderActive, addWallets } from "../actions/index";
-import { SendHttpRequest } from "./utility";
 
 import { withRouter } from "react-router-dom";
 
@@ -40,20 +34,11 @@ class Logout extends Component {
   }
   clearSession() {
     localStorage.removeItem(AuthenticationTokenId);
-    localStorage.removeItem(UserAuthTokenId);
-    localStorage.removeItem(UserProfileTokenId);
-    localStorage.removeItem(UserTypeTokenId);
     localStorage.clear();
-    localStorage.removeItem(DefaultCurrencyTokenId);
     this.props.addWallets({});
     //this.props.setToken("");
     clearInterval(this.props.Interval);
     this.props.setIsLoaderActive(false);
-    // var s = this.props.location;
-    // if ((s.pathname + "").includes("ref")) {
-    //   s.search = (s.pathname + "").split("?ref=")[1];
-    //   s.pathname = "";
-    // }
     this.props.history.push("/SignIn")
   }
   LogoutHandler() {
@@ -63,13 +48,6 @@ class Logout extends Component {
       this.clearSession();
     } else {
       try {
-        // SendHttpRequest(
-        //   BaseUrl + "Logout",
-        //   {
-        //     Token: token,
-        //   },
-        //   "POST"
-        // );
         this.clearSession();
       } catch (error) {
         this.clearSession();

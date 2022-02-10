@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
@@ -8,13 +8,14 @@ import ListItemText from "@material-ui/core/ListItemText";
 import "../../Assets/css/layout.css";
 import Avatar from "@material-ui/core/Avatar";
 import Logout from "../Logout";
-import Setting from "../Setting";
 import avator from "../../Assets/images/profilePic.png";
-import ListItem from "@material-ui/core/ListItem";
-import { Link } from "react-router-dom";
-import { LogOut, Settings } from "react-feather";
-import { ImageBaseUrl, UserProfileTokenId } from "../../Constants/BusinessManager";
+import { LogOut, Settings, Bell } from "react-feather";
 import { getUser } from "../../Utils/Utils";
+import { useDispatch, useSelector } from "react-redux";
+import { setMetamaskAction } from "../../actions";
+import { connectMetaMaskaction } from "../../metamask/metamask";
+import swal from "sweetalert";
+import { Badge } from "@material-ui/core";
 
 const StyledMenu = withStyles({
   paper: {
@@ -46,7 +47,6 @@ const StyledMenuItem = withStyles((theme) => ({
     height: 75,
     padding: "0 !important",
     "&:focus": {
-      // backgroundColor: theme.palette.primary.main,
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
         color: theme.palette.common.white,
       },
@@ -56,6 +56,22 @@ const StyledMenuItem = withStyles((theme) => ({
 
 function TopNavbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const walletDataSelector = useSelector(state => state?.metamaskData)
+  const [isMetamaskConnected, setIsMetamaskConnected] = useState(false)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (walletDataSelector?.accounts) {
+
+      setIsMetamaskConnected(true)
+    }
+
+    else {
+      setIsMetamaskConnected(false)
+    }
+
+  }, [walletDataSelector]);
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -64,9 +80,34 @@ function TopNavbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  let user = getUser();
+
   return (
     <div className="topbarDiv">
+      <Badge badgeContent={4} color="primary" className="mr-3">
+        <Bell />
+      </Badge>
+
+      <Button
+        className="mr-2"
+        aria-controls="customized-menu"
+        aria-haspopup="true"
+        variant="contained"
+        onClick={() => {
+          if (!isMetamaskConnected) {
+            connectMetaMaskaction().then((resp) => {
+              dispatch(setMetamaskAction(resp))
+            }).catch(() => {
+              alert("metamask connection error")
+            })
+          }
+        }}
+        color="secondary">
+        {isMetamaskConnected ? walletDataSelector?.accounts[0].substr(0, 10) : "Connect Metamask"}
+      </Button>
+
+
+
+
       <Button
         className="avator-btn"
         aria-controls="customized-menu"
@@ -75,7 +116,7 @@ function TopNavbar() {
         color="primary"
         onClick={handleClick}
       >
-        <Avatar alt="User" src={avator}/>
+        <Avatar alt="User" src={avator} />
       </Button>
       <StyledMenu
         id="customized-menu"
@@ -84,25 +125,6 @@ function TopNavbar() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {/* <StyledMenuItem>
-          <ListItemIcon>]
-            <img alt="User" src={user?(!user.ProfileImage||user.ProfileImage===""?avator:ImageBaseUrl+user.ProfileImage):avator} className="userMenuIcon" width={40} />
-          </ListItemIcon>
-          <Link to="/Profile">
-            <ListItemText primary={user?(!user.Email||user.Email===""?"Email":user.Email):"EMAIL"} />{" "}
-          </Link>
-        </StyledMenuItem>
-        <hr style={{ marginTop: 0 }} />
-
-        <StyledMenuItem>
-          <ListItemIcon>
-            <Settings className="userMenuIcon" width={30}></Settings>
-          </ListItemIcon>
-          <Link to="/Setting">
-            <ListItemText primary="Settings" />{" "}
-          </Link>
-        </StyledMenuItem>
-        <hr style={{ marginTop: 0 }} /> */}
         <Logout>
           <StyledMenuItem className="topbarDrop">
             <ListItemIcon>
@@ -114,5 +136,13 @@ function TopNavbar() {
       </StyledMenu>
     </div>
   );
+}
+const mapStatesToProps = (state) => {
+  return ({
+    walletData: state
+  })
+}
+const mapDispatchToProps = () => {
+
 }
 export default TopNavbar;
