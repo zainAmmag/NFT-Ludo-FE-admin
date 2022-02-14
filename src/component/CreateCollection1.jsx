@@ -7,70 +7,79 @@ import {
     BaseUrl,
   } from "../Constants/BusinessManager";
   import { SendHttpRequest } from "../component/utility";
-  
-  import { connect } from "react-redux";
-  import swal from "sweetalert";
-   
-import { bindActionCreators } from "redux";
+
 import { setIsLoaderActive } from "../actions/index";
-  
+import { Component } from 'react'
+import { contains } from 'jquery';
 import Modal from "react-bootstrap/Modal";
+import { connect } from "react-redux";
+import swal from "sweetalert";
+
+
+import { bindActionCreators } from "redux";
 
 const mapStateToProps = (state) => {
-    return {};
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setIsLoaderActive: bindActionCreators(setIsLoaderActive, dispatch),
   };
-  
-  const mapDispatchToProps = (dispatch) => {
-    return {
-      setIsLoaderActive: bindActionCreators(setIsLoaderActive, dispatch),
-    };
-  };
-class CreateNt extends React.Component {
+};
+
+
+class CreateCollection extends React.Component {
 
     constructor() {
         super()
         this.state = {
             // selectedFile: null,
+            // optionValue: "",
             Name:"",
-             TokenId:"",           
-             ContractAddress:"",
-             ExternalLink:"",
-             Description:"",
-            Unlockablecontent:false,
-          Unlockablecontentnote:"",
-          SesitiveData:false,
-              Supply:0,
-            Feetransitiondata:"", 
-            CategoryId:0,
-           CurrencyId:0,
-           CollectionId:0,
-           BlockChainname_:"",
+            ExternalLink:"",
+            Description:"",
             Price:0,
+            BlockChainName:0,
+            UrlL:"",
+            DiscordLink:"",
+            TwitterLink:"",
+            InstagramLink:"",
+            MediumLink:"",
+            TLink:"",
+            PercentageFee:0,
+            CategoryId:0,
             ChainId:0,
-            NftProperties:[],
-            NftLevels:[],
             ImageModal:false,
-            NftStats:[],
-            Image:{},
-            ImagePreview:{},
+            CurrencyId:"",
+            SensitveContent:false,
+            LogoImage:{},
+            WebsiteLink:"",
+            FeaturedImage:{},
+            BannerImage:{},
+            BannerPreview:{},
+            LogoPreview:{},   
+            FeatPreview:{},
             Blockchaindata:[],
             CategoryData:[],
             Currencydata:[],
-            SelectedBlockchain:[],
+            modalVisible: false,
             falsemessage:"",
             successmessage:"",
             errormessage:"",
         };
-      
     }
     componentDidMount() {
         this.submit()
-    }  
+        this.HandelChange()
+    }
+   
+    
 async CategoriesIdd()
 {
     try {
         const data = await SendHttpRequest(
-          BaseUrl + "/Amin/GetMyAllCollections?PageSize=0&CurrentPage=0",
+          BaseUrl + "/Nft/GetNftCollectionCategories",
           {},
           "GET"
         );
@@ -83,9 +92,10 @@ async CategoriesIdd()
           console.log("data"+ data.message);
         }
       } catch (error) {
-      
+       
         return;
       }   
+
 }
 
 async CurrencyIdget()
@@ -105,7 +115,7 @@ async CurrencyIdget()
           console.log("data"+ data.message);
         }
       } catch (error) {
-        // ();localStorage.clear
+       
         return;
       }   
 
@@ -127,7 +137,7 @@ async BlockchainNames()
               console.log("data"+ data.message);
             }
           } catch (error) {
-            // localStorage.clear();
+          
             return;
           }   
     }
@@ -137,59 +147,50 @@ async componentDidMount()
        this.CategoriesIdd();
        this.CurrencyIdget();
     console.log(localStorage.getItem("TokenofAdminsigned"))
+    this.setState({ImageModal:false});
 }
-    
-clearall=()=>{
-    this.setState({Name:""})
-    this.setState({ExternalLink:""})
-    this.setState({Description:""})
-    this.setState({Price:""})
-    this.setState({DiscordLink:""})
-    this.setState({TwitterLink:""})
-    this.setState({InstagramLink:""})
-    this.setState({TLink:""})
-    this.setState({MediumLink:""})
-}
+       clearall=()=>{
+                   this.setState({Name:""})
+                   this.setState({ExternalLink:""})
+                   this.setState({Description:""})
+                   this.setState({Price:""})
+                   this.setState({DiscordLink:""})
+                   this.setState({TwitterLink:""})
+                   this.setState({InstagramLink:""})
+                   this.setState({TLink:""})
+                   this.setState({MediumLink:""})
+            }
     submit =(data)=>{
-         
-          console.log("block",this.state.BlockChainname_)
-          console.log("chain",this.state.ChainId)          
-          console.log("categoty",this.state.CategoryId)
-          console.log("curency",this.state.CurrencyId)
+          console.log(this.state.BlockChainName)
+          
+          console.log(this.state.CategoryId)
+          console.log(this.state.CurrencyId)
           this.setState({falsemessage:""})
           this.setState({successmessage:""})
           this.setState({errormessage:""})
+          //   this.HandleOpen();
         var bodyFormData = new FormData();
         bodyFormData.append("Name",this.state.Name);
-        bodyFormData.append("TokenId",this.state.TokenId);
-        bodyFormData.append("ContractAddress",this.state.ContractAddress);
-        bodyFormData.append("ExternalLink", this.state.ExternalLink);
-        bodyFormData.append("Description", this.state.Description);
-        bodyFormData.append("UnlockableContent",this.state.Unlockablecontent);
-        bodyFormData.append("UnlockableContentNote",this.state.Unlockablecontentnote);
-        bodyFormData.append("SensitiveContent",this.state.SesitiveData);
-        bodyFormData.append("Supply",this.state.Supply);
-        bodyFormData.append("FeeTransactionHash",this.state.Feetransitiondata);
+        bodyFormData.append("Url",this.state.UrlL);
+        bodyFormData.append("Description",this.state.Description);
+        bodyFormData.append("WebsiteLink", this.state.WebsiteLink);
+        bodyFormData.append("DiscordLink", this.state.DiscordLink);
+        bodyFormData.append("TwitterLink",this.state.TwitterLink);
+        bodyFormData.append("InstagramLink",this.state.InstagramLink);
+        bodyFormData.append("MediumLink",this.state.MediumLink);
+        bodyFormData.append("TLink",this.state.TLink);
+        bodyFormData.append("PercentageFee",this.state.PercentageFee);
+        bodyFormData.append("CategoryId", this.state.CategoryId);
+        bodyFormData.append("ChainId",this.state.BlockChainName);
         bodyFormData.append("CurrencyId", this.state.CurrencyId);
-        bodyFormData.append("CollectionId",this.state.CategoryId);
-        bodyFormData.append("BlockChainName", this.state.BlockChainname_);
-        bodyFormData.append("Price", this.state.Price);
-        bodyFormData.append("ChainId", this.state.ChainId);
+        bodyFormData.append("SensitveContent", this.state.SensitveContent);
+        bodyFormData.append("LogoImage", this.state.LogoImage);
         bodyFormData.append("FeaturedImage", this.state.FeaturedImage);
-        bodyFormData.append("NftProperties", this.state.NftProperties);
-        bodyFormData.append("NftLevels", this.state.NftLevels);
-        bodyFormData.append("NftStats", this.state.NftStats);
-        bodyFormData.append("Image", this.state.Image);
-        if(this.state.CurrencyId==0||this.state.CategoryId==0||this.state.chainID==0)
-        {
-            this.setState({ ImageModal: true })
-            this.setState({errormessage:"Fill Form Correctly"})
-        }
-        else{
-            this.props.setIsLoaderActive(true);
+        bodyFormData.append("BannerImage", this.state.BannerImage);
+     
         axios({
             method:"POST",
-            url:"http://198.187.28.244:7577/api/v1/Nft/AddNft",
+            url:"http://198.187.28.244:7577/api/v1/Amin/AddAdminNftCollection",
 
             data:bodyFormData,
             headers:{
@@ -199,10 +200,8 @@ clearall=()=>{
                
             }
         }).then((response)=>{
-            this.props.setIsLoaderActive(false);
             this.setState({ ImageModal: true })
             console.log(response.data.message);
-            console.log("daadd"+response.statusText);
            if(response.data.message=="Collection already exist")
               {
                   this.setState({falsemessage:response.data.message})
@@ -217,38 +216,66 @@ clearall=()=>{
                 this.setState({errormessage:response.data.message})
               }
             // console.log(");
-        }) }
+        })
     }
 
      uploadPicture = (e) => {
-        this.setState({Image:e.target.files[0]}) 
-        this.setState({ImagePreview:URL.createObjectURL(e.target.files[0])})
+        this.setState({BannerImage:e.target.files[0]}) 
+        this.setState({BannerPreview:URL.createObjectURL(e.target.files[0])})
         };
-    FindBlockchainName(data)
-       {
-             
-
-        var temp="";
-       temp= this.state.Blockchaindata.find((item, index) => item.chainID == data).name
-         console.log("sass",data);
-            console.log("sass",temp);
-            this.setState({BlockChainname_:temp})
-      }
+        LogoImageset = (e) => {
+            this.setState({LogoImage:e.target.files[0]}) 
+             this.setState({LogoPreview:URL.createObjectURL(e.target.files[0])})
+            };
+            
+        FeatureImageSet = (e) => {
+            this.setState({FeaturedImage:e.target.files[0]}) 
+             this.setState({FeatPreview:URL.createObjectURL(e.target.files[0])})
+            };
+            setModalVisible = (visible) => {
+                this.setState({ modalVisible: visible });
+            }
+            HandelChange=()=>{
+                this.setState({ ImageModal: false })
+            }
+           
 
     render() {
         const handleClose1 = () => this.setState({ImageModal:false});
-        return (
+        return ( 
+            <>
             <div className="row">
+                
              <div className="flex2-1">
-            <div className='container'>
-                <h1 className='f-Heading'>Create NFT</h1>
 
+            <div className='container'>
+                
+                <h1 className='f-Heading'>Create Collection</h1>
+                
+          
                 <div style={{marginLeft:"5%"}}>
                 <div className='container-fluid-1 col-sm-12 col-lg-12 '>
                     <p style={{ cursor: "pointer", marginTop: "-3%" }}>
                         Banner Image
                     </p>
-                    <Modal
+                    <div className='upload-section '>
+                        <input type="file" onChange={this.uploadPicture} className="inputSec" />
+                    </div>
+                </div>
+                              </div>
+                              <div className='pt-4'></div>
+               
+                <div style={{marginLeft:"5%"}}>
+                <div className='container-fluid-1 col-sm-12 col-lg-12 '>
+                    <p style={{ cursor: "pointer", marginTop: "-3%" }}>
+                      Feature Image
+                    </p>
+                    <div className='upload-section '>
+                        <input type="file" onChange={this.FeatureImageSet} className="inputSec" />
+                    </div>
+                </div></div>
+                <div className='pt-4'></div>
+                <Modal
                 centered
                 size="lg"
                 show={this.state.ImageModal}
@@ -272,13 +299,16 @@ clearall=()=>{
                       <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
                </Modal.Footer>
               </Modal>
+                <div style={{marginLeft:"5%"}}>
+                <div className='container-fluid-1 col-sm-12 col-lg-12 '>
+                    <p style={{ cursor: "pointer", marginTop: "-3%" }}>
+                        Logo Image
+                    </p>
                     <div className='upload-section '>
-                        <input type="file" onChange={this.uploadPicture} className="inputSec" />
+                        <input type="file" onChange={this.LogoImageset} className="inputSec" />
                     </div>
                 </div>
-                              </div>
-                              <div className='pt-4'></div>
-              
+                </div>
                 <div className="col-md-12">
                     <div className='input-fields'>
                         <p>Name</p>
@@ -323,9 +353,10 @@ clearall=()=>{
                             onChange={(data)=>{this.setState({Description:data.target.value})}}
                         />
                     </div>
+
                     <div className='input-fields'>
-                        <p>Collection</p>
-                        <select className='dropDown' name='Category' onChange={(data)=>{ console.log("dmkdsmmsd",this.state.BlockChainname_); this.setState ({CategoryId:data.target.value} ) ;     } }>
+                        <p>Category</p>
+                        <select className='dropDown' name='Category' onChange={(data)=>{ this.setState ({CategoryId:data.target.value} ) ;     } }>
                                 <option value="none" selected disabled hidden>Select an Option</option>
                            {
                                this.state.CategoryData.map((playerData, k) => {
@@ -356,7 +387,7 @@ clearall=()=>{
 
                     <div className='input-fields'>
                         <p>Blockchain</p>
-                        <select className='dropDown' name='BlockChainName' onChange={(data)=>{this.FindBlockchainName(data.target.value);  this.setState ({ChainId:data.target.value} ) ;     } }>
+                        <select className='dropDown' name='BlockChainName' onChange={(data)=>{ this.setState ({BlockChainName:data.target.value} ) ;     } }>
                                 <option value="none" selected disabled hidden>Select an Option</option>
                            {
                                this.state.Blockchaindata.map((playerData, k) => {
@@ -381,27 +412,125 @@ clearall=()=>{
                            }
                         </select>
                     </div>
+                   
+                    <p>Links </p >         
+                <div className='input-fields'>
+                        
+                        <input
+                            type="text"
+                            required
+                            placeholder="www.Discord.com "
+                            width={100}
+                            className="input-field"
+                            name='Discord'
+                            value={this.state.DiscordLink}
+                            onChange={(data)=>{this.setState({DiscordLink:data.target.value})}}
+                        />
+                    </div>
+                    <div className='input-fields'>
+                        <input
+                            type="text"
+                            required
+                            placeholder="www.Twitter.com "
+                            width={100}
+                            className="input-field"
+                            name='twitter'
+                            value={this.state.TwitterLink}
+                            onChange={(data)=>{this.setState({TwitterLink:data.target.value})}}
+                        />
+                    </div>
+                    <div className='input-fields'>
+                    
+                        <input
+                            type="text"
+                            required
+                            placeholder="www.Instagram.com"
+                            width={100}
+                            className="input-field"
+                            name='instagram'
+                            value={this.state.InstagramLink}
+                            onChange={(data)=>{this.setState({InstagramLink:data.target.value})}}
+                        />
+                    </div>
+                    <div className='input-fields'>
+                    
+                    <input
+                        type="text"
+                        required
+                        placeholder="www.TLink.com"
+                        width={100}
+                        className="input-field"
+                        name='tLink'
+                        value={this.state.TLink}
+                        onChange={(data)=>{this.setState({TLink:data.target.value})}}
+                    />
+                </div>
+                    <div className='input-fields'>
+                      
+                        <input
+                            type="text"
+                            required
+                            placeholder="www.MediumLink.com"
+                            width={100}
+                            className="input-field"
+                            name='mediumLink'
+                            value={this.state.MediumLink}
+                            onChange={(data)=>{this.setState({MediumLink:data.target.value})}}
+                        />
+                    </div>
                     <div style={{ display: "flex" }}>
-                        <button className='btnStyle' onClick={()=>{this.submit()}}>Create NFT</button>
+                        <button className='btnStyle' onClick={()=>{this.submit()}}>Create Collection</button>
                         <button className='btnStyle'  onClick={()=>{this.clearall()}}>Clear</button>
                     </div>
                 </div>
             </div></div>
                                 <div className="flex3">
-                               
-                    <div className="pt-2"></div>
-                   
-                    <div className="pt-2"></div>
-
-                    <div className='prevItem2'>
+                                <div className='prevItem'>
                         <p style={{ cursor: "pointer"}}>
-                           Image Preview
+                            Banner Image
                         </p>
                         <div style={{height:"55%"}}>
                        
                             <div className='prevItmImgSec'>
                             <img
-                                src={this.state.ImagePreview}
+                              src={this.state.BannerPreview}
+                              alt="profileImage"
+                              className="avatar-immage"
+                            />
+                       
+                        </div>
+                        </div>
+                      
+                    </div> 
+                    <div className="pt-2"></div>
+                    <div className='prevItem2'>
+                        <p style={{ cursor: "pointer"}}>
+                            Logo Image
+                        </p>
+                        <div style={{height:"55%"}}>
+                       
+                            <div className='prevItmImgSec'>
+                            <img
+                           src={this.state.LogoPreview}
+                              alt="profileImage"
+                              className="avatar-immage"
+                            />
+                     
+                        </div>
+                        </div>
+                        
+                    </div> 
+                    <div className="pt-2"></div>
+
+                    <div className='prevItem2'>
+                        <p style={{ cursor: "pointer"}}>
+                           Featured Image
+                        </p>
+                        <div style={{height:"55%"}}>
+                       
+                            <div className='prevItmImgSec'>
+                            <img
+                                src={this.state.FeatPreview}
                               alt="profileImage"
                               className="avatar-immage"
                             />
@@ -411,8 +540,8 @@ clearall=()=>{
                         
                     </div> 
                                 </div>
-                                </div>
+                                </div> </>
              );
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(CreateNt);
+export default CreateCollection;

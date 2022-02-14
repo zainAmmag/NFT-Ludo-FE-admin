@@ -1,0 +1,120 @@
+.container-fluid-1{
+  display: flex;
+  margin-top: 5%;
+}
+.f-Heading{
+  text-align: center;
+}
+.upload-section{
+  height: 200px;
+  width: 60%;
+  border: 2px solid white;
+  border-radius: 2%;
+  border-style: dashed;
+  background-color: transparent;
+  justify-content: center;
+  display: flex;
+  margin-left: -8%;
+}
+.prevItem{
+  height: 400px;
+  width: 23%;
+  border: 1px solid green;
+  background-color: #d6cece;
+  margin-left: 3%;
+  border-radius: 5%;
+}
+.imgSet{
+  height: 120%;
+  width: 100%;
+  border-radius: 15px;
+}
+.prevItmImgSec{
+  width: 80%;
+  margin-left: 10%;
+  height: 80%;
+  border-radius: 15px;
+  margin-top: 10%;
+}
+.input-fields{
+margin-top: 2%;
+}
+.input-field{
+  background-color: transparent;
+  width: 60%;
+  border: 1px solid white;
+  font-size: medium; 
+  letter-spacing: 1.5px;
+  border-radius: 5px;
+  font-weight: bolder;
+  height: 40px;
+}
+.description-field{
+  background-color: transparent;
+  width: 60%;
+  border: 1px solid white;
+  font-size: medium; 
+  letter-spacing: 1.5px;
+  border-radius: 5px;
+  font-weight: bolder;
+  height: 75px;
+}
+
+.dropdown{
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+.dropDown{
+  width: 60%;
+  height: 45px;
+  background-color: rgb(255,255,255,0.1) !important;
+  color: #fafafa;
+  font-size: large;
+  border-radius: 4px;
+}
+.btnStyle{
+  background-color: rgb(101, 101, 255);
+  border-radius: 25px;
+  margin: 1.5%;
+  color: #fff;
+  width: 12%;
+  border: 1px solid rgb(101, 101, 255);
+  padding: 0.5%;
+  font-weight: bolder;
+  letter-spacing: 1px;
+  cursor: pointer;
+  font-size: 15px;
+}
+.padding-0{
+  margin-top: -18%;
+}
+.imgSecInfo{
+  font-size: 15px;
+  color: black;
+  font-weight: bolder;
+  padding-left: 5%;
+  margin-top: 5%;
+  font-family:  sans-serif;
+  margin-left: 5%;
+
+}
+.imgSecInfoo{
+  font-size: 15px;
+  color: black;
+  font-weight: bolder;
+  padding-left: 5%;
+  margin-top: 20%;
+  font-family:  sans-serif;
+  margin-left: 5%;
+}
+.form-group{
+  margin-top: -5%;
+}
+
+.avatar-immage{
+  height: 30%;
+}
+.inputSec{
+width: 100%;
+}

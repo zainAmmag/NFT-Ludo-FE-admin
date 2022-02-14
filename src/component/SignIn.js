@@ -110,6 +110,7 @@ class SignIn extends React.Component {
       );
       // console.log(data)
       if (data.isSuccess == true) {
+           localStorage.setItem("TokenofAdminsigned",data.data.token);
         SetUser(data.data.token, {
           name: data.data.userInfo.username,
           email: data.data.userInfo.email,

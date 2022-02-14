@@ -16,7 +16,11 @@ import {
   ChevronDown,
   Clipboard,
   Users,
+  Truck,
   HardDrive,
+  FilePlus,
+  Columns,
+
 } from "react-feather";
 import Collapse from "@material-ui/core/Collapse";
 import List from "@material-ui/core/List";
@@ -86,6 +90,7 @@ function ResponsiveDrawer(props) {
   const [openSecurity, setOpenSecurity] = React.useState(false);
   const [openHistory, setOpenHistory] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const[isActive,setisActive]= React.useState(true);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -104,9 +109,10 @@ function ResponsiveDrawer(props) {
         <ListItem>
           <div className="user-details w-100">
             <div className="avatar">
-              <Link to="/ProjectManagement">
+              <Link to="/ProjectManagement" 
+                    activeClassName='is-active' >
      
-                <h1>DOXPAD</h1>
+                <h3>ADMIN PANEL</h3>
               </Link>
             </div>
           </div>
@@ -115,23 +121,26 @@ function ResponsiveDrawer(props) {
           <Link to="/ProjectManagement" className="waves-effect">
       
             <Clipboard className="sidebarIcons mt-5" color="white" size={30} />
+      
             <p className="LINK_OVERVIEW">Project Management</p>
+
           </Link>
+
         </ListItem>
 
         <ListItem>
           <Link to="/manageAccount" className="waves-effect">
       
-            <Clipboard className="sidebarIcons mt-5" color="white" size={30} />
+            <Users className="sidebarIcons mt-5" color="white" size={30} />
             <p className="LINK_OVERVIEW">Manage Account</p>
           </Link>
         </ListItem>
 
 
         <ListItem>
-          <Link to="/managerOrder" className="waves-effect">
+          <Link to="/orderDetail" className="waves-effect">
        
-            <Clipboard className="sidebarIcons mt-5" color="white" size={30} />
+            <Truck className="sidebarIcons mt-5" color="white" size={30} />
             <p className="LINK_OVERVIEW">Manage Orders</p>
           </Link>
         </ListItem>
@@ -140,7 +149,7 @@ function ResponsiveDrawer(props) {
         <ListItem>
           <Link to="/manageCollection" className="waves-effect">
           
-            <Clipboard className="sidebarIcons mt-5" color="white" size={30} />
+            <Columns className="sidebarIcons mt-5" color="white" size={30} />
             <p className="LINK_OVERVIEW">Manage Collection</p>
           </Link>
         </ListItem>
@@ -148,10 +157,10 @@ function ResponsiveDrawer(props) {
 
 
         <ListItem>
-          <Link to="/createNFT" className="waves-effect">
+          <Link to="/ManageNFt" className="waves-effect">
           
-            <Clipboard className="sidebarIcons mt-5" color="white" size={30} />
-            <p className="LINK_OVERVIEW">Create NFT</p>
+            <FilePlus className="sidebarIcons mt-5" color="white" size={30} />
+            <p className="LINK_OVERVIEW">Manage NFT</p>
           </Link>
         </ListItem>
      

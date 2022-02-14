@@ -839,3 +839,7 @@ CARD
     margin-top: 14% !important;
   }
 }
+.is-active
+{
+  background-color: gray;
+}

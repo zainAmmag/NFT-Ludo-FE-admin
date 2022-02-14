@@ -1,28 +1,20 @@
 import React from "react";
-import ReactDOM from 'react-dom';
 import { Link } from "react-router-dom";
 import { SocialIcon } from 'react-social-icons';
-import Ticker from "react-ticker";
-import { Card, Row, Col, Container } from "react-bootstrap";
-import { connect } from "react-redux";
+
+import { Col } from "react-bootstrap";
 import profilePic from "../Assets/images/profilePic.png";
-import nft from "../Assets/images/nft.jpg";
+
 import "../Assets/css/custom.css";
-import TwitterIcon from '@material-ui/core/';
 import Email from "@material-ui/icons/Email"
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWalletSharp'
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { SendHttpRequest } from "../component/utility";
 import FavoriteIcon from '@material-ui/icons/Favorite';
+
+import { setIsLoaderActive } from "../actions/index";
 import {
   BaseUrl,
-  AuthenticationToken,
-  DefaultCurrencyTokenId,
-  AuthenticationTokenId,
-  UserTypeTokenId,
-  UserAuthTokenId,
-  UserProfileTokenId,
-  LogoSmall,
 } from "../Constants/BusinessManager";
 class UserDetail extends React.Component {
   constructor(props) {
@@ -61,7 +53,7 @@ class UserDetail extends React.Component {
         console.log("data"+ data.message);
       }
     } catch (error) {
-      localStorage.clear();
+      // localStorage.clear();
       return;
     }
   } 
@@ -77,13 +69,14 @@ class UserDetail extends React.Component {
         console.log("data"+ data.message);
          console.log(...data.data);
          this.setState({collectiondata: data.data })
+         console.log("naeandianuioand",localStorage.getItem("profileImage"))
      
       } else 
       {
         console.log("data"+ data.message);
       }
     } catch (error) {
-      localStorage.clear();
+      // localStorage.clear();
       return;
     }
   
@@ -128,7 +121,7 @@ class UserDetail extends React.Component {
               >
 
                 <img
-                   src={"http://198.187.28.244:7577/"+localStorage.getItem("profileImage")}
+                   src={ localStorage.getItem("profileImage")==="Null"?profilePic:"http://198.187.28.244:7577/"+localStorage.getItem("profileImage") }
                   //src={profilePic}
                   alt="profileImage"
                   data-toggle="modal"
@@ -152,7 +145,7 @@ class UserDetail extends React.Component {
                   position: "relative",
                 }}
               >
-                <div>0
+                <div>
                   <p> <PersonOutlineIcon /> {" "+localStorage.getItem("username")} </p>
                   <p> <Email />{" "+ localStorage.getItem("email") }</p>
                   <p> <AccountBalanceWalletIcon /> {"Wallet :"+localStorage.getItem("address") }</p>
@@ -189,7 +182,7 @@ class UserDetail extends React.Component {
                                  />
                                   <button
                                     style={{ background: 'transparent',border:0}}
-                                    onClick={() =>{this.GetNFTbycollectionId(26)}}>
+                                    onClick={() =>{this.GetNFTbycollectionId(playerData.id)}}>
                                  <img
                                   src={"http://198.187.28.244:7577/"+ playerData.bannerImage}
                                   alt="profileImage"
@@ -286,7 +279,7 @@ class UserDetail extends React.Component {
                 </p>
               </div>
             )}
-            )
+            
           </div>
         </div>
       </div>
