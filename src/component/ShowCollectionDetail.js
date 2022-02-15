@@ -10,6 +10,7 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { SendHttpRequest } from "../component/utility";
 import { connect } from "react-redux";
 import swal from "sweetalert";
+import { Search } from "react-feather";
 
 
 import { bindActionCreators } from "redux";
@@ -47,6 +48,7 @@ class CollectionDetail extends React.Component {
       RenderFinished: false,
       NftcollectionId:0,
       FN: "No data available",
+      search:"",
       BO: null,
     };
   }
@@ -112,6 +114,13 @@ async componentDidMount() {
   this.GetcollectionbyId();
   this.GetNFTbycollectionId();
 }
+  Find()
+  {
+        console.log("find called")
+              var temp=[];
+              temp=this.state.NFtData.find((item, index) => item.name == this.state.search)
+              this.setState({NFtData:temp})
+  }
   render() {
     var arr=[] ;
     for (var i = 0; i < this.state.categoryNumber; i++) 
@@ -143,6 +152,17 @@ async componentDidMount() {
                         <p>
                             {this.state.collectiondata.description}
                         </p>
+                        <p style={{whiteSpace:"nowrap"}}>
+                        <input
+                            type="text"
+                            required
+                            placeholder="enter Price for one item[BNB] "
+                            width={50}
+                            className="input-field"
+                            name='Price'
+                            value={this.state.Price}
+                            onChange={(data)=>{this.setState({Price:data.target.value})}}
+                        /> <Search color="blue" />  </p>
                         
                         <Link to="/EditCollection">
                                  
@@ -162,6 +182,7 @@ async componentDidMount() {
         </div>
         <div className="pt-5"></div>
         <h1>NFT's:</h1>
+           
         <div id="container">
           <div className="row">
             {this.state.NFtData.length > 0 ? (

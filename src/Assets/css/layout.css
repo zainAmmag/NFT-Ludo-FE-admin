@@ -550,7 +550,10 @@ CARD
     margin-left: 15px;
   }
 }
-
+.active{
+  background-color: #6d7fcc;
+  color: white;
+}
 .card-group > .card {
   margin-bottom: 15px;
 }

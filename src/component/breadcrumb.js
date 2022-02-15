@@ -12,7 +12,7 @@ export default function CollapsedBreadcrumbs() {
         <div role="presentation" onClick={handleClick}>
             <Breadcrumbs maxItems={2} aria-label="breadcrumb" style={{paddingTop:"3%"}}>
                 <Link to="/ProjectManagement">
-                <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>Admin Panel</p>
+                <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>DOXPAD</p>
                 </Link>
                 {window.location.pathname === '/ProjectManagement' && (
                     <Link to="/ProjectManagement" className="waves-effect">
@@ -39,18 +39,19 @@ export default function CollapsedBreadcrumbs() {
                         <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>Manage Collection</p>
                     </Link>
                     )
+               
+                }
+                {
+                         window.location.pathname === '/CreateCollection' && (
+                            <Link to="/CreateCollection"  className="waves-effect"  > 
+                            <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}><Link to="/manageCollection">  Manage Collection</Link> / CreateCollection</p>
+                             </Link>
+                        )
                 }
                 {
                     window.location.pathname === "/createNFT" && (
                         <Link to="/createNFT" className="waves-effect">
                     <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>Create NFT</p>
-                </Link>
-                    )
-                }
-                {
-                    window.location.pathname === "/ShowCollectionDetail" && (
-                        <Link to="/ShowCollectionDetail" className="waves-effect">
-                    <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>ShowCollectionDetail</p>
                 </Link>
                     )
                 }
