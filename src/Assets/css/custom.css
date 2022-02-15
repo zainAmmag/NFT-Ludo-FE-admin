@@ -1475,7 +1475,7 @@ border-radius : 4px ;
 .detail-card
 {
    margin-bottom: 20px ;
-  height:250px;
+   height:200px;
     width:90% ;
     border-radius: 20px;
    background-color:#323C4D ;
@@ -1746,4 +1746,22 @@ width: 100%;
   border-radius: 20px;
   background: grey;
   margin-left: 110%;
+}
+.input-field1{
+  background-color: transparent;
+  width: 50%;
+  border: 1px solid white;
+  font-size: medium; 
+  letter-spacing: 1.5px;
+  border-radius: 5px;
+  font-weight: bolder;
+  height: 40px;
+}
+.avatar-immage{
+  height: 160%;
+width: 100%;
+}
+.padding
+{
+  margin-top: 20px;
 }

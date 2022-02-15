@@ -10,9 +10,9 @@ function handleClick(event) {
 export default function CollapsedBreadcrumbs() {
     return (
         <div role="presentation" onClick={handleClick}>
-            <Breadcrumbs maxItems={2} aria-label="breadcrumb" style={{paddingTop:"3%"}}>
+            <Breadcrumbs maxItems={2} aria-label="breadcrumb" style={{paddingTop:"3%",color:"white"}}>
                 <Link to="/ProjectManagement">
-                <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>DOXPAD</p>
+                <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>Admin Panal</p>
                 </Link>
                 {window.location.pathname === '/ProjectManagement' && (
                     <Link to="/ProjectManagement" className="waves-effect">

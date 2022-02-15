@@ -148,7 +148,7 @@ class UserDetail extends React.Component {
                 <div>
                   <p> <PersonOutlineIcon /> {" "+localStorage.getItem("username")} </p>
                   <p> <Email />{" "+ localStorage.getItem("email") }</p>
-                  <p> <AccountBalanceWalletIcon /> {"Wallet :"+localStorage.getItem("address") }</p>
+                  <p> <AccountBalanceWalletIcon /> {localStorage.getItem("address") }</p>
                    
                   <p> <SocialIcon network="twitter" fgColor="black" bgColor="white"  style={{ height: 25, width: 25 }}/>
                         { " "+ localStorage.getItem("twitterLink") }</p>

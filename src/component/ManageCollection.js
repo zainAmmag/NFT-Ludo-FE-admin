@@ -13,6 +13,7 @@ import { SendHttpRequest } from "../component/utility";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { connect } from "react-redux";
 import swal from "sweetalert";
+import { Search } from "react-feather";
 
 import { setIsLoaderActive } from "../actions/index";
 
@@ -41,6 +42,8 @@ class UserDetail extends React.Component {
       collectiondata: [],
       NFtData:[],
       categoryname: "",
+      Search:"",
+      Search1:"",
       IsTickerHovered: false,
       categoryNumber: 0 ,
       BaseCurrency: 0,
@@ -79,6 +82,12 @@ class UserDetail extends React.Component {
     }
   
 }
+Finduser = () => {
+
+  var temp=this.state.Search1;
+ //  temp=this.state.tableData.find ((item, index) => item.username == this.state.search)
+  this.setState({Search:temp})
+}; 
   render() {
     var arr=[] ;
     for (var i = 0; i < this.state.categoryNumber; i++) 
@@ -91,11 +100,27 @@ class UserDetail extends React.Component {
      
 
         <h1>Collections :</h1>
+        <p style={{whiteSpace:"nowrap",textAlign:"center"}}>
+                        <input
+                            type="text"
+                            required
+                            placeholder="enter name to search"
+                            className="input-field1"
+                            name='search'
+                            value={this.state.Search1}
+                            onChange={(data)=>{this.setState({Search1:data.target.value})}}
+                            
+                        />
+                         <Search color="white" onClick={()=>this.Finduser()} style={{cursor:"pointer"}}/>
+                           </p>
         <div id="container">
+        <div className="row">  <Link to="/createNFT" className="Link"  >  <button className="collection-button" >Create NFT </button>  </Link>  </div>     
+         
            <div className="row">  <Link to="/CreateCollection" className="Link"  >  <button className="collection-button" >Create Collection</button>  </Link>  </div>     
           <div className="row">
-          
-            {this.state.collectiondata.length > 0 ? (
+            {
+          this.state.Search.length==0 ?(
+                <>  {this.state.collectiondata.length > 0 ? (
               <>         
                 {    
                   this.state.collectiondata.map((playerData, k) => {
@@ -125,7 +150,7 @@ class UserDetail extends React.Component {
                                  </button>
                                  </Link> 
                                  <h5 style={{color:"black",paddingTop:"6%"}}>{playerData.name} 
-                                 {playerData.id}</h5>
+                               </h5>
                           </div>
                         </div>
                       </div>{" "}
@@ -145,7 +170,52 @@ class UserDetail extends React.Component {
                   No Collection 
                 </p>
               </div>
+            )}</> ) 
+            : (<>" "</>) }
+            {this.state.collectiondata.length > 0 ? (
+              <>     
+
+            {    
+                  this.state.collectiondata.filter((x) => x.name ==this.state.Search).map((playerData, k) => {
+                      return(
+                      <>
+                    <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
+                      <div
+                        className="">
+                        <div >
+                          <div className="panal1 card2 ">
+                       
+                                <img
+                                  src={ "http://198.187.28.244:7577/"+ playerData.logoImage  }
+                                  alt="profileImage"
+                                  className="NFT-immage"
+                                 />
+                                <Link to="/ShowCollectionDetail">  
+                                  <button
+                                    style={{ background: 'transparent',border:0}}
+                                    onClick={() => {  localStorage.setItem("CollectionDetail",playerData.id) }} 
+                                    className="NFT-banner-immage">
+                                 <img
+                                  src={"http://198.187.28.244:7577/"+ playerData.bannerImage}
+                                  alt="profileImage"
+                               style={{width:'100%',height:'100%'}}
+                                 />
+                                 </button>
+                                 </Link> 
+                                 <h5 style={{color:"black",paddingTop:"6%"}}>{playerData.name} 
+                                 </h5>
+                          </div>
+                        </div>
+                      </div>{" "}
+                    </Col>
+                  </>
+                   ) })}
+              </>
+            ) : (
+             <>  </>
             )}
+
+            
             
           </div>
         </div>
