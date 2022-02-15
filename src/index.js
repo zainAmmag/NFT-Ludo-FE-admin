@@ -18,11 +18,15 @@ import UserDetail from "./component/UserDetail";
 import ManagerOrder from './component/MenageOrder'
 import OrderDetail from "./component/OrderDetail";
 import ManageCollection from "./component/ManageCollection";
-import CreateCollection from "./component/CreateCollection";
 import CreateNFT from "./component/createNFT";
 import NFTDetail from "./component/NFTDetail";
-
+import ShowCollectionDetail from './component/ShowCollectionDetail'
+import CreateCollection from "./component/CreateCollection1"
+import EditCollection from "./component/EditCollection";
+import ManageNFt from "./component/ManageNFT"
 const Pages = () => {
+
+  
   return (
     <Loader
       style={{
@@ -32,16 +36,24 @@ const Pages = () => {
       <BrowserRouter basename={"/"}>
         <div>
           <Switch>
-            <PublicRoute exact path="/" component={SignIn} />{" "}
-            <PublicRoute exact path="/SignIn" component={SignIn} />{" "}
+            <PublicRoute restricted={true} exact path="/" component={SignIn} />{" "}
+            <PublicRoute restricted={true} exact path="/SignIn" component={SignIn} />{" "}
             <Fragment>
               <SharedLayout>
+
+              <PrivateRoute
+                  exact
+                  path="/"
+                  component={SignIn}
+                >
+                  </PrivateRoute>{" "}
 
                 <PrivateRoute
                   exact
                   path="/ProjectManagement"
                   component={ProjectManagement}
-                ></PrivateRoute>{" "}
+                >
+                  </PrivateRoute>{" "}
 
 
                 <PrivateRoute
@@ -68,6 +80,13 @@ const Pages = () => {
                   component={ManagerOrder}
                 ></PrivateRoute>{" "}
 
+                  <PrivateRoute
+                  exact
+                  path="/ManageNFt"
+                  component={ManageNFt}
+                ></PrivateRoute>{" "}
+
+
 
 
                 <PrivateRoute
@@ -89,9 +108,21 @@ const Pages = () => {
                 ></PrivateRoute>{" "}
                 <PrivateRoute
                   exact
-                  path="/createCollection"
+                  path="/ShowCollectionDetail"
+                  component={ShowCollectionDetail}
+                ></PrivateRoute>{" "}
+                <PrivateRoute
+                  exact
+                  path="/EditCollection"
+                  component={EditCollection}
+                ></PrivateRoute>{" "}
+                    <PrivateRoute
+                  exact
+                  path="/CreateCollection"
                   component={CreateCollection}
                 ></PrivateRoute>{" "}
+                
+               
               </SharedLayout>{" "}
             </Fragment>{" "}
           </Switch>{" "}

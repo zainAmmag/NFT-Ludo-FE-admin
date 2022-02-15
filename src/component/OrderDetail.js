@@ -1,99 +1,160 @@
  import React from "react";
 import './OrderDetail.css';
-// import { MapContainer } from "./GoogleMap";
-// import GoogleMap from './GoogleMap'
-// import googleMapReact from "google-map-react";
 
+import { SendHttpRequest } from "./utility";
+import {
+  BaseUrl,
+} from "../Constants/BusinessManager";
+import swal from "sweetalert";
+import { Link } from "react-router-dom";
+
+import {CheckSquare, Eye,MinusCircle } from "react-feather";
+import TablePagination from "@material-ui/core/TablePagination"
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 class OrderDetail extends React.Component {
-    // static defaultProps = {
-    //     center: {
-    //         lat: 59.95,
-    //         lng: 30.33
-    //     },
-    //     zoom: 11
-    // };
-
-    // createMapOptions(maps) {
-    //     return {
-    //         zoomControlOptions: {
-    //             position: maps.ControlPosition.RIGHT_CENTER,
-    //             style: maps.ZoomControlStyle.SMALL
-    //         },
-    //         mapTypeControlOptions: {    
-    //             position: maps.ControlPosition.TOP_RIGHT
-    //         },
-    //         mapTypeControl: true
-    //     };
-    // }
+ 
+    constructor(props) {
+        super(props);
+        this.state = {
+          split:"",
+          page:0,
+          tableData: [],
+          blockstatus: true,
+        };
+      }
+      
+async componentDidMount() 
+{
+        try {
+          var data = await SendHttpRequest(
+            BaseUrl + "/Amin/GetAllOrderNft",
+            {},
+            "GET"
+          );
+          if (data.isSuccess) 
+          {
+            this.setState({ tableData: data.data });
+            console.log("data",data.message);
+         
+          } 
+          else {
+            throw new Error("Something went wrong, try to relogin");
+          }
+        } 
+        catch (error) {
+          console.log(error);
+          return swal({
+            icon: "error",
+            text: "Something went wrong, try to relogin",
+          });
+        }
+      }
+     
+   handleChangePage = (event, newPage) => {
+    this.setState({page:newPage})
+   }
     render() {
         return (
             <div>
-                <div className="heading">
-                    <h1>OrderTracking</h1>
-                </div>
-
-                <div>
-                    <div className="container-fluide" >
-                        <div className="mapContainer col-8">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d27200.48836185969!2d74.34700550000001!3d31.549939249999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1643875020370!5m2!1sen!2s" width="100%" height="100%"></iframe>
-                        </div>
-
-                        <div style={{ height: 300 }} className="col-4">
-
-                            <h3 style={{ textAlign: 'center' }}>Details</h3>
-
-                            <table className="table table-striped table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl AccountStatement" style={{ textAlign: "center" }}>
-                                <thead>
-                                    <tr style={{ color: "#fff" }}>
-                                        <th>Collection</th>
-                                        <th>NFT Name </th>
-                                        <th>Delevery Date </th>
-                                        <th>Time</th>
-                                        <th>Order Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody style={{ color: "#fff" }}>
-                                
-                                           
-                                                    <tr>
-                                                        <td>Music</td>
-                                                        <td> Piano </td>
-                                                        <td> 12/3/2022 </td>
-                                                        <td>Tomorrow</td>
-                                                        <td> Delever </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Sports</td>
-                                                        <td> BatKit </td>
-                                                        <td> 12/3/2022 </td>
-                                                        <td>5hours ago</td>
-                                                        <td> Pending </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Business</td>
-                                                        <td> Computer </td>
-                                                        <td> 12/3/2022 </td>
-                                                        <td>Today</td>
-                                                        <td> OnWay </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Music</td>
-                                                        <td> Gitaar </td>
-                                                        <td> 12/3/2022 </td>
-                                                        <td>2hours ago</td>
-                                                        <td> Pending </td>
-                                                    </tr>
+              <div className="row">
+                <div className="col-lg-12 col-md-12 col-xl-12 col-12 order-2 order-lg-2 order-xl-1">
+                  <div className="card">
+                        <h1 style={{textAlign:"center"}}>Manage Order </h1>
+                    {this.state.tableData.length > 0 ? (
+                      <div style={{ padding: 10 }}>
+                          <TableContainer component={Paper} className="Text-white">
+                        <Table
+                          className="table table-striped table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl AccountStatement Text-white"
+                          style={{ textAlign: "center",color:"white" }}
+                        >
+                         <TableHead className="Text-white">
+                          <TableRow style={{ color: "#fff" }}>
+                          <TableCell className="Text-white">Nft Owner Name</TableCell>
+                          <TableCell className="Text-white">NFT Name</TableCell>
+                          <TableCell className="Text-white">Order Date</TableCell>
+                          <TableCell className="Text-white">Order Time</TableCell>
+                          <TableCell className="Text-white">Order Status</TableCell>
+                          <TableCell className="Text-white">Detail</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody style={{ color: "#fff" }} className="Text-white">
+                            {this.state.tableData &&
+                              this.state.tableData.length > 0 &&
+                              this.state.tableData
+                              .slice(this.state.page * 5, this.state.page * 5  + 5)
+                                .map((value, index) => {
+                                  return (
+                                    <TableRow key={index}  className="Text-white">      
+                                      <TableCell className="Text-white">{value.nftOwnerName}</TableCell> 
+                                      <TableCell className="Text-white">{value.nftName } </TableCell>
+                                      <TableCell className="Text-white">{value.orderCreatedTime.slice(0,10)}</TableCell> 
+                                      <TableCell className="Text-white">{value.orderCreatedTime.slice(11,19)}</TableCell> 
+                                      <TableCell className="Text-white">{ value.orderStatus } </TableCell>
+                                    
+                                      <TableCell className="Text-white">  
+                                        {value.accountStatus=="Active" ? 'UnBlock' : 'Block' }
+                                        </TableCell>
+                                              
+                                        <TableCell>
+                                      <Link to="">
+                                      <button
+                                          style={{ padding: 8, background: 'transparent', border: 0 }}
+                                          onClick={() => {
+                                               } }
+                                      >
+                                        <Eye
+                                          className="ml-2"
+                                          color="white"
+                                          size={16}
+                                        /> 
+                                        </button>
                                         
-                                            
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
+                                      </Link>
+                                       
+                                      </TableCell>
+                                      </TableRow>
+                                  );
+                                })}
+                         </TableBody>
+                         </Table>
+                         <div className="Text-white1" > 
+                           <TablePagination
+                          component="div"
+                          count={this.state.tableData.length}
+                          rowsPerPage={5}
+                          page={this.state.page}
+                          onChangePage={this.handleChangePage}
+                         /></div>
+      
+                        </TableContainer>
+                      
+       
+                      </div>
+                    ) : (
+                      <div style={{ alignItems: "center", alignContent: "center" }}>
+                        <p
+                          style={{
+                            textAlign: "center",
+                            color: "white",
+                            fontSize: 20,
+                          }}
+                        >
+                       No Order Placed
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
+              </div>
             </div>
-        )
+          );
     }
 }
 export default OrderDetail;

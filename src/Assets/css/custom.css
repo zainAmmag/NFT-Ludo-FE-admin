@@ -55,8 +55,19 @@ input {
   cursor: pointer;
 }
 .panal
-{
+{ 
+  height: 500px;
   width:100%;
+  /* padding: 20; */
+  flex-direction: column;
+  font-family: 'Outfit', sans-serif;
+}
+
+.panal1
+{ 
+  height: 180px;
+  width:100%;
+  /* padding: 20; */
   flex-direction: column;
   font-family: 'Outfit', sans-serif;
 }
@@ -174,7 +185,7 @@ input {
 }
 .NFT-immage{
   width: 13%;
-  height: 10%;
+  height: 20%;
   text-align: initial !important;
   /* border-radius: 20px; */
   /* text-align: center; */
@@ -194,6 +205,7 @@ input {
   /* padding-right: 1%; */
   padding-top: 4%;
 }
+
 .NFT-immage1
 {
   color: transparent;
@@ -284,22 +296,20 @@ input {
 
 .card2 {
   position: relative;
-  display: -ms-flexbox;
-  height: 250px !important; 
-  /*display: flex;*/
-  width: 342px !important;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  min-width: 0;
-  box-shadow: 0 0 8px 0 rgb(0 0 0 / 30%);
-  background-color: #E8E8DB !important;
-  text-align: center;
-  word-wrap: break-word;
-  background-clip: border-box;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border: none;
-  background-color: rgba(0, 0, 0, 0.2);
+    display: -ms-flexbox;
+    height: 390px;
+    width: 340px;
+    flex-direction: column;
+    min-width: 0;
+    background-color: #c7c7c7;
+    text-align: center;
+    word-wrap: break-word;
+    background-clip: border-box;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
+    border: none;
+    margin-top: 1%;
+    margin-left: 5%;
 }
 .card {
   position: relative;
@@ -1394,7 +1404,6 @@ border-radius : 4px ;
   width:75%;
   height: 50%;
 
-  
 }
 .NFT-immage-NFT
 {
@@ -1519,7 +1528,7 @@ border-radius : 4px ;
   text-align: center;
 }
 .upload-section{
-  height: 200px;
+  height: 48px;
   width: 60%;
   border: 2px solid white;
   border-radius: 2%;
@@ -1528,15 +1537,25 @@ border-radius : 4px ;
   justify-content: center;
   display: flex;
   margin-left: -8%;
+
 }
 .prevItem{
   height: 400px;
-  width: 23%;
+  width: 100%;
   border: 1px solid green;
   background-color: #d6cece;
-  margin-left: 3%;
   border-radius: 5%;
 }
+
+.prevItem2{
+  height: 250px;
+  width: 100%;
+  border: 1px solid green;
+  background-color: #d6cece;
+  border-radius: 5%;
+}
+
+
 .imgSet{
   height: 120%;
   width: 100%;
@@ -1554,7 +1573,7 @@ margin-top: 2%;
 }
 .input-field{
   background-color: transparent;
-  width: 60%;
+  width: 100%;
   border: 1px solid white;
   font-size: medium; 
   letter-spacing: 1.5px;
@@ -1564,7 +1583,7 @@ margin-top: 2%;
 }
 .description-field{
   background-color: transparent;
-  width: 60%;
+  width: 100%;
   border: 1px solid white;
   font-size: medium; 
   letter-spacing: 1.5px;
@@ -1614,7 +1633,7 @@ margin-top: 2%;
 }
 .imgSecInfoo{
   font-size: 15px;
-  color: black;
+  color:white;
   font-weight: bolder;
   padding-left: 5%;
   margin-top: 20%;
@@ -1630,4 +1649,101 @@ margin-top: 2%;
 }
 .inputSec{
 width: 100%;
+}
+
+/* zain */
+.collection-button
+{
+  background-color: #af4caa;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+
+  border-radius: 20px;;
+}
+.Link
+{
+  margin-left: 86%;
+}
+
+.Flex11
+{
+  display: flex;
+  flex-direction: column;
+  
+}
+.flex2-1
+{
+  width:70%;
+  display: flex;
+  flex-direction: column;
+
+}
+.paddingtop
+{
+  padding-top: 193px;
+}
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.Modal-div
+{
+  text-align: center;
+  background-color: white !important;
+}
+.Modal-div-notcreated
+{
+  color: red !important;
+}
+
+.Modal-div-created
+{
+  color:green !important;
+}
+.Modal-div-cancel-button
+{
+   color: red;
+  width: 66px !important;
+}
+.Modal-div-back-button
+{
+  color: green;
+  width: 66px !important;  
+}
+.collectiondetail
+{
+   /* style={{ height: "362px" }} */
+   height: 362px !important; 
+   text-align: center;
+}
+.collectionlogoimg
+{
+ width:100%;
+ height: 100px;
+
+}
+.logostyle
+{
+  width: 75px;
+  height: 75px;
+  text-align: center;
+  border-radius: 50%;
+  margin-bottom: 0px;
+}
+.Collection-nft-create
+{
+  
+  font-size: large;
+  width: 129px;
+  height: 36px;
+  border-radius: 20px;
+  background: grey;
+  margin-left: 110%;
 }

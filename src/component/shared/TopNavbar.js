@@ -16,6 +16,34 @@ import { setMetamaskAction } from "../../actions";
 import { connectMetaMaskaction } from "../../metamask/metamask";
 import swal from "sweetalert";
 import { Badge } from "@material-ui/core";
+// import { Route, Router } from "react-router-dom";
+import CollapsedBreadcrumbs from "../breadcrumb";
+
+
+// const routes = [
+//   {
+//     path:'/ProjectManagement',
+//     main:()=> <h2>ProjectManagement</h2>
+//   },
+//   {
+//     path:'/manageAccount',
+//     main:()=> <h2>ManageAccount</h2>
+//   },
+//   {
+//     path:'/orderDetail',
+//     main:()=> <h2>OrderDetail</h2>
+//   },
+//   {
+//     path:'/manageCollection',
+//     main:()=> <h2>ManageCollection</h2>
+//   },
+//   {
+//     path:'/createNFT',
+//     main:()=> <h2>CreateNFT</h2>
+//   },
+
+// ]
+
 
 const StyledMenu = withStyles({
   paper: {
@@ -82,10 +110,14 @@ function TopNavbar() {
   };
 
   return (
+
     <div className="topbarDiv">
-      <Badge badgeContent={4} color="primary" className="mr-3">
+           <div style={{}}>
+      <CollapsedBreadcrumbs/>
+        </div>
+      {/* <Badge badgeContent={4} color="primary" className="mr-3" style={{marginTop:"-6%"}} >
         <Bell />
-      </Badge>
+      </Badge> */}
 
       <Button
         className="mr-2"
@@ -101,12 +133,9 @@ function TopNavbar() {
             })
           }
         }}
-        color="secondary">
+        color="secondary" style={{marginTop:"-6%"}} >
         {isMetamaskConnected ? walletDataSelector?.accounts[0].substr(0, 10) : "Connect Metamask"}
       </Button>
-
-
-
 
       <Button
         className="avator-btn"
@@ -115,6 +144,7 @@ function TopNavbar() {
         variant="contained"
         color="primary"
         onClick={handleClick}
+        style={{marginTop:"-6%"}}
       >
         <Avatar alt="User" src={avator} />
       </Button>
@@ -134,6 +164,7 @@ function TopNavbar() {
           </StyledMenuItem>
         </Logout>
       </StyledMenu>
+      
     </div>
   );
 }

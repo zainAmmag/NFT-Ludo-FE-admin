@@ -16,6 +16,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../Assets/css/custom.css";
 import DatePicker from "react-datepicker";
 import { setIsLoaderActive } from "../actions/index";
+
 // import {Loader} from './Loader'
 import Loader from "../component/shared/loader";
 
@@ -81,7 +82,7 @@ class NFTDetail extends React.Component {
         console.log("data"+ data.message);
       }
     } catch (error) {
-      localStorage.clear();
+      // localStorage.clear();
       return;
     }
   
