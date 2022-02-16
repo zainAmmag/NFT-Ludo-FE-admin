@@ -129,11 +129,23 @@ class NFTDetail extends React.Component {
             <h3>Description</h3>
 
             {this.state.nftDATA.description}
-                 Created By{" "}{this.state.nftDATA.creatorName}      
+                 Created By{this.state.nftDATA.creatorName}    
+                 <div style={{float:"right",marginRight:"25%"}}>
+                 <Link to="/UpdateNFt" className="Link"  >  <Button
+                  className="collection-button" 
+                  style={{width:"160%",height:"25%",borderRadius:"20px",fontSize:'20px',fontWeight:"bolder"}}
+                  onClick={()=>{  localStorage.setItem("Updatenftid",this.state.nftDATA.id)
+                  localStorage.setItem("Updatenftaccountid",this.state.nftDATA.accountId)         } }  
+                  >
+                    Update</Button>  
+                    </Link>
+          </div>  
           </div>
+        
           <div className="detail-card">
            <h3> Listing </h3>
            <table
+          
                     className="table table-striped table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl AccountStatement"
                     style={{ textAlign: "center",color:"white" }}
                   >

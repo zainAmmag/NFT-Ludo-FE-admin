@@ -148,7 +148,7 @@ function ResponsiveDrawer(props) {
             <div className="user-details w-100">
               <div className="avatar">
                 <Link to="/ProjectManagement">
-                  <h1>DOXPAD</h1>
+                  <h1>Admin panal</h1>
                 </Link>
               </div>
             </div>
@@ -230,7 +230,7 @@ function ResponsiveDrawer(props) {
             className={isActive4 ? 'waves-effect active': 'waves-effect'}>
             <Link id='5' to="/ManageNFt" className="waves-effect">
               <FilePlus className="sidebarIcons mt-5" color="white" size={30} />
-              <p className="LINK_OVERVIEW">Create NFT</p>
+              <p className="LINK_OVERVIEW">Manage NFT</p>
             </Link>
           </ListItem>
         </List>

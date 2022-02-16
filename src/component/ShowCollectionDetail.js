@@ -39,6 +39,8 @@ class CollectionDetail extends React.Component {
       CurrentCurrency: "",
       ComponentChart: null,
       tableData: [],
+      Search:"",
+      Search1:"",
       collectiondata:[],
       NFtData:[],
       categoryname: "",
@@ -81,6 +83,12 @@ class CollectionDetail extends React.Component {
       return;
     }
 }   
+Finduser = () => {
+
+  var temp=this.state.Search1;
+ //  temp=this.state.tableData.find ((item, index) => item.username == this.state.search)
+  this.setState({Search:temp})
+}; 
 async GetNFTbycollectionId(collectionId)
 {
     console.log("danananak112",this.state.NftcollectionId);
@@ -152,18 +160,20 @@ async componentDidMount() {
                         <p>
                             {this.state.collectiondata.description}
                         </p>
-                        <p style={{whiteSpace:"nowrap"}}>
+                        <p style={{whiteSpace:"nowrap",textAlign:"center"}}>
                         <input
                             type="text"
                             required
-                            placeholder="enter Price for one item[BNB] "
-                            width={50}
-                            className="input-field"
-                            name='Price'
-                            value={this.state.Price}
-                            onChange={(data)=>{this.setState({Price:data.target.value})}}
-                        /> <Search color="blue" />  </p>
-                        
+                            placeholder="enter name to search"
+                            className="input-field1"
+                            name='search'
+                            value={this.state.Search1}
+                            onChange={(data)=>{this.setState({Search1:data.target.value})}}
+                            
+                        />
+                         <Search color="white" onClick={()=>this.Finduser()} style={{cursor:"pointer"}}/>
+                           </p>
+
                         <Link to="/EditCollection">
                                  
                         <button className="Collection-nft-create"> Edit Collection   </button>
@@ -180,12 +190,15 @@ async componentDidMount() {
               }
             
         </div>
-        <div className="pt-5"></div>
+        <div className="pt-2"></div>
         <h1>NFT's:</h1>
            
         <div id="container">
           <div className="row">
-            {this.state.NFtData.length > 0 ? (
+          {    
+                  this.state.Search.length==0 ?(
+                <>  {
+                  this.state.NFtData.length > 0 ? (
               <>         
                 {    
                 this.state.NFtData.map((playerData, k) => (
@@ -210,6 +223,7 @@ async componentDidMount() {
                                </div>
                                <h5 className="nft-heading">  price</h5>  
                                <p className="note"> Price { playerData.buyPrice+" "}NB </p>   
+                              
                                <l> 
 
                                  <Link to="/nftdetail">                                
@@ -235,7 +249,7 @@ async componentDidMount() {
                 ))}
               </>
             ) : (
-              <div className="card" style={{ alignItems: "center", alignContent: "center",width:"100%" }}>
+              <div className="card" style={{ alignItems: "center", alignContent: "center",width:"100%",marginTop:'100px' }}>
                 <p
                   style={{
                     textAlign: "center",
@@ -246,7 +260,69 @@ async componentDidMount() {
                    <h2>   No NFT To Show  </h2>
                 </p>
               </div>
+            )} </> ) 
+            : (<>" "</>) }
+
+
+
+
+{
+                 this.state.Search.length >0 ? (
+              <>         
+                {    
+                this.state.NFtData.filter((x) => x.name ==this.state.Search).map((playerData, k) => (
+                  <>
+                    <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
+                      <div
+                        className="card2NFT">
+                        <div >
+                          <div className="panal">
+                                <img
+                                  src={"http://198.187.28.244:7577/"+playerData.image }
+                                  alt="profileImage"
+                                  className="NFT-immage-NFT"
+                                 />
+
+                             <div className="">
+                                      <img
+                                       src={"http://198.187.28.244:7577/"+playerData.logoImage}
+                                       alt="profileImage"
+                                      className="NFT-immage3"
+                                      />
+                               </div>
+                               <h5 className="nft-heading">  price</h5>  
+                               
+                               <p className="note"> Price { playerData.buyPrice+" "}NB </p> 
+                             
+                                 
+                               <l> 
+
+                                 <Link to="/nftdetail">                                
+                                 <a
+                                     onClick={() =>{
+                                      localStorage.setItem("NFTID",playerData.id)
+                                      localStorage.setItem("NftaccountId",playerData.accountId)
+                                      
+                                      }}
+                                    className="view-all-btn"
+                                  >
+                                    Detail 
+                                  </a>
+                                  </Link>
+                                            <FavoriteIcon />   {playerData.ratings}
+                                  </l>
+
+                          </div>
+                        </div>
+                      </div>{" "}
+                    </Col>
+                  </>
+                ))}
+              </>
+            ) : (
+              <>  </>
             )}
+
             
           </div>
         </div>

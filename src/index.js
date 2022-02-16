@@ -24,6 +24,7 @@ import ShowCollectionDetail from './component/ShowCollectionDetail'
 import CreateCollection from "./component/CreateCollection1"
 import EditCollection from "./component/EditCollection";
 import ManageNFt from "./component/ManageNFT"
+import UpdateNFt from "./component/UpdateNFt";
 const Pages = () => {
 
   
@@ -87,7 +88,11 @@ const Pages = () => {
                 ></PrivateRoute>{" "}
 
 
-
+                  <PrivateRoute
+                  exact
+                  path="/UpdateNFt"
+                  component={UpdateNFt}
+                ></PrivateRoute>{" "}
 
                 <PrivateRoute
                   exact

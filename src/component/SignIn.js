@@ -139,7 +139,7 @@ class SignIn extends React.Component {
               <div className="card-content p-2">
                 <div className="text-center">
                   {/* <img src={LogoSmall} width="200" alt="logo icon" /> */}
-                  <h1>DOXPAD</h1>
+                  <h1>Admin panal</h1>
                 </div>
                 <div className="card-title text-uppercase text-center py-3">
                   Sign In

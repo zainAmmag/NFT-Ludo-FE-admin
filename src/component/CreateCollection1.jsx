@@ -219,14 +219,17 @@ async componentDidMount()
         })
     }
 
+
+
+    LogoImageset = (e) => {
+        this.setState({LogoImage:e.target.files[0]}) 
+         this.setState({LogoPreview:URL.createObjectURL(e.target.files[0])})
+        };
      uploadPicture = (e) => {
         this.setState({BannerImage:e.target.files[0]}) 
         this.setState({BannerPreview:URL.createObjectURL(e.target.files[0])})
         };
-        LogoImageset = (e) => {
-            this.setState({LogoImage:e.target.files[0]}) 
-             this.setState({LogoPreview:URL.createObjectURL(e.target.files[0])})
-            };
+   
             
         FeatureImageSet = (e) => {
             this.setState({FeaturedImage:e.target.files[0]}) 
@@ -252,28 +255,30 @@ async componentDidMount()
                 
                 <h1 className='f-Heading'>Create Collection</h1>
                 
-          
                 <div style={{marginLeft:"5%"}}>
                 <div className='container-fluid-1 col-sm-12 col-lg-12 '>
-                    <p style={{ cursor: "pointer", marginTop: "-3%" }}>
-                        Banner Image
+                    <p style={{ cursor: "pointer", marginTop: "-5%" }}>
+                        Logo Image
                     </p>
                     <div className='upload-section '>
-                        <input type="file" onChange={this.uploadPicture} className="inputSec" />
+                        <input type="file" onChange={this.LogoImageset} className="inputSec" />
                     </div>
                 </div>
-                              </div>
-                              <div className='pt-4'></div>
+                </div>
+                   <div className='pt-4'></div>
                
+
                 <div style={{marginLeft:"5%"}}>
                 <div className='container-fluid-1 col-sm-12 col-lg-12 '>
-                    <p style={{ cursor: "pointer", marginTop: "-3%" }}>
+                    <p style={{ cursor: "pointer", marginTop: "-5%" }}>
                       Feature Image
                     </p>
                     <div className='upload-section '>
                         <input type="file" onChange={this.FeatureImageSet} className="inputSec" />
                     </div>
-                </div></div>
+                </div>
+                </div>
+
                 <div className='pt-4'></div>
                 <Modal
                 centered
@@ -299,16 +304,21 @@ async componentDidMount()
                       <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
                </Modal.Footer>
               </Modal>
-                <div style={{marginLeft:"5%"}}>
+
+
+              <div style={{marginLeft:"5%"}}>
                 <div className='container-fluid-1 col-sm-12 col-lg-12 '>
-                    <p style={{ cursor: "pointer", marginTop: "-3%" }}>
-                        Logo Image
+                    <p style={{ cursor: "pointer", marginTop: "-5%" }}>
+                        Banner Image
                     </p>
                     <div className='upload-section '>
-                        <input type="file" onChange={this.LogoImageset} className="inputSec" />
+                        <input type="file" onChange={this.uploadPicture} className="inputSec" />
                     </div>
                 </div>
-                </div>
+                  </div>
+
+
+
                 <div className="col-md-12">
                     <div className='input-fields'>
                         <p>Name</p>
@@ -371,19 +381,6 @@ async componentDidMount()
 
                     <hr style={{ width: "60%", marginLeft: "0%" }} />
 
-                    <div className='input-fields'>
-                        <p>Price</p>
-                        <input
-                            type="text"
-                            required
-                            placeholder="enter Price for one item[BNB] "
-                            width={100}
-                            className="input-field"
-                            name='Price'
-                            value={this.state.Price}
-                            onChange={(data)=>{this.setState({Price:data.target.value})}}
-                        />
-                    </div>
 
                     <div className='input-fields'>
                         <p>Blockchain</p>
@@ -480,31 +477,18 @@ async componentDidMount()
                     </div>
                     <div style={{ display: "flex" }}>
                         <button className='btnStyle' onClick={()=>{this.submit()}}>Create Collection</button>
-                        <button className='btnStyle'  onClick={()=>{this.clearall()}}>Clear</button>
+                        <button className='btnStyle'  onClick={()=>{this.clearall()}}>Cencel</button>
                     </div>
                 </div>
             </div></div>
                                 <div className="flex3">
-                                <div className='prevItem'>
-                        <p style={{ cursor: "pointer"}}>
-                            Banner Image
-                        </p>
-                        <div style={{height:"55%"}}>
-                       
-                            <div className='prevItmImgSec'>
-                            <img
-                              src={this.state.BannerPreview}
-                              alt="profileImage"
-                              className="avatar-immage"
-                            />
-                       
-                        </div>
-                        </div>
-                      
-                    </div> 
-                    <div className="pt-2"></div>
+
+
+                               
+
+
                     <div className='prevItem2'>
-                        <p style={{ cursor: "pointer"}}>
+                        <p style={{ cursor: "pointer",textAlign:"center"}}>
                             Logo Image
                         </p>
                         <div style={{height:"55%"}}>
@@ -522,8 +506,9 @@ async componentDidMount()
                     </div> 
                     <div className="pt-2"></div>
 
+
                     <div className='prevItem2'>
-                        <p style={{ cursor: "pointer"}}>
+                        <p style={{ cursor: "pointer",textAlign:"center"}}>
                            Featured Image
                         </p>
                         <div style={{height:"55%"}}>
@@ -537,9 +522,29 @@ async componentDidMount()
                        
                         </div>
                         </div>
-                        
+                    </div>
+
+                    <div className="pt-2"></div> 
+                     <div className='prevItem'>
+                        <p style={{ cursor: "pointer",textAlign:"center"}}>
+                            Banner Image
+                        </p>
+                        <div style={{height:"55%"}}>
+                       
+                            <div className='prevItmImgSec'>
+                            <img
+                              src={this.state.BannerPreview}
+                              alt="profileImage"
+                              className="avatar-immage"
+                            />
+                       
+                        </div>
+                        </div>
+                      
                     </div> 
-                                </div>
+                    
+
+                  </div>
                                 </div> </>
              );
     }
