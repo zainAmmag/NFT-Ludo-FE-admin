@@ -293,24 +293,24 @@ input {
   color: white;
   padding-left: 10px;
 }
-
 .card2 {
-  position: relative;
-    display: -ms-flexbox;
-    height: 390px;
-    width: 340px;
-    flex-direction: column;
-    min-width: 0;
-    background-color: #c7c7c7;
-    text-align: center;
-    word-wrap: break-word;
-    background-clip: border-box;
-    border-radius: 5px;
+    position: relative;display: -ms-flexbox;
+    height: auto;width: 320px;padding: 60px 15px 40px;
+    flex-direction: column;min-width: 0;
+    background-color: #ffffff;text-align: center;
+    word-wrap: break-word;background-clip: border-box;border-radius: 10px;
     box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
-    border: none;
-    margin-top: 1%;
-    margin-left: 5%;
+    border: none;margin-top: 1%;margin-left: 5%;
 }
+.card2 .img-pnl{position: relative;display: inline-block;width: 100%;}
+.card2 a{display: inline-block;width: 100%;}
+.card2 img.NFT-immage{
+  margin: 0;padding: 0;height: auto;width: 60px;height: 60px;top: -30px;
+  border-radius: 50%;margin-bottom: 15px;position: absolute;left: 0;
+}
+.card2 a button.NFT-banner-immage{display: inline-block;width: 100%;height: auto;border-radius: 10px;}
+.card2 img{width: auto !important;max-width: 100%;border-radius: 5px;}
+.card2 h5{font-weight: bold;padding-top: 20px !important;margin-bottom: 0;}
 .card {
   position: relative;
   display: -ms-flexbox;
@@ -1376,27 +1376,27 @@ border-radius : 4px ;
 {
   display: inline-block;
   position: relative;
-  border-radius: 25px;
+  border-radius: 10px;
   border: 1px solid white;
   color: white;
   text-decoration: none !important;
   padding: 5px 15px 4px;
   font-size: 20px;
-  background-color: #3d3d3d;
+  background-color: #308afb;
 }
 .view-all-btn:hover {
 
-  background-color: blue;
+  background-color: #308afb;
 }
 .fa-angle-right
 {
-  background-color: blue;
+  background-color: #308afb;
   color: white;
 }
 .fa-angle-right:hover
 {
   background-color: #3d3d3d;
-  color: blue;
+  color: #308afb;
   
 }
 .NFT-banner-immage
@@ -1436,15 +1436,17 @@ border-radius : 4px ;
   flex-direction: column;
   min-width: 0;
   box-shadow: 0 0 8px 0 rgb(0 0 0 / 30%);
-  background-color: #E8E8DB !important;
+  background-color: #ffffff !important;
   text-align: center;
   word-wrap: break-word;
   background-clip: border-box;
-  border-radius: 5px;
+  border-radius: 10px;
+  padding: 20px 15px;margin-bottom: 30px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border: none;
   background-color: rgba(0, 0, 0, 0.2); 
 }
+.card2NFT img.NFT-immage3{border-radius: 50%;width: 50px;height: 50px;}
 .flex1
 {
   width:30%;
@@ -1529,44 +1531,48 @@ border-radius : 4px ;
 }
 .upload-section{
   height: 48px;
-  width: 60%;
+  width: 100%;
   border: 2px solid white;
   border-radius: 2%;
   border-style: dashed;
   background-color: transparent;
   justify-content: center;
   display: flex;
-  margin-left: -8%;
 
 }
 .prevItem{
-  height: 400px;
-  width: 100%;
-  border: 1px solid green;
-  background-color: #d6cece;
-  border-radius: 5%;
+  height: auto;
+    width: 100%;
+    margin-top: 10px;
+    border: 1px solid green;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
 }
-
+.prevItem p{
+  color: black;
+    font-size: 16px;
+    font-weight: bold;
+}
 .prevItem2{
-  height: 250px;
-  width: 100%;
+  height: auto;
+  width: 100%;margin-top: 10px;
   border: 1px solid green;
-  background-color: #d6cece;
-  border-radius: 5%;
+  background-color: #ffffff;padding: 15px;
+  border-radius: 10px;text-align: center;
 }
-
-
+.prevItem2 p{color: black;font-size: 16px;font-weight: bold;}
 .imgSet{
   height: 120%;
   width: 100%;
   border-radius: 15px;
 }
 .prevItmImgSec{
-  width: 80%;
-  margin-left: 10%;
-  height: 80%;
-  border-radius: 15px;
-  margin-top: 10%;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 15px;
 }
 .input-fields{
 margin-top: 2%;
@@ -1598,7 +1604,7 @@ margin-top: 2%;
   cursor: pointer;
 }
 .dropDown{
-  width: 60%;
+  width: 100%;
   height: 45px;
   background-color: rgb(255,255,255,0.1) !important;
   color: #fafafa;
@@ -1720,8 +1726,11 @@ width: 100%;
 .collectiondetail
 {
    /* style={{ height: "362px" }} */
-   height: 362px !important; 
+   height: auto !important; 
    text-align: center;
+}
+.collectiondetail .img-hght{
+  height: 200px;margin-bottom: 50px;
 }
 .collectionlogoimg
 {
@@ -1758,10 +1767,88 @@ width: 100%;
   height: 40px;
 }
 .avatar-immage{
-  height: 160%;
-width: 100%;
+  height: auto;
+  width: 100%;border-radius: 5px;
 }
-.padding
-{
-  margin-top: 20px;
+.padding{margin-top: 20px;}
+
+
+/* My css Starts Here
+====================== */
+a,
+.card.login-card .card-body .create-btn{
+  -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+.card.login-card{background-color: transparent;margin: 50px auto;}
+.card.login-card .card-body{background-color: black;border-radius: 10px;margin: 0px auto;padding-bottom: 30px;}
+.card.login-card .card-body input{background-color: transparent !important;border:1px solid white;height: 40.88px;margin-bottom: 10px !important;}
+.card.login-card .card-body input:focus{background-color: rgba(255, 255, 255, 0.2) !important;border:1px solid #308afb !important;}
+.card.login-card .card-body .form-group{display: inline-block;width: 100%;}
+.card.login-card .card-body .create-btn:hover{background-color: #308afb;border-color: #308afb;cursor: pointer;}
+.MuiBreadcrumbs-separator{margin-top: -10px;}
+.mr-t-7{margin-top: -75px !important;}
+.right-sidebar .switcher-icon{display: none;}
+.MuiListItem-gutters:hover,
+.active{background-color: #308afb !important;}
+.MuiList-padding li.breadcrumb,
+.MuiList-padding li.breadcrumb:hover{margin-bottom: 0;background-color: unset !important;}
+.p-t-30{padding-top: 30px;}
+.p-t-30 h1{margin-bottom: 20px;}
+.margin-ud{margin: 15px 0 10px;}
+.search-panel{background-color: rgb(255,255,255,0.3) !important;display: inline-block;margin-bottom: 30px;width: 50%;border: 1px solid white;border-radius: 5px;padding-right: 5px;}
+.search-panel .input-field1{width: calc(100% - 25px);background-color: transparent !important;border:none;}
+.profile-img-pnl{width: 200px;height: 200px;float: left;margin-left: 30px;display: inline-block;margin-top: 30px;}
+.profile-txt-pnl{display: inline-block;width: calc(100% - 250px);float: left;padding-left: 30px;margin-bottom: 30px;margin-top: 30px;box-sizing: border-box;}
+.profile-txt-pnl p{word-break: break-all;}
+.panal1.card2{background-color: #ffffff !important;border-radius: 10px;} 
+.create-list{
+  cursor:pointer;display: inline-block;margin-left: 0;margin:25px 10px;padding: 10px 20px 10px;background-color: #308afb;
+  color: white;border-radius: 10px;font-weight: bold;border:hidden;
+}
+.create-list:hover{background-color: #000;color: white;}
+/* My css Ends Here
+==================== */
+@media (max-width: 1200px) {
+  html{min-height: 100%;height: auto !important;}
+  main#yoo{width: calc(100vh - 270px);margin-top: 80px !important;}
+  header{background-color: #000 !important;}
+}
+@media (max-width: 991px) {
+  main#yoo{width: calc(100vh - 345px);}
+  .search-panel{width: 80%;}
+  h1{font-size: 40px !important;}
+  .profile-img-pnl{width: 120px;height: 120px;}
+  .profile-txt-pnl{width: calc(100% - 170px);padding-left: 15px;}
+}
+@media (max-width: 767px) {
+  main#yoo{width: calc(100vh - 475px);}
+  .search-panel{width: 90%;}
+  h1{font-size: 34px !important;}
+  .MuiPaper-root,
+  .MuiDrawer-paperAnchorLeft,
+  .MuiDrawer-paperAnchorDockedLeft,
+  .makeStyles-drawerPaper-30{background-color: #000000 !important ; }
+  .MuiBreadcrumbs-ol{display: none !important;}
+  .mr-t-7 {margin-top: -30px !important;}
+  .create-list{padding: 10px 15px 10px;}
+  .card2{width: 100%;max-width: 320px;margin: 20px auto 10px;}
+}
+@media (max-width: 599px) {
+  main#yoo{width: 100%;}
+  .card.login-card .card-body{max-width: 290px;}
+  h1{font-size: 28px !important;}
+  .profile-img-pnl{width: 120px;height: 120px;float: none;margin: 30px auto 0;}
+  .profile-txt-pnl{width: 100%;padding-left: 30px;text-align: center;padding-right: 30px;float: none;}
+}
+a,
+.create-list{
+  -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
 }

@@ -163,7 +163,7 @@ function ResponsiveDrawer(props) {
               }}  
               className={isActive ? 'waves-effect active': 'waves-effect'} >
             <Link id='1' to="/ProjectManagement" className="waves-effect">
-              <Clipboard className="sidebarIcons mt-5" color="white" size={30} />
+              <Clipboard className="sidebarIcons mt-0" color="white" size={30} />
               <p className="LINK_OVERVIEW">Project Management</p>
             </Link>
             </ListItem>
@@ -178,7 +178,7 @@ function ResponsiveDrawer(props) {
             className={isActive1 ? 'waves-effect active': 'waves-effect'}>
             <Link id='2' to="/manageAccount"className="waves-effect" >
 
-              <Users className="sidebarIcons mt-5" color="white" size={30} />
+              <Users className="sidebarIcons mt-0" color="white" size={30} />
               <p className="LINK_OVERVIEW">Manage Account</p>
             </Link>
           </ListItem>
@@ -195,7 +195,7 @@ function ResponsiveDrawer(props) {
             className={isActive2 ? 'waves-effect active': 'waves-effect'}>
             <Link id='3' to="/orderDetail" className="waves-effect">
 
-              <Truck className="sidebarIcons mt-5" color="white" size={30} />
+              <Truck className="sidebarIcons mt-0" color="white" size={30} />
               <p className="LINK_OVERVIEW">Manage Orders</p>
             </Link>
           </ListItem>
@@ -212,7 +212,7 @@ function ResponsiveDrawer(props) {
             className={isActive3 ? 'waves-effect active': 'waves-effect'}>
             <Link id='4' to="/manageCollection" className="waves-effect">
 
-              <Columns className="sidebarIcons mt-5" color="white" size={30} />
+              <Columns className="sidebarIcons mt-0" color="white" size={30} />
               <p className="LINK_OVERVIEW">Manage Collection</p>
             </Link>
           </ListItem>
@@ -229,7 +229,7 @@ function ResponsiveDrawer(props) {
               }}
             className={isActive4 ? 'waves-effect active': 'waves-effect'}>
             <Link id='5' to="/ManageNFt" className="waves-effect">
-              <FilePlus className="sidebarIcons mt-5" color="white" size={30} />
+              <FilePlus className="sidebarIcons mt-0" color="white" size={30} />
               <p className="LINK_OVERVIEW">Manage NFT</p>
             </Link>
           </ListItem>

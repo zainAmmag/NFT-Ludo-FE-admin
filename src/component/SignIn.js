@@ -5,6 +5,7 @@ import { Lock, Mail, Eye, EyeOff } from "react-feather";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { SendHttpRequest } from "../component/utility";
+import '../Assets/css/custom.css';
 import {
   addWallets,
   setFocused,
@@ -134,7 +135,7 @@ class SignIn extends React.Component {
       <>
 
         <div id="wrapper">
-          <div className="card card-authentication1 mx-auto my-5">
+          <div className="card login-card card-authentication1 mx-auto my-5">
             <div className="card-body">
               <div className="card-content p-2">
                 <div className="text-center">

@@ -666,6 +666,13 @@ CARD
   -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
 }
+.MuiDrawer-paperAnchorLeft,
+header.MuiPaper-root{background-color: rgba(0, 0, 0, 0.8) !important ;}
+@media (max-width: 767px) {
+  .MuiDrawer-paperAnchorLeft,
+  header.MuiPaper-root{background-color: #000000 !important ; }
+}
+
 .makeStyles-root-112 .MuiListItem-gutters {
   padding: 0;
   margin-bottom: 10px;
@@ -846,3 +853,4 @@ CARD
 {
   background-color: gray;
 }
+

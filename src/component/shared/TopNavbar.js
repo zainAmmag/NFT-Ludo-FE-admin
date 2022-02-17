@@ -120,7 +120,7 @@ function TopNavbar() {
       </Badge> */}
 
       <Button
-        className="mr-2"
+        className="mr-2 mr-t-7"
         aria-controls="customized-menu"
         aria-haspopup="true"
         variant="contained"
@@ -133,18 +133,17 @@ function TopNavbar() {
             })
           }
         }}
-        color="secondary" style={{marginTop:"-6%"}} >
+        color="secondary" style={{background:"#308afb"}} >
         {isMetamaskConnected ? walletDataSelector?.accounts[0].substr(0, 10) : "Connect Metamask"}
       </Button>
 
       <Button
-        className="avator-btn"
+        className="avator-btn mr-t-7"
         aria-controls="customized-menu"
         aria-haspopup="true"
         variant="contained"
         color="primary"
         onClick={handleClick}
-        style={{marginTop:"-6%"}}
       >
         <Avatar alt="User" src={avator} />
       </Button>

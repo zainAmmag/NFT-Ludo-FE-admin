@@ -24,10 +24,10 @@ class UserDetail extends React.Component {
       ComponentChart: null,
       tableData: [],
       collectiondata: [],
-      NFtData:[],
+      NFtData: [],
       categoryname: "",
       IsTickerHovered: false,
-      categoryNumber: 0 ,
+      categoryNumber: 0,
       BaseCurrency: 0,
       RenderFinished: false,
 
@@ -35,62 +35,56 @@ class UserDetail extends React.Component {
       BO: null,
     };
   }
-  async GetNFTbycollectionId(collectionId)
-  {
+  async GetNFTbycollectionId(collectionId) {
     try {
       const data = await SendHttpRequest(
-        BaseUrl + "/Amin/GetAllNftsByCollectionId?collectionId="+collectionId,
+        BaseUrl + "/Amin/GetAllNftsByCollectionId?collectionId=" + collectionId,
         {},
         "GET"
       );
-      if (data.isSuccess) 
-      {  
-        console.log("data"+ data.message);
-         console.log(...data.data);
-         this.setState({NFtData: data.data })
-      } else 
-      {
-        console.log("data"+ data.message);
+      if (data.isSuccess) {
+        console.log("data" + data.message);
+        console.log(...data.data);
+        this.setState({ NFtData: data.data })
+      } else {
+        console.log("data" + data.message);
       }
     } catch (error) {
       // localStorage.clear();
       return;
     }
-  } 
+  }
   async componentDidMount() {
     try {
       const data = await SendHttpRequest(
-        BaseUrl + "/Amin/GetMyAllCollectionsByUserId?userAccountId="+localStorage.getItem("UserID"),
+        BaseUrl + "/Amin/GetMyAllCollectionsByUserId?userAccountId=" + localStorage.getItem("UserID"),
         {},
         "GET"
       );
-      if (data.isSuccess) 
-      {  
-        console.log("data"+ data.message);
-         console.log(...data.data);
-         this.setState({collectiondata: data.data })
-         console.log("naeandianuioand",localStorage.getItem("profileImage"))
-     
-      } else 
-      {
-        console.log("data"+ data.message);
+      if (data.isSuccess) {
+        console.log("data" + data.message);
+        console.log(...data.data);
+        this.setState({ collectiondata: data.data })
+        console.log("naeandianuioand", localStorage.getItem("profileImage"))
+
+      } else {
+        console.log("data" + data.message);
       }
     } catch (error) {
       // localStorage.clear();
       return;
     }
-  
-}
+
+  }
   render() {
-    var arr=[] ;
-    for (var i = 0; i < this.state.categoryNumber; i++) 
-    {
-        arr.push(this.state.moviesData[this.state.categoryNumber1].Name);
+    var arr = [];
+    for (var i = 0; i < this.state.categoryNumber; i++) {
+      arr.push(this.state.moviesData[this.state.categoryNumber1].Name);
     }
-   
+
     return (
       <div className="container-fluid body-content" id="">
-        <div className="row" style={{ height: "362px" }}>
+        <div className="row">
           <div className="card" style={{ flex: 1 }}>
             <div
               style={{
@@ -109,19 +103,16 @@ class UserDetail extends React.Component {
             </div>
             <div className="row">
               <div
-                className=""
+                className="profile-img-pnl"
                 style={{
-                  width: "199px",
-                  height: "199px",
                   overflow: "hidden",
-                  marginLeft: "2%",
                   position: "relative",
                   borderRadius: "50%",
                 }}
               >
 
                 <img
-                   src={ localStorage.getItem("profileImage")==="Null"?profilePic:"http://198.187.28.244:7577/"+localStorage.getItem("profileImage") }
+                  src={localStorage.getItem("profileImage") === "Null" ? profilePic : "http://198.187.28.244:7577/" + localStorage.getItem("profileImage")}
                   //src={profilePic}
                   alt="profileImage"
                   data-toggle="modal"
@@ -137,24 +128,21 @@ class UserDetail extends React.Component {
                 />
               </div>
               <div
-                className=""
+                className="profile-txt-pnl"
                 style={{
-                  width: "70%",
-                  height: "100%",
-                  marginLeft: "2%",
                   position: "relative",
                 }}
               >
                 <div>
-                  <p> <PersonOutlineIcon /> {" "+localStorage.getItem("username")} </p>
-                  <p> <Email />{" "+ localStorage.getItem("email") }</p>
-                  <p> <AccountBalanceWalletIcon /> {localStorage.getItem("address") }</p>
-                   
-                  <p> <SocialIcon network="twitter" fgColor="black" bgColor="white"  style={{ height: 25, width: 25 }}/>
-                        { " "+ localStorage.getItem("twitterLink") }</p>
-                  <p> <SocialIcon network="instagram" fgColor="black" bgColor="white"  style={{ height: 25, width: 25 }}/>
-                        {" "+localStorage.getItem("instagramLink") }</p>
-                        <p>  {"Bio :"+localStorage.getItem("bio")}</p>
+                  <p> <PersonOutlineIcon /> {" " + localStorage.getItem("username")} </p>
+                  <p> <Email />{" " + localStorage.getItem("email")}</p>
+                  <p> <AccountBalanceWalletIcon /> {localStorage.getItem("address")}</p>
+
+                  <p> <SocialIcon network="twitter" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} />
+                    {" " + localStorage.getItem("twitterLink")}</p>
+                  <p> <SocialIcon network="instagram" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} />
+                    {" " + localStorage.getItem("instagramLink")}</p>
+                  <p>  {"Bio :" + localStorage.getItem("bio")}</p>
                 </div>
               </div>
             </div>
@@ -162,40 +150,41 @@ class UserDetail extends React.Component {
         </div>
 
         <h1>Collections :</h1>
-        <div id="container">
-          <div className="row">
+        {/* <div id="container">
+          <div className="row"> */}
+          <div className="full-div">
             {this.state.collectiondata.length > 0 ? (
-              <>         
-                {    
+              <>
+                {
                   this.state.collectiondata.map((playerData, k) => (
-                  <>
-                    <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
-                      <div
-                        className="card2">
-                        <div >
-                          <div className="panal">
-                       
+                    <>
+                      <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
+                        <div
+                          className="card2">
+                          <div >
+                            <div className="panal">
+
+                              <img
+                                src={"http://198.187.28.244:7577/" + playerData.logoImage}
+                                alt="profileImage"
+                                className="NFT-immage"
+                              />
+                              <button
+                                style={{ background: 'transparent', border: 0 }}
+                                onClick={() => { this.GetNFTbycollectionId(playerData.id) }}>
                                 <img
-                                  src={"http://198.187.28.244:7577/"+ playerData.logoImage}
-                                  alt="profileImage"
-                                  className="NFT-immage"
-                                 />
-                                  <button
-                                    style={{ background: 'transparent',border:0}}
-                                    onClick={() =>{this.GetNFTbycollectionId(playerData.id)}}>
-                                 <img
-                                  src={"http://198.187.28.244:7577/"+ playerData.bannerImage}
+                                  src={"http://198.187.28.244:7577/" + playerData.bannerImage}
                                   alt="profileImage"
                                   className="NFT-banner-immage"
-                                 />
-                                 </button>
-                                 <h5 style={{color:"black",paddingTop:"6%"}}>{playerData.name}</h5>
+                                />
+                              </button>
+                              <h5 style={{ color: "black", paddingTop: "6%" }}>{playerData.name}</h5>
+                            </div>
                           </div>
-                        </div>
-                      </div>{" "}
-                    </Col>
-                  </>
-                ))}
+                        </div>{" "}
+                      </Col>
+                    </>
+                  ))}
               </>
             ) : (
               <div style={{ alignItems: "center", alignContent: "center" }}>
@@ -206,80 +195,82 @@ class UserDetail extends React.Component {
                     fontSize: 20,
                   }}
                 >
-                  No Collection 
+                  No Collection
                 </p>
               </div>
             )}
-            
+
           </div>
-        </div>
-        
+          {/* </div>
+        </div> */}
+
         <h1>NFT's:</h1>
         <div id="container">
           <div className="row">
             {this.state.NFtData.length > 0 ? (
-              <>         
-                {    
-                this.state.NFtData.map((playerData, k) => (
-                  <>
-                    <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
-                      <div
-                        className="card2NFT">
-                        <div >
-                          <div className="panal">
+              <>
+                {
+                  this.state.NFtData.map((playerData, k) => (
+                    <>
+                      <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
+                        <div
+                          className="card2NFT">
+                          <div >
+                            <div className="panal">
+                              <img
+                                src={"http://198.187.28.244:7577/" + playerData.bannerImage}
+                                alt="profileImage"
+                                className="NFT-immage-NFT"
+                              />
+
+                              <div className="">
                                 <img
-                                  src={"http://198.187.28.244:7577/"+playerData.bannerImage }
+                                  src={"http://198.187.28.244:7577/" + playerData.logoImage}
                                   alt="profileImage"
-                                  className="NFT-immage-NFT"
-                                 />
+                                  className="NFT-immage3"
+                                />
+                              </div>
+                              <h5 className="nft-heading">  price</h5>
+                              <p className="note"> Price {playerData.buyPrice + " "}NB </p>
+                              <l>
 
-                             <div className="">
-                                      <img
-                                       src={"http://198.187.28.244:7577/"+playerData.logoImage}
-                                       alt="profileImage"
-                                      className="NFT-immage3"
-                                      />
-                               </div>
-                               <h5 className="nft-heading">  price</h5>  
-                               <p className="note"> Price { playerData.buyPrice+" "}NB </p>   
-                               <l> 
+                                <Link to="/nftdetail">
+                                  <a
+                                    onClick={() => {
+                                      localStorage.setItem("NFTID", playerData.id)
+                                      localStorage.setItem("NftaccountId", playerData.accountId)
 
-                                 <Link to="/nftdetail">                                
-                                 <a
-                                     onClick={() =>{
-                                      localStorage.setItem("NFTID",playerData.id)
-                                      localStorage.setItem("NftaccountId",playerData.accountId)
-                                      
-                                      }}
+                                    }}
                                     className="view-all-btn"
                                   >
-                                    Detail 
+                                    Detail
                                   </a>
-                                  </Link>
-                                            <FavoriteIcon />   {playerData.ratings}
-                                  </l>
+                                </Link>
+                                <FavoriteIcon />   {playerData.ratings}
+                              </l>
 
+                            </div>
                           </div>
-                        </div>
-                      </div>{" "}
-                    </Col>
-                  </>
-                ))}
+                        </div>{" "}
+                      </Col>
+                    </>
+                  ))}
               </>
             ) : (
-              <div className="card" style={{ alignItems: "center", alignContent: "center",width:"100%" }}>
+              <div className="card" style={{ alignItems: "center", alignContent: "center", width: "100%" }}>
                 <p
+                  className="margin-ud"
                   style={{
                     textAlign: "center",
                     color: "white",
                     fontSize: 20,
                   }}
                 >
-                   <h2>   No NFT To Show  </h2>
+                  <h2>   No NFT To Show  </h2>
                 </p>
               </div>
             )}
-            
+
           </div>
         </div>
       </div>
