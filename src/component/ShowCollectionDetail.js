@@ -128,10 +128,8 @@ class CollectionDetail extends React.Component {
       arr.push(this.state.moviesData[this.state.categoryNumber1].Name);
     }
     return (
-      <div className="container-fluid body-content" id="">
+      <div className="full-div">
         <div className="collectiondetail">
-
-
           {
             <div style={{
               width: "100%",
@@ -162,30 +160,23 @@ class CollectionDetail extends React.Component {
                       name='search'
                       value={this.state.Search1}
                       onChange={(data) => { this.setState({ Search1: data.target.value }) }}
-
                     />
                     <Search color="white" onClick={() => this.Finduser()} style={{ cursor: "pointer" }} />
                   </div>
                 </p>
-
                 <Link to="/EditCollection">
-
                   <button className="create-list"> Edit Collection   </button>
-
                 </Link>
                 <Link to="/createNFT">
                   <button className="create-list">Create NFT   </button>
                 </Link>
               </div>
             </div>
-
           }
-
         </div>
         <div className="pt-2"></div>
         <h1>NFT's:</h1>
-
-        <div id="container">
+        <div className="full-div mb-txt-center">
           <div className="row">
             {
               this.state.Search.length == 0 ? (
@@ -195,7 +186,7 @@ class CollectionDetail extends React.Component {
                       {
                         this.state.NFtData.map((playerData, k) => (
                           <>
-                            <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
+                            <Col key={k} style={{ paddingTop: "15px" }} md={6} lg={4} >
                               <div
                                 className="card2NFT">
                                 <div >

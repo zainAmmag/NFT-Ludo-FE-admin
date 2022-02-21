@@ -7,7 +7,7 @@ import {
   BaseUrlGet,
 } from "../Constants/BusinessManager";
 import swal from "sweetalert";
-import { Calendar, CheckSquare, Edit, Eye,Heart,MinusCircle } from "react-feather";
+import { Calendar, CheckSquare, Edit, Eye, Heart, MinusCircle } from "react-feather";
 import Modal from "react-bootstrap/Modal";
 import { Button, Table } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -38,15 +38,15 @@ class NFTDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      getUsers:null,
+      getUsers: null,
       dataSource: null,
       ImageModal: false,
       imageUrl: "",
-      split:"",
+      split: "",
       gridView: true,
       tableData: [],
-      nftDATA:[],
-      toslice:null,
+      nftDATA: [],
+      toslice: null,
       blockstatus: true,
       tableHead: ["Inv #", "Amount", "Detail", "Date"],
       descriptionModel: false,
@@ -63,149 +63,142 @@ class NFTDetail extends React.Component {
       CurrencyName: "",
     };
   }
-  
+
   async componentDidMount() {
     try {
       const data = await SendHttpRequest(
-        BaseUrl1 + "/GetNftMarketById?nftId="+localStorage.getItem("NFTID")+"&accountId="+localStorage.getItem("NftaccountId"),
+        BaseUrl1 + "/GetNftMarketById?nftId=" + localStorage.getItem("NFTID") + "&accountId=" + localStorage.getItem("NftaccountId"),
         {},
         "GET"
       );
-      if (data.isSuccess) 
-      {  
+      if (data.isSuccess) {
 
-        console.log("daaddadadta"+ data.message);
-         console.log(data.data);
-         this.setState({nftDATA: data.data })
-      } else 
-      {
-        console.log("data"+ data.message);
+        console.log("daaddadadta" + data.message);
+        console.log(data.data);
+        this.setState({ nftDATA: data.data })
+      } else {
+        console.log("data" + data.message);
       }
     } catch (error) {
       // localStorage.clear();
       return;
     }
-  
-}
-    render() {
-      
-     return (
-         <>
-         <div className="row">
-          <div className="flex1">
-            
-             <img
-              src={"http://198.187.28.244:7577/"+this.state.nftDATA.image}
-              alt="profileImage"
-              className="NFT-immage-NFT1"
-              />
-              <div className="pt-4"/ >
-              <div className="detail-card">
-                  
-                 <p> Details  </p>
-                 <p> Contract Address {   this.state.nftDATA.contractAddress }
-                                  </p>
-                 <p>Token         <l > IDv213 </l>  </p>
-                <p>Token    Standard </p>
-                </div>  
-                <div className="detail-card">
-                <h3>Properties</h3>
-                </div>  
-          </div>
-          <div className="flex2">
-            <div className="Nft-user-detail">
-           <p>{this.state.nftDATA.name}</p>
-           <p>By </p>
-           <p>{this.state.nftDATA.creatorName}</p>
 
-           <p style={{fontWeight:"bold"}}> Funky 213 </p>
-           <p>owner By {" "}{this.state.nftDATA.ownerName } </p>
-        <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart /> {" "}{this.state.nftDATA.ratings}     </p>
-        
+  }
+  render() {
+
+    return (
+      <>
+        <div className="row">
+          <div className="col-lg-4 col-md-12 col-sm-12">
+            <img src={"http://198.187.28.244:7577/" + this.state.nftDATA.image} alt="profileImage" className="NFT-immage-NFT1 detail-img" />
+            <div className="pt-4" />
+            <div className="detail-card">
+              <h3>Details</h3>
+              <p><b>Contract Address</b> {this.state.nftDATA.contractAddress}</p>
+              <p><b>Token</b> IDv213</p>
+              <p><b>Token</b> Standard</p>
             </div>
-          <div className="detail-card">
-           <p>min price---{this.state.nftDATA.bidInitialMinimumAmount?this.state.nftDATA.bidInitialMaximumAmount:0} 
-           max price----{this.state.nftDATA.bidInitialMaximumAmount?this.state.nftDATA.bidInitialMaximumAmount:0} </p>
-            <h3>Description</h3>
+            <div className="detail-card">
+              <h3>Properties</h3>
+            </div>
+          </div>
+          <div className="col-lg-6 col-md-12 col-sm-12">
+            <div className="Nft-user-detail">
+              <p>{this.state.nftDATA.name}</p>
+              <p><b>By </b></p>
+              <p>{this.state.nftDATA.creatorName}</p>
 
-            {this.state.nftDATA.description}
-                 Created By{this.state.nftDATA.creatorName}    
-                 <div style={{float:"right",marginRight:"25%"}}>
-                 <Link to="/UpdateNFt" className="Link"  >  <Button
-                  className="collection-button" 
-                  style={{width:"160%",height:"25%",borderRadius:"20px",fontSize:'20px',fontWeight:"bolder"}}
-                  onClick={()=>{  localStorage.setItem("Updatenftid",this.state.nftDATA.id)
-                  localStorage.setItem("Updatenftaccountid",this.state.nftDATA.accountId)         } }  
-                  >
-                    Update</Button>  
-                    </Link>
-          </div>  
-          </div>
-        
-          <div className="detail-card">
-           <h3> Listing </h3>
-           <table
-          
-                    className="table table-striped table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl AccountStatement"
-                    style={{ textAlign: "center",color:"white" }}
-                  >
-           <thead>
-              <tr>
-                <th>Price</th>
-                <th>Us Price</th>
-                <th>Expiration</th>
-                <th>Form</th>
-              </tr>
-              </thead>
-              </table>
-          </div>
-          <div className="detail-card">
-           <h3 > Offers </h3>
-           <table
-                    className="table table-striped table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl AccountStatement"
-                    style={{ textAlign: "center",color:"white" }}
-                  >
-           <thead>
-              <tr>
-                <th>Price</th>
-                <th>UsD</th>
-                <th>Expiration</th>
-                <th>Form</th>
-              </tr>
-              </thead>
-              </table>
-          </div>
-         </div>
-         <div className="flex3">
-                <div className="detail-card1">
-                  <div className="Nfy-time">
-                     0 
-                     <br />
-                     Days<br />
-                     <div className="pt-3"/>
-                     0 <br />
-                    Minutes
-                    <br />
-                   
-                   <div className="pt-3"/>
-                     0 
-                     <br />
-                     Hours
-                     <br />
-                   
-                   <div className="pt-3"/>
-                       0 
-                       <br />
-                    Seconds
-                    <br />
-                   <div className="pt-3"/>
-                   </div>
-                </div>
+              <p style={{ fontWeight: "bold" }}> Funky 213 </p>
+              <p>owner By {" "}{this.state.nftDATA.ownerName} </p>
+              <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart /> {" "}{this.state.nftDATA.ratings}     </p>
 
-         </div>
-         </div>
-         </>
-       );
+            </div>
+            <div className="detail-card">
+              <p>min price---{this.state.nftDATA.bidInitialMinimumAmount ? this.state.nftDATA.bidInitialMaximumAmount : 0}
+                max price----{this.state.nftDATA.bidInitialMaximumAmount ? this.state.nftDATA.bidInitialMaximumAmount : 0} </p>
+              <h3>Description</h3>
+
+              {this.state.nftDATA.description}
+              Created By{this.state.nftDATA.creatorName}
+              <div className="full-div">
+                <Link to="/UpdateNFt" className="reg-btn blue"  >  <Button
+                  className="collection-button"
+                  style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder" }}
+                  onClick={() => {
+                    localStorage.setItem("Updatenftid", this.state.nftDATA.id)
+                    localStorage.setItem("Updatenftaccountid", this.state.nftDATA.accountId)
+                  }}
+                >
+                  Update</Button>
+                </Link>
+              </div>
+            </div>
+
+            <div className="detail-card">
+              <h3> Listing </h3>
+              <table
+
+                className="table table-striped table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl AccountStatement"
+                style={{ textAlign: "center", color: "white" }}
+              >
+                <thead>
+                  <tr>
+                    <th>Price</th>
+                    <th>Us Price</th>
+                    <th>Expiration</th>
+                    <th>Form</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div className="detail-card">
+              <h3 > Offers </h3>
+              <table
+                className="table table-striped table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl AccountStatement"
+                style={{ textAlign: "center", color: "white" }}
+              >
+                <thead>
+                  <tr>
+                    <th>Price</th>
+                    <th>UsD</th>
+                    <th>Expiration</th>
+                    <th>Form</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+          <div className="col-lg-2 col-md-6 col-sm-12">
+            <div className="detail-card1">
+              <div className="Nfy-time">
+                0
+                <br />
+                Days<br />
+                <div className="pt-3" />
+                0 <br />
+                Minutes
+                <br />
+
+                <div className="pt-3" />
+                0
+                <br />
+                Hours
+                <br />
+
+                <div className="pt-3" />
+                0
+                <br />
+                Seconds
+                <br />
+                <div className="pt-3" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </>
+    );
   }
 }
 const styles = {

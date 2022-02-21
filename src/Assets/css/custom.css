@@ -1355,14 +1355,17 @@ border-radius : 4px ;
 
 
 
-
+.detail-card{word-break: break-all;}
 .noAsset{
   text-align: center;
     color: white;
     font-size: xx-large;
 }
 .modal-body {
-  background-color: #d0c2c275 !important;
+  background-color: #000 !important;border-radius: 10px;padding-bottom: 40px;
+}
+.modal-footer .Modal-div-cancel-button{
+  background: #308afb;color: white;border: hidden;padding: 6px 15px;border-radius: 5px;
 }
 .nft-heading
 {
@@ -1376,6 +1379,7 @@ border-radius : 4px ;
 {
   display: inline-block;
   position: relative;
+  cursor: pointer;
   border-radius: 10px;
   border: 1px solid white;
   color: white;
@@ -1431,7 +1435,8 @@ border-radius : 4px ;
   position: relative;
   display: -ms-flexbox;
   /*display: flex;*/
-  width: 342px !important;
+  width: 100% !important;
+  max-width: 100% ;
   -ms-flex-direction: column;
   flex-direction: column;
   min-width: 0;
@@ -1477,13 +1482,13 @@ border-radius : 4px ;
 .detail-card
 {
    margin-bottom: 20px ;
-   height:200px;
-    width:90% ;
+   height:auto;
+    width:100% ;
     border-radius: 20px;
    background-color:#323C4D ;
    flex-direction: column;
     color: white;
-    padding: 5px;
+    padding: 20px;
 }
 
 .detail-card1
@@ -1510,8 +1515,19 @@ border-radius : 4px ;
 {
   background-color: white;
 }
-
-
+.detail-img{width: auto;max-width: 100%;}
+@media (max-width:1400px){
+  .Nfy-time{font-size: 30px !important;}
+  .detail-card h3{font-size: 26px;}
+}
+@media (max-width:1200px){
+  .Nfy-time{font-size: 24px !important;}
+  .detail-card h3{font-size: 24px;}
+}
+@media (max-width:991px){
+  .Nfy-time{font-size: 43px !important;}
+  .detail-card h3{font-size: 30px;}
+}
 
 
 
@@ -1823,6 +1839,7 @@ a,
   h1{font-size: 40px !important;}
   .profile-img-pnl{width: 120px;height: 120px;}
   .profile-txt-pnl{width: calc(100% - 170px);padding-left: 15px;}
+  
 }
 @media (max-width: 767px) {
   main#yoo{width: calc(100vh - 475px);}
@@ -1838,6 +1855,8 @@ a,
   .card2{width: 100%;max-width: 320px;margin: 20px auto 10px;}
   .profile-img-pnl{width: 120px;height: 120px;float: none;margin: 30px auto 0;}
   .profile-txt-pnl{width: 100%;padding-left: 30px;text-align: center;padding-right: 30px;float: none;}
+  .mb-txt-center{text-align: center;}
+  .card2NFT{margin: 0 auto 30px;}
 }
 @media (max-width: 599px) {
   main#yoo{width: 100%;}
