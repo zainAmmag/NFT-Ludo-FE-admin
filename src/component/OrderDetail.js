@@ -127,7 +127,12 @@ class OrderDetail extends React.Component {
                                         </TableCell>
 
                                         <TableCell>
-                                          <Link to="">
+                                        <Link to={{
+                                        pathname: "orderstatus",
+                                        state: {
+                                            value,
+                                        }
+                                    }}>
                                             <button
                                               style={{ padding: 8, background: 'transparent', border: 0 }}
                                               onClick={() => {

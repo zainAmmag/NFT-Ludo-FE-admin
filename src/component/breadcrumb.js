@@ -10,49 +10,58 @@ function handleClick(event) {
 export default function CollapsedBreadcrumbs() {
     return (
         <div role="presentation" onClick={handleClick}>
-            <Breadcrumbs maxItems={2} aria-label="breadcrumb" style={{paddingTop:"30px",color:"white"}}>
+            <Breadcrumbs maxItems={2} aria-label="breadcrumb" style={{ paddingTop: "30px", color: "white" }}>
                 <Link to="/ProjectManagement">
-                <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>Admin Panal</p>
+                    <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}>Admin Panal</p>
                 </Link>
                 {window.location.pathname === '/ProjectManagement' && (
                     <Link to="/ProjectManagement" className="waves-effect">
-                        <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>Project Management</p>
+                        <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}>Project Management</p>
                     </Link>
                 )}
                 {
                     window.location.pathname === '/manageAccount' && (
                         <Link to="/manageAccount" className="waves-effect">
-                            <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>Manage Account</p>
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}>Manage Account</p>
                         </Link>
                     )
                 }
                 {
                     window.location.pathname === '/orderDetail' && (
                         <Link to="/orderDetail" className="waves-effect">
-                            <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>Manage Orders</p>
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}>Manage Orders</p>
+                        </Link>
+                    )
+                }
+
+                {
+                    window.location.pathname === '/orderstatus' && (
+                        <Link to="/orderstatus" className="waves-effect">
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}><Link to="/orderDetail"> Manage Orders </Link> / Order Status</p>
+                        </Link>
+                    )
+                }
+
+                {
+                    window.location.pathname === "/manageCollection" && (
+                        <Link to="/manageCollection" className="waves-effect">
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}>Manage Collection</p>
+                        </Link>
+                    )
+
+                }
+                {
+                    window.location.pathname === '/CreateCollection' && (
+                        <Link to="/CreateCollection" className="waves-effect"  >
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}><Link to="/manageCollection">  Manage Collection</Link> / CreateCollection</p>
                         </Link>
                     )
                 }
                 {
-                    window.location.pathname === "/manageCollection" && (
-                        <Link to="/manageCollection" className="waves-effect">
-                        <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>Manage Collection</p>
-                    </Link>
-                    )
-               
-                }
-                {
-                         window.location.pathname === '/CreateCollection' && (
-                            <Link to="/CreateCollection"  className="waves-effect"  > 
-                            <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}><Link to="/manageCollection">  Manage Collection</Link> / CreateCollection</p>
-                             </Link>
-                        )
-                }
-                {
                     window.location.pathname === "/createNFT" && (
                         <Link to="/createNFT" className="waves-effect">
-                    <p className="LINK_OVERVIEW" style={{fontSize:"15px"}}>Create NFT</p>
-                </Link>
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}>Create NFT</p>
+                        </Link>
                     )
                 }
             </Breadcrumbs>

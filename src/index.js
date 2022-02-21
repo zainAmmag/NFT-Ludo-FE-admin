@@ -25,9 +25,10 @@ import CreateCollection from "./component/CreateCollection1"
 import EditCollection from "./component/EditCollection";
 import ManageNFt from "./component/ManageNFT"
 import UpdateNFt from "./component/UpdateNFt";
+import OrderStatus from "./component/OrderStatus";
 const Pages = () => {
 
-  
+
   return (
     <Loader
       style={{
@@ -42,19 +43,19 @@ const Pages = () => {
             <Fragment>
               <SharedLayout>
 
-              <PrivateRoute
+                <PrivateRoute
                   exact
                   path="/"
                   component={SignIn}
                 >
-                  </PrivateRoute>{" "}
+                </PrivateRoute>{" "}
 
                 <PrivateRoute
                   exact
                   path="/ProjectManagement"
                   component={ProjectManagement}
                 >
-                  </PrivateRoute>{" "}
+                </PrivateRoute>{" "}
 
 
                 <PrivateRoute
@@ -81,14 +82,14 @@ const Pages = () => {
                   component={ManagerOrder}
                 ></PrivateRoute>{" "}
 
-                  <PrivateRoute
+                <PrivateRoute
                   exact
                   path="/ManageNFt"
                   component={ManageNFt}
                 ></PrivateRoute>{" "}
 
 
-                  <PrivateRoute
+                <PrivateRoute
                   exact
                   path="/UpdateNFt"
                   component={UpdateNFt}
@@ -121,13 +122,19 @@ const Pages = () => {
                   path="/EditCollection"
                   component={EditCollection}
                 ></PrivateRoute>{" "}
-                    <PrivateRoute
+                <PrivateRoute
                   exact
                   path="/CreateCollection"
                   component={CreateCollection}
                 ></PrivateRoute>{" "}
-                
-               
+
+                <PrivateRoute
+                  exact
+                  path="/orderstatus"
+                  component={OrderStatus}
+                ></PrivateRoute>{" "}
+
+
               </SharedLayout>{" "}
             </Fragment>{" "}
           </Switch>{" "}
