@@ -311,192 +311,181 @@ class UpdateNFT extends React.Component {
   render() {
     const handleClose1 = () => this.setState({ ImageModal: false });
     return (
-      <div className="row">
-        <div className='col-md-12'>
-          <h1 className='f-Heading'>Update NFT</h1>
-        </div>
-        <div className="flex2-1">
-          <div className='container'>
-            <div className="col-md-12">
-              <div className='input-fields'>
-                <p style={{ cursor: "pointer", }}>
-                  Banner Image
-                </p>
+      <div className='container'>
+        <div className="row">
+          <div className='col-md-12'>
+            <h1 className='f-Heading'>Update NFT</h1>
+          </div>
+          <div className="col-md-8 col-sm-12 col-lg-8">
+            <div className='input-fields'>
+              <p style={{ cursor: "pointer", }}>
+                Banner Image
+              </p>
 
-                <Modal
-                  centered
-                  size="lg"
-                  show={this.state.ImageModal}
-                >
-                  <Modal.Body>
-                    <div style={{ textAlign: "center" }} className="Modal-div">
-                      <div className='Modal-div-notcreated'>
-                        {this.state.falsemessage === "" ? "" : this.state.falsemessage}
-                      </div>
-
-                      <div className='Modal-div-created'>
-                        {this.state.successmessage === "" ? "" : this.state.successmessage}
-                      </div>
-                      <div className='Modal-div-notcreated'>
-                        {this.state.errormessage === "" ? "" : this.state.errormessage}
-                      </div>
-
+              <Modal
+                centered
+                size="lg"
+                show={this.state.ImageModal}
+              >
+                <Modal.Body>
+                  <div style={{ textAlign: "center" }} className="Modal-div">
+                    <div className='Modal-div-notcreated'>
+                      {this.state.falsemessage === "" ? "" : this.state.falsemessage}
                     </div>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
-                  </Modal.Footer>
-                </Modal>
-                <div className='upload-section '>
-                  <input type="file" onChange={this.uploadPicture} className="inputSec" />
+
+                    <div className='Modal-div-created'>
+                      {this.state.successmessage === "" ? "" : this.state.successmessage}
+                    </div>
+                    <div className='Modal-div-notcreated'>
+                      {this.state.errormessage === "" ? "" : this.state.errormessage}
+                    </div>
+
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
+                </Modal.Footer>
+              </Modal>
+              <div className='upload-section '>
+                <input type="file" onChange={this.uploadPicture} className="inputSec" />
+              </div>
+            </div>
+            <div className='input-fields'>
+              <p>Name</p>
+              <input
+                type="text"
+                required
+                // placeholder="e.g 'Crypto Funk' "
+                placeholder='Enter Your Name'
+                width={100}
+                className="input-field"
+                name='Name'
+                value={this.state.Name1}
+                onChange={(data) => { this.setState({ Name1: data.target.value }) }}
+              />
+            </div>
+            <div className='input-fields'>
+              <p>External Link</p>
+              <input
+                type="text"
+                required
+                placeholder="e.g 'https://www.yoursite.com/item/123' "
+                width={100}
+                className="input-field"
+                name='ExternalLink'
+                value={this.state.ExternalLink1}
+                onChange={(data) => { this.setState({ ExternalLink1: data.target.value }) }}
+              />
+            </div>
+            <div className='input-fields'>
+              <p>Description</p>
+              <input
+                type="text"
+                required
+                placeholder="e.g 'this is very limited item' "
+                width={100}
+                className="description-field"
+                name='Description'
+                value={this.state.Description1}
+                onChange={(data) => { this.setState({ Description1: data.target.value }) }}
+              />
+            </div>
+            <div className='input-fields'>
+              <p>Collection</p>
+              <select className='dropDown' name='Category' onChange={(data) => { console.log("dmkdsmmsd", this.state.BlockChainname_); this.setState({ CategoryId: data.target.value }); }}>
+                <option value="none" selected disabled hidden>{this.state.defaultcollctionname}</option>
+                {
+                  this.state.CategoryData1.map((playerData, k) => {
+                    return (
+                      <option value={playerData.id}> {playerData.name}</option>
+                    );
+                  })
+                }
+              </select>
+            </div>
+            <div className='input-fields'>
+              <p>Price</p>
+              <input
+                type="text"
+                required
+                placeholder="enter Price for one item[BNB] "
+                width={100}
+                className="input-field"
+                name='Price'
+                value={this.state.Price1}
+                onChange={(data) => { this.setState({ Price1: data.target.value }) }}
+              />
+            </div>
+            <div className='input-fields'>
+              <p>Blockchain</p>
+              <select className='dropDown' name='BlockChainName' onChange={(data) => { this.FindBlockchainName(data.target.value); this.setState({ ChainId: data.target.value }); }}>
+                <option value="none" selected disabled hidden>{this.state.defaultcurrencyname}</option>
+                {
+                  this.state.Blockchaindata1.map((playerData, k) => {
+                    return (
+                      <option value={playerData.chainID}> {playerData.name}</option>
+                    );
+                  })
+                }
+              </select>
+            </div>
+            <div className='input-fields'>
+              <p>Payment tokens</p>
+              <select className='dropDown' name='Payment' onChange={(data) => { this.setState({ CurrencyId: data.target.value }); }}>
+                <option value="none" selected disabled hidden>Select as an option</option>
+
+                {
+                  this.state.Currencydata1.map((playerData, k) => {
+                    return (
+                      <option value={playerData.id}> {playerData.name}</option>
+
+                    );
+                  })
+                }
+              </select>
+            </div>
+            <div className='input-fields'>
+              <p>Contract Adress</p>
+              <input
+                type="text"
+                required
+                // placeholder="e.g 'Crypto Funk' "
+                placeholder='Enter Your Name'
+                width={100}
+                className="input-field"
+                name='contract'
+                value={this.state.ContractAddress1}
+                onChange={(data) => { this.setState({ ContractAddress1: data.target.value }) }}
+              />
+            </div>
+            <p style={{ whiteSpace: 'nowrap' }} >    <Switch defaultChecked size="small" />  Freeze MetaData </p>
+          </div>
+          <div className="col-md-4 col-sm-10 col-lg-4">
+            <div className="pt-2"></div>
+            <div className="pt-2"></div>
+            <div className='prevItem2'>
+              <p style={{ cursor: "pointer" }}>
+                Image Preview
+              </p>
+              <div style={{ height: "55%" }}>
+
+                <div className='prevItmImgSec'>
+                  <img
+                    src={this.state.ImagePreview}
+                    alt="profileImage"
+                    className="avatar-immage"
+                  />
+
                 </div>
               </div>
-              <div className='input-fields'>
-                <p>Name</p>
-                <input
-                  type="text"
-                  required
-                  // placeholder="e.g 'Crypto Funk' "
-                  placeholder='Enter Your Name'
-                  width={100}
-                  className="input-field"
-                  name='Name'
-                  value={this.state.Name1}
-                  onChange={(data) => { this.setState({ Name1: data.target.value }) }}
-                />
-              </div>
 
-              <div className='input-fields'>
-                <p>External Link</p>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g 'https://www.yoursite.com/item/123' "
-                  width={100}
-                  className="input-field"
-                  name='ExternalLink'
-                  value={this.state.ExternalLink1}
-                  onChange={(data) => { this.setState({ ExternalLink1: data.target.value }) }}
-                />
-              </div>
-
-
-              <div className='input-fields'>
-                <p>Description</p>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g 'this is very limited item' "
-                  width={100}
-                  className="description-field"
-                  name='Description'
-                  value={this.state.Description1}
-                  onChange={(data) => { this.setState({ Description1: data.target.value }) }}
-                />
-              </div>
-              <div className='input-fields'>
-                <p>Collection</p>
-                <select className='dropDown' name='Category' onChange={(data) => { console.log("dmkdsmmsd", this.state.BlockChainname_); this.setState({ CategoryId: data.target.value }); }}>
-                  <option value="none" selected disabled hidden>{this.state.defaultcollctionname}</option>
-
-                  {
-
-                    this.state.CategoryData1.map((playerData, k) => {
-                      return (
-                        <option value={playerData.id}> {playerData.name}</option>
-                      );
-                    })
-                  }
-
-                </select>
-              </div>
-
-              <div className='input-fields'>
-                <p>Price</p>
-                <input
-                  type="text"
-                  required
-                  placeholder="enter Price for one item[BNB] "
-                  width={100}
-                  className="input-field"
-                  name='Price'
-                  value={this.state.Price1}
-                  onChange={(data) => { this.setState({ Price1: data.target.value }) }}
-                />
-              </div>
-
-              <div className='input-fields'>
-                <p>Blockchain</p>
-                <select className='dropDown' name='BlockChainName' onChange={(data) => { this.FindBlockchainName(data.target.value); this.setState({ ChainId: data.target.value }); }}>
-                  <option value="none" selected disabled hidden>{this.state.defaultcurrencyname}</option>
-                  {
-                    this.state.Blockchaindata1.map((playerData, k) => {
-                      return (
-                        <option value={playerData.chainID}> {playerData.name}</option>
-                      );
-                    })
-                  }
-                </select>
-              </div>
-
-              <div className='input-fields'>
-                <p>Payment tokens</p>
-                <select className='dropDown' name='Payment' onChange={(data) => { this.setState({ CurrencyId: data.target.value }); }}>
-                  <option value="none" selected disabled hidden>Select as an option</option>
-
-                  {
-                    this.state.Currencydata1.map((playerData, k) => {
-                      return (
-                        <option value={playerData.id}> {playerData.name}</option>
-
-                      );
-                    })
-                  }
-                </select>
-              </div>
-              <div className='input-fields'>
-                <p>Contract Adress</p>
-                <input
-                  type="text"
-                  required
-                  // placeholder="e.g 'Crypto Funk' "
-                  placeholder='Enter Your Name'
-                  width={100}
-                  className="input-field"
-                  name='contract'
-                  value={this.state.ContractAddress1}
-                  onChange={(data) => { this.setState({ ContractAddress1: data.target.value }) }}
-                />
-              </div>
-              <p style={{ whiteSpace: 'nowrap' }} >    <Switch defaultChecked size="small" />  Freeze MetaData </p>
-              <div style={{ display: "flex" }}>
-                <button className='create-list' onClick={() => { this.submit() }}>Update NFT</button>
-                <button className='create-list' onClick={() => { this.clearall() }}>Clear</button>
-              </div>
             </div>
-          </div></div>
-        <div className="flex3">
-
-          <div className="pt-2"></div>
-
-          <div className="pt-2"></div>
-
-          <div className='prevItem2'>
-            <p style={{ cursor: "pointer" }}>
-              Image Preview
-            </p>
-            <div style={{ height: "55%" }}>
-
-              <div className='prevItmImgSec'>
-                <img
-                  src={this.state.ImagePreview}
-                  alt="profileImage"
-                  className="avatar-immage"
-                />
-
-              </div>
+          </div>
+          <div className='col-md-12'>
+            <div style={{ display: "flex" }}>
+              <button className='create-list' onClick={() => { this.submit() }}>Update NFT</button>
+              <button className='create-list' onClick={() => { this.clearall() }}>Clear</button>
             </div>
-
           </div>
         </div>
       </div>

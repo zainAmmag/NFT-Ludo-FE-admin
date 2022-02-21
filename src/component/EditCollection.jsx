@@ -273,280 +273,253 @@ class EditCollection extends React.Component {
         const handleClose1 = () => this.setState({ ImageModal: false });
         return (
             <>
-                <div className="row">
-                    <div className='col-md-12'>
-                        <h1 className='f-Heading'>Edit Collection</h1>
-                    </div>
-                    <div className="flex2-1">
-                        <div className='container'>
-                            <div className="col-md-12">
-                                <div className='input-fields'>
-                                    <p style={{ cursor: "pointer", }}>
-                                        Logo Image
-                                    </p>
-                                    <div className='upload-section '>
-                                        <input type="file" onChange={this.LogoImageset} className="inputSec" />
-                                    </div>
+                <div className='container'>
+                    <div className="row">
+                        <div className='col-md-12'>
+                            <h1 className='f-Heading'>Edit Collection</h1>
+                        </div>
+                        <div className="col-md-8 col-sm-12 col-lg-8">
+                            <div className='input-fields'>
+                                <p style={{ cursor: "pointer", }}>
+                                    Logo Image
+                                </p>
+                                <div className='upload-section '>
+                                    <input type="file" onChange={this.LogoImageset} className="inputSec" />
                                 </div>
-                                <div className='input-fields'>
-                                    <p style={{ cursor: "pointer", }}>
-                                        Feature Image
-                                    </p>
-                                    <div className='upload-section '>
-                                        <input type="file" onChange={this.FeatureImageSet} className="inputSec" />
-                                    </div>
-                                    <Modal
-                                        centered
-                                        size="lg"
-                                        show={this.state.ImageModal}
-                                    >
-                                        <Modal.Body>
-                                            <div style={{ textAlign: "center" }} className="Modal-div">
-                                                <div className='Modal-div-notcreated'>
-                                                    {this.state.falsemessage === "" ? "" : this.state.falsemessage}
-                                                </div>
-
-                                                <div className='Modal-div-created'>
-                                                    {this.state.successmessage === "" ? "" : this.state.successmessage}
-                                                </div>
-                                                <div className='Modal-div-notcreated'>
-                                                    {this.state.errormessage === "" ? "" : this.state.errormessage}
-                                                </div>
-
+                            </div>
+                            <div className='input-fields'>
+                                <p style={{ cursor: "pointer", }}>
+                                    Feature Image
+                                </p>
+                                <div className='upload-section '>
+                                    <input type="file" onChange={this.FeatureImageSet} className="inputSec" />
+                                </div>
+                                <Modal
+                                    centered
+                                    size="lg"
+                                    show={this.state.ImageModal}
+                                >
+                                    <Modal.Body>
+                                        <div style={{ textAlign: "center" }} className="Modal-div">
+                                            <div className='Modal-div-notcreated'>
+                                                {this.state.falsemessage === "" ? "" : this.state.falsemessage}
                                             </div>
-                                        </Modal.Body>
-                                        <Modal.Footer>
-                                            <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
-                                        </Modal.Footer>
-                                    </Modal>
+
+                                            <div className='Modal-div-created'>
+                                                {this.state.successmessage === "" ? "" : this.state.successmessage}
+                                            </div>
+                                            <div className='Modal-div-notcreated'>
+                                                {this.state.errormessage === "" ? "" : this.state.errormessage}
+                                            </div>
+
+                                        </div>
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
+                                    </Modal.Footer>
+                                </Modal>
+                            </div>
+                            <div className='input-fields'>
+                                <p style={{ cursor: "pointer", }}>
+                                    Banner Image
+                                </p>
+                                <div className='upload-section '>
+                                    <input type="file" onChange={this.uploadPicture} className="inputSec" />
                                 </div>
-                                <div className='input-fields'>
-                                    <p style={{ cursor: "pointer", }}>
-                                        Banner Image
-                                    </p>
-                                    <div className='upload-section '>
-                                        <input type="file" onChange={this.uploadPicture} className="inputSec" />
+                            </div>
+                            <div className='input-fields'>
+                                <p>Name</p>
+                                <input
+                                    type="text"
+                                    required
+                                    // placeholder="e.g 'Crypto Funk' "
+                                    placeholder='Enter Your Name'
+                                    width={100}
+                                    className="input-field"
+                                    name='Name'
+                                    value={this.state.Name}
+                                    onChange={(data) => { this.setState({ Name: data.target.value }) }}
+                                />
+                            </div>
+                            <div className='input-fields'>
+                                <p>External Link</p>
+                                <input
+                                    type="text"
+                                    required
+                                    placeholder="e.g 'https://www.yoursite.com/item/123' "
+                                    width={100}
+                                    className="input-field"
+                                    name='ExternalLink'
+                                    value={this.state.ExternalLink}
+                                    onChange={(data) => { this.setState({ ExternalLink: data.target.value }) }}
+                                />
+                            </div>
+                            <div className='input-fields'>
+                                <p>Description</p>
+                                <input
+                                    type="text"
+                                    required
+                                    placeholder="e.g 'this is very limited item' "
+                                    width={100}
+                                    className="description-field"
+                                    name='Description'
+                                    value={this.state.Description}
+                                    onChange={(data) => { this.setState({ Description: data.target.value }) }}
+                                />
+                            </div>
+                            <div className='input-fields'>
+                                <p>Category</p>
+                                <select className='dropDown' name='Category' onChange={(data) => { this.setState({ CategoryId: data.target.value }); }}>
+                                    <option value="none" selected disabled hidden>Select an Option</option>
+                                    {
+                                        this.state.CategoryData.map((playerData, k) => {
+                                            return (
+                                                <option value={playerData.id}> {playerData.name}</option>
+                                            );
+                                        })
+                                    }
+
+                                </select>
+                            </div>
+                            <div className='input-fields'>
+                                <p>Blockchain</p>
+                                <select className='dropDown' name='BlockChainName' onChange={(data) => { this.setState({ BlockChainName: data.target.value }); }}>
+                                    <option value="none" selected disabled hidden>Select an Option</option>
+                                    {
+                                        this.state.Blockchaindata.map((playerData, k) => {
+                                            return (
+                                                <option value={playerData.chainID}> {playerData.name}</option>
+                                            );
+                                        })
+                                    }
+                                </select>
+                            </div>
+                            <div className='input-fields'>
+                                <p>Payment tokens</p>
+                                <select className='dropDown' name='Payment' onChange={(data) => { this.setState({ CurrencyId: data.target.value }); }}>
+                                    <option value="none" selected disabled hidden>Select an Option</option>
+                                    {
+                                        this.state.Currencydata.map((playerData, k) => {
+                                            return (
+                                                <option value={playerData.id}> {playerData.name}</option>
+                                            );
+                                        })
+                                    }
+                                </select>
+                            </div>
+                            <div className='input-fields'>
+                                <p>Links </p >
+                                <input
+                                    type="text"
+                                    required
+                                    placeholder="www.Discord.com "
+                                    width={100}
+                                    className="input-field"
+                                    name='Discord'
+                                    value={this.state.DiscordLink}
+                                    onChange={(data) => { this.setState({ DiscordLink: data.target.value }) }}
+                                />
+                            </div>
+                            <div className='input-fields'>
+                                <input
+                                    type="text"
+                                    required
+                                    placeholder="www.Twitter.com "
+                                    width={100}
+                                    className="input-field"
+                                    name='twitter'
+                                    value={this.state.TwitterLink}
+                                    onChange={(data) => { this.setState({ TwitterLink: data.target.value }) }}
+                                />
+                            </div>
+                            <div className='input-fields'>
+                                <input
+                                    type="text"
+                                    required
+                                    placeholder="www.Instagram.com"
+                                    width={100}
+                                    className="input-field"
+                                    name='instagram'
+                                    value={this.state.InstagramLink}
+                                    onChange={(data) => { this.setState({ InstagramLink: data.target.value }) }}
+                                />
+                            </div>
+                            <div className='input-fields'>
+                                <input
+                                    type="text"
+                                    required
+                                    placeholder="www.TLink.com"
+                                    width={100}
+                                    className="input-field"
+                                    name='tLink'
+                                    value={this.state.TLink}
+                                    onChange={(data) => { this.setState({ TLink: data.target.value }) }}
+                                />
+                            </div>
+                            <div className='input-fields'>
+                                <input
+                                    type="text"
+                                    required
+                                    placeholder="www.MediumLink.com"
+                                    width={100}
+                                    className="input-field"
+                                    name='mediumLink'
+                                    value={this.state.MediumLink}
+                                    onChange={(data) => { this.setState({ MediumLink: data.target.value }) }}
+                                />
+                            </div>
+                        </div>
+                        <div className="col-md-4 col-sm-10 col-lg-4">
+                            <div className="pt-2"></div>
+                            <div className="pt-2"></div>
+                            <div className='prevItem2'>
+                                <p style={{ cursor: "pointer", textAlign: "center" }}>
+                                    Logo Image
+                                </p>
+                                <div style={{ height: "55%" }}>
+                                    <div className='prevItmImgSec'>
+                                        <img src={this.state.LogoPreview} alt="profileImage" className="avatar-immage" />
                                     </div>
                                 </div>
-                                <div className='input-fields'>
-                                    <p>Name</p>
-                                    <input
-                                        type="text"
-                                        required
-                                        // placeholder="e.g 'Crypto Funk' "
-                                        placeholder='Enter Your Name'
-                                        width={100}
-                                        className="input-field"
-                                        name='Name'
-                                        value={this.state.Name}
-                                        onChange={(data) => { this.setState({ Name: data.target.value }) }}
-                                    />
-                                </div>
-
-                                <div className='input-fields'>
-                                    <p>External Link</p>
-                                    <input
-                                        type="text"
-                                        required
-                                        placeholder="e.g 'https://www.yoursite.com/item/123' "
-                                        width={100}
-                                        className="input-field"
-                                        name='ExternalLink'
-                                        value={this.state.ExternalLink}
-                                        onChange={(data) => { this.setState({ ExternalLink: data.target.value }) }}
-                                    />
-                                </div>
-
-
-                                <div className='input-fields'>
-                                    <p>Description</p>
-                                    <input
-                                        type="text"
-                                        required
-                                        placeholder="e.g 'this is very limited item' "
-                                        width={100}
-                                        className="description-field"
-                                        name='Description'
-                                        value={this.state.Description}
-                                        onChange={(data) => { this.setState({ Description: data.target.value }) }}
-                                    />
-                                </div>
-
-                                <div className='input-fields'>
-                                    <p>Category</p>
-                                    <select className='dropDown' name='Category' onChange={(data) => { this.setState({ CategoryId: data.target.value }); }}>
-                                        <option value="none" selected disabled hidden>Select an Option</option>
-                                        {
-                                            this.state.CategoryData.map((playerData, k) => {
-                                                return (
-                                                    <option value={playerData.id}> {playerData.name}</option>
-                                                );
-                                            })
-                                        }
-
-                                    </select>
-                                </div>
-
-
-                                <div className='input-fields'>
-                                    <p>Blockchain</p>
-                                    <select className='dropDown' name='BlockChainName' onChange={(data) => { this.setState({ BlockChainName: data.target.value }); }}>
-                                        <option value="none" selected disabled hidden>Select an Option</option>
-                                        {
-                                            this.state.Blockchaindata.map((playerData, k) => {
-                                                return (
-                                                    <option value={playerData.chainID}> {playerData.name}</option>
-                                                );
-                                            })
-                                        }
-                                    </select>
-                                </div>
-
-                                <div className='input-fields'>
-                                    <p>Payment tokens</p>
-                                    <select className='dropDown' name='Payment' onChange={(data) => { this.setState({ CurrencyId: data.target.value }); }}>
-                                        <option value="none" selected disabled hidden>Select an Option</option>
-                                        {
-                                            this.state.Currencydata.map((playerData, k) => {
-                                                return (
-                                                    <option value={playerData.id}> {playerData.name}</option>
-                                                );
-                                            })
-                                        }
-                                    </select>
-                                </div>
-
-                                <p>Links </p >
-                                <div className='input-fields'>
-
-                                    <input
-                                        type="text"
-                                        required
-                                        placeholder="www.Discord.com "
-                                        width={100}
-                                        className="input-field"
-                                        name='Discord'
-                                        value={this.state.DiscordLink}
-                                        onChange={(data) => { this.setState({ DiscordLink: data.target.value }) }}
-                                    />
-                                </div>
-                                <div className='input-fields'>
-                                    <input
-                                        type="text"
-                                        required
-                                        placeholder="www.Twitter.com "
-                                        width={100}
-                                        className="input-field"
-                                        name='twitter'
-                                        value={this.state.TwitterLink}
-                                        onChange={(data) => { this.setState({ TwitterLink: data.target.value }) }}
-                                    />
-                                </div>
-                                <div className='input-fields'>
-
-                                    <input
-                                        type="text"
-                                        required
-                                        placeholder="www.Instagram.com"
-                                        width={100}
-                                        className="input-field"
-                                        name='instagram'
-                                        value={this.state.InstagramLink}
-                                        onChange={(data) => { this.setState({ InstagramLink: data.target.value }) }}
-                                    />
-                                </div>
-                                <div className='input-fields'>
-
-                                    <input
-                                        type="text"
-                                        required
-                                        placeholder="www.TLink.com"
-                                        width={100}
-                                        className="input-field"
-                                        name='tLink'
-                                        value={this.state.TLink}
-                                        onChange={(data) => { this.setState({ TLink: data.target.value }) }}
-                                    />
-                                </div>
-                                <div className='input-fields'>
-
-                                    <input
-                                        type="text"
-                                        required
-                                        placeholder="www.MediumLink.com"
-                                        width={100}
-                                        className="input-field"
-                                        name='mediumLink'
-                                        value={this.state.MediumLink}
-                                        onChange={(data) => { this.setState({ MediumLink: data.target.value }) }}
-                                    />
-                                </div>
-                                <div style={{ display: "flex" }}>
-                                    <button className='create-list' onClick={() => { this.submit() }}>Update Collection</button>
-                                    <button className='create-list' onClick={() => { this.clearall() }}>Cencel</button>
+                            </div>
+                            <div className="pt-2"></div>
+                            <div className='prevItem2'>
+                                <p style={{ cursor: "pointer", textAlign: "center" }}>
+                                    Featured Image
+                                </p>
+                                <div style={{ height: "55%" }}>
+                                    <div className='prevItmImgSec'>
+                                        <img src={this.state.FeatPreview} alt="profileImage" className="avatar-immage" />
+                                    </div>
                                 </div>
                             </div>
-                        </div></div>
-                    <div className="flex3">
+                            <div className="pt-2"></div>
+                            <div className='prevItem'>
+                                <p style={{ cursor: "pointer", textAlign: "center" }}>
+                                    Banner Image
+                                </p>
+                                <div style={{ height: "55%" }}>
 
-
-                        <div className='prevItem2'>
-                            <p style={{ cursor: "pointer", textAlign: "center" }}>
-                                Logo Image
-                            </p>
-                            <div style={{ height: "55%" }}>
-
-                                <div className='prevItmImgSec'>
-                                    <img
-                                        src={this.state.LogoPreview}
-                                        alt="profileImage"
-                                        className="avatar-immage"
-                                    />
-
+                                    <div className='prevItmImgSec'>
+                                        <img
+                                            src={this.state.BannerPreview}
+                                            alt="profileImage"
+                                            className="avatar-immage"
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
-                        <div className="pt-2"></div>
-
-                        <div className='prevItem2'>
-                            <p style={{ cursor: "pointer", textAlign: "center" }}>
-                                Featured Image
-                            </p>
-                            <div style={{ height: "55%" }}>
-
-                                <div className='prevItmImgSec'>
-                                    <img
-                                        src={this.state.FeatPreview}
-                                        alt="profileImage"
-                                        className="avatar-immage"
-                                    />
-
-                                </div>
+                        <div className='col-md-12'>
+                            <div style={{ display: "flex" }}>
+                                <button className='create-list' onClick={() => { this.submit() }}>Update Collection</button>
+                                <button className='create-list' onClick={() => { this.clearall() }}>Cencel</button>
                             </div>
-
                         </div>
-                        <div className="pt-2"></div>
-                        <div className='prevItem'>
-                            <p style={{ cursor: "pointer", textAlign: "center" }}>
-                                Banner Image
-                            </p>
-                            <div style={{ height: "55%" }}>
-
-                                <div className='prevItmImgSec'>
-                                    <img
-                                        src={this.state.BannerPreview}
-                                        alt="profileImage"
-                                        className="avatar-immage"
-                                    />
-
-                                </div>
-                            </div>
-
-                        </div>
-
                     </div>
-                </div> </>
+                </div>
+            </>
         );
     }
 }

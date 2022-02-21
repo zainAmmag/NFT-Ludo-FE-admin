@@ -1836,6 +1836,8 @@ a,
   .mr-t-7 {margin-top: -30px !important;}
   .create-list{padding: 10px 15px 10px;}
   .card2{width: 100%;max-width: 320px;margin: 20px auto 10px;}
+  .profile-img-pnl{width: 120px;height: 120px;float: none;margin: 30px auto 0;}
+  .profile-txt-pnl{width: 100%;padding-left: 30px;text-align: center;padding-right: 30px;float: none;}
 }
 @media (max-width: 599px) {
   main#yoo{width: 100%;}
