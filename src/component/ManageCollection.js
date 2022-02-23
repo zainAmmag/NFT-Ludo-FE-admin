@@ -125,31 +125,28 @@ class UserDetail extends React.Component {
                       this.state.collectiondata.map((playerData, k) => {
                         return (
                           <>
-                            <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
-                              <div
-                                className="">
-                                <div >
-                                  <div className="panal1 card2 ">
+                            <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={3} >
+                        
+                                  <div className="panal1 card2">
                                     <div className="img-pnl">
-                                      <img src={"http://198.187.28.244:7577/" + playerData.logoImage} alt="profileImage" className="NFT-immage" />
+                                      <img src={"http://198.187.28.244:7577/" + playerData.logoImage} className="NFT-immage" />
                                       <Link to="/ShowCollectionDetail">
                                         <button
                                           style={{ background: 'transparent', border: 0 }}
                                           onClick={() => { localStorage.setItem("CollectionDetail", playerData.id) }}
-                                          className="NFT-banner-immage">
+                                         >
                                           <img
                                             src={"http://198.187.28.244:7577/" + playerData.bannerImage}
-                                            alt="profileImage"
-                                            style={{ width: '100%', height: '100%' }}
-                                          />
+                                            className="NFT-banner-immage"
+                                           />
+                                        
                                         </button>
                                       </Link>
                                     </div>
                                     <h5 style={{ color: "black", paddingTop: "6%" }}>{playerData.name}
                                     </h5>
                                   </div>
-                                </div>
-                              </div>{" "}
+                            {" "}
                             </Col>
                           </>
                         )
@@ -176,7 +173,7 @@ class UserDetail extends React.Component {
                   this.state.collectiondata.filter((x) => x.name == this.state.Search).map((playerData, k) => {
                     return (
                       <>
-                        <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
+                        <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={3} >
                           <div
                             className="">
                             <div >

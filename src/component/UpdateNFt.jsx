@@ -3,28 +3,42 @@ import React, { useState } from "react";
 import '../../src/Assets/css/custom.css';
 import { Button } from 'bootstrap';
 import avatar from '../Assets/images/avatar.png'
+import { mint } from './metamask'
+// import { signMessage, mint, sellNftMarket, buyNftMarket, cancelNft, openForAuction, acceptBid} from "decentralized-marketplace";
 import {
   BaseUrl, BaseUrl1,
 } from "../Constants/BusinessManager";
 import { SendHttpRequest } from "../component/utility";
 
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
+
 import swal from "sweetalert";
 import Switch from 'react-bootstrap/esm/Switch';
 import { bindActionCreators } from "redux";
 import { setIsLoaderActive } from "../actions/index";
 
-import Modal from "react-bootstrap/Modal";
+import {
+  Modal,
+  Row,
+  Col,
+  Form as Formm,
+} from "react-bootstrap";
+
+
 
 const mapStateToProps = (state) => {
-  return {};
+  return { walletAddress: state.metamaskData };
 };
+const delay = (t) => new Promise((resolve) => setTimeout(resolve, t));
+
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setIsLoaderActive: bindActionCreators(setIsLoaderActive, dispatch),
   };
 };
+// const walletDataSelector = useSelector(state => state?.metamaskData)
+// const dispatch = useDispatch()
 class UpdateNFT extends React.Component {
 
   constructor() {
@@ -43,11 +57,11 @@ class UpdateNFT extends React.Component {
       Supply1: 0,
       Feetransitiondata1: "",
       CategoryId1: 0,
-      CurrencyId1: 0,
+      CurrencyId1: 9,
       CollectionId1: 0,
       BlockChainname_1: "",
       Price1: 0,
-      ChainId1: 0,
+      ChainId1: 97,
       NftProperties1: [],
       NftLevels1: [],
       ImageModal1: false,
@@ -57,15 +71,31 @@ class UpdateNFT extends React.Component {
       NftStats1: [],
       Image1: {},
       freezedata: false,
+      isSwitchOn: false,
       ImagePreview: {},
       Blockchaindata1: [],
       CategoryData1: [],
-      Currencydata1: [],
+      Currencydata1: [
+        {
+          blockchainId: 2,
+          canUpdate: true,
+          currencyType: "Token",
+          decimals: 18,
+          id: 9,
+          image: null,
+          name: "BNB",
+          rateInUSD: 528.7,
+          shortName: "BNB",
+          smartContractAddress: "0x9Ce7B893A8aBe688803121e1bcCc68D069C01f51",
+          uuid: "793b259c-532d-4dff-a51c-06d609c64b63",
+        },
+          ],
       SelectedBlockchain1: [],
       falsemessage: "",
       successmessage: "",
       errormessage: "",
       PrevNftdata: [],
+
     };
 
   }
@@ -91,32 +121,9 @@ class UpdateNFT extends React.Component {
     }
   }
 
-  async CurrencyIdget() {
-    try {
-      const data = await SendHttpRequest(
-        BaseUrl + "/BlockChain/GetAllCurrency",
-        {},
-        "GET"
-      );
-      if (data.isSuccess) {
-        console.log(...data.data);
-        this.setState({ Currencydata1: data.data })
-
-      } else {
-        console.log("data" + data.message);
-      }
-    } catch (error) {
-      // ();localStorage.clear
-      return;
-    }
-
-
-  }
   async GetSelectedNft() {
-    //  /Nft/GetNftMarketById?nftId=10266&accountId=62
     var temp = "";
     var tempnum = 0;
-
     var tempbool = false;
     console.log("nftid", localStorage.getItem("Updatenftid"))
 
@@ -128,6 +135,7 @@ class UpdateNFT extends React.Component {
         "GET"
       );
       if (data.isSuccess) {
+        
         console.log("Collection data" + data.message);
         console.log(data.data);
         this.setState({ PrevNftdata: data.data })
@@ -170,6 +178,9 @@ class UpdateNFT extends React.Component {
         this.setState({ defaultcollctionname: temp })
         temp = this.state.PrevNftdata.contractAddress
         this.setState({ ContractAddress1: temp })
+        console.log("zazzaazazaz",this.state.CurrencyId1 )
+        this.setState({defaultpaymentnname: this.state.Currencydata1.find((item, index) => item.id == this.state.PrevNftdata.currencyId).name})
+        console.log("dsddddsdsdd",this.state.defaultpaymentnname)
       }
       else {
         console.log("data" + data.message)
@@ -177,33 +188,10 @@ class UpdateNFT extends React.Component {
     } catch (error) {
       return;
     }
-
-
-  }
-  async BlockchainNames() {
-    try {
-      const data = await SendHttpRequest(
-        BaseUrl + "/BlockChain/GetAllBlockChain",
-        {},
-        "GET"
-      );
-      if (data.isSuccess) {
-        console.log(...data.data);
-        this.setState({ Blockchaindata1: data.data })
-      } else {
-        console.log("data" + data.message);
-      }
-    } catch (error) {
-      // localStorage.clear();
-      return;
-    }
   }
   async componentDidMount() {
-    this.BlockchainNames();
-    this.CategoriesIdd();
-    this.CurrencyIdget();
     this.GetSelectedNft();
-
+    this.findcurrencyid();
     console.log(localStorage.getItem("TokenofAdminsigned"))
   }
   findchainid = () => {
@@ -213,7 +201,7 @@ class UpdateNFT extends React.Component {
     this.setState({ ChainId1: temp })
 
   }
-  findcurrencyid = () => {
+  async findcurrencyid() {
 
     console.log("zazzaazazaz", this.state.CurrencyId1)
     var temp = [];
@@ -233,7 +221,8 @@ class UpdateNFT extends React.Component {
     this.setState({ MediumLink: "" })
   }
   submit = (data) => {
-
+   
+    this.props.setIsLoaderActive(true);
     console.log("block", this.state.BlockChainname_)
     console.log("chain", this.state.ChainId)
     console.log("categoty", this.state.CategoryId)
@@ -242,6 +231,10 @@ class UpdateNFT extends React.Component {
     this.setState({ successmessage: "" })
     this.setState({ errormessage: "" })
     var bodyFormData = new FormData();
+    console.log("state.CurrencyId1",this.state.PrevNftdata.currencyId)
+         console.log("state.CategoryId1",this.state.PrevNftdata.collectionId)
+         console.log("state.chainID1",)
+
     bodyFormData.append("NftId", localStorage.getItem("Updatenftid"));
     bodyFormData.append("Name", this.state.Name1);
     bodyFormData.append("TokenId", this.state.TokenId1);
@@ -251,22 +244,92 @@ class UpdateNFT extends React.Component {
     bodyFormData.append("UnlockableContentNote", this.state.Unlockablecontentnote1);
     bodyFormData.append("SensitiveContent", this.state.SesitiveData1);
     bodyFormData.append("Supply", this.state.Supply1);
-    bodyFormData.append("CurrencyId", this.state.CurrencyId1);
-    bodyFormData.append("CollectionId", this.state.collectionId1);
-    bodyFormData.append("BlockChainName", this.state.defaultcurrencyname);
+    bodyFormData.append("CurrencyId", this.state.PrevNftdata.currencyId);
+    bodyFormData.append("CollectionId", this.state.PrevNftdata.collectionId);
+    bodyFormData.append("BlockChainName", this.state .defaultcurrencyname);
     bodyFormData.append("Price", this.state.Price1);
-    bodyFormData.append("ChainId", this.state.ChainId1);
+    bodyFormData.append("ChainId",  this.state.Blockchaindata1.find((item, index) => item.name == this.state.defaultcurrencyname).chainID);
     bodyFormData.append("FreezeData", this.state.freezedata);
     bodyFormData.append("Image", this.state.Image1);
-    if (this.state.CurrencyId1 == 0 || this.state.CategoryId1 == 0 || this.state.chainID1 == 0) {
-      this.setState({ ImageModal: true })
-      this.setState({ errormessage: "Fill Form Correctly" })
+    console.log("WHYYY BRO", this.state.isSwitchOn);
+    if (this.state.isSwitchOn === true) {
+      const payload = [
+        {
+          to: this.props.walletAddress.accounts[0],
+          uri: this.props.walletAddress.accounts[0],
+          tokenId: this.state.TokenId1,
+        },
+      ];
+      console.log("PAYLOADD".payload)
+
+      mint(payload, this.state.ContractAddress1).then(async (res) => {
+        console.log("responseeeeeee", res)
+        bodyFormData.append("FeeTransactionHash", res.hash);
+        var postBody = {
+          nftId: localStorage.getItem("Updatenftid"),
+          transactionHash: res.hash,
+        };
+        console.log("postBodypostBodypostBodypostBody", postBody)
+        delay(12000).then(async () => {
+          axios({
+            method: "PUT",
+            url: "http://198.187.28.244:7577/api/v1/Amin/EditNft",
+    
+            data: bodyFormData,
+            headers: {
+              accept: "text/plain",
+              "Content-Type": "multipart/form-data",
+              Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
+    
+            }
+          }).then(async(response) => {
+            axios({
+              method: "POST",
+              url: `http://198.187.28.244:7577/api/v1/Amin/FreezeNft`,
+      
+              data: postBody,
+              headers: {
+                // accept: "text/plain",
+                // "Content-Type": "multipart/form-data",
+                Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
+      
+              }
+            }).then((resdata) => {
+                  console.log("res updateeeeee", resdata)
+                  this.setState({ ImageModal: true })
+                  this.props.setIsLoaderActive(false);
+                  return this.props.history.push("/nftdetail");
+                  this.setState({ errormessage: "NFT updated successfully" })
+                }).catch((e) => {
+                  this.props.setIsLoaderActive(false);
+                  console.log("errorrrrrrrrrrrrr updateeeeee", e)
+  
+                })
+            }).catch((e)=>{
+              this.props.setIsLoaderActive(false);
+              console.log("eeeee updateeeeee", e)
+  
+            })
+        })
+        
+
+
+      }).catch((e) => {
+        console.log("errrr", e)
+      })
     }
+
+    // if (this.state.CurrencyId1 == 0 || this.state.collectionId1 == 0 || this.state.chainID1 == 0) {
+    //   this.setState({ ImageModal: true })
+    //   console.log("to check" + this.state.CurrencyId1, this.state.collectionId1, this.state.ChainId1)
+    //   this.setState({ errormessage: "Fill Form Correctly" })
+    // }
     else {
+      console.log("not update")
       this.props.setIsLoaderActive(true);
       axios({
-        method: "POST",
-        url: "http://198.187.28.244:7577/api/v1/Nft/AddNft",
+        method: "PUT",
+        url: "http://198.187.28.244:7577/api/v1/Amin/EditNft",
 
         data: bodyFormData,
         headers: {
@@ -280,17 +343,15 @@ class UpdateNFT extends React.Component {
         this.setState({ ImageModal: true })
         console.log(response.data.message);
         console.log("daadd" + response.statusText);
-        if (response.data.message == "Collection already exist") {
-          this.setState({ falsemessage: response.data.message })
-
-        }
-        else if (response.data.message == "Data successfully added") {
+        if (response.data.message == "Data successfully added") {
           this.setState({ successmessage: response.data.message })
         }
         else {
           this.setState({ errormessage: response.data.message })
         }
         // console.log(");
+      }).catch((e) => {
+        console.log("errorrrrr", e)
       })
     }
   }
@@ -317,12 +378,7 @@ class UpdateNFT extends React.Component {
             <h1 className='f-Heading'>Update NFT</h1>
           </div>
           <div className="col-md-8 col-sm-12 col-lg-8">
-            <div className='input-fields'>
-              <p style={{ cursor: "pointer", }}>
-                Banner Image
-              </p>
-
-              <Modal
+            <Modal
                 centered
                 size="lg"
                 show={this.state.ImageModal}
@@ -346,10 +402,7 @@ class UpdateNFT extends React.Component {
                   <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
                 </Modal.Footer>
               </Modal>
-              <div className='upload-section '>
-                <input type="file" onChange={this.uploadPicture} className="inputSec" />
-              </div>
-            </div>
+          
             <div className='input-fields'>
               <p>Name</p>
               <input
@@ -432,7 +485,7 @@ class UpdateNFT extends React.Component {
             <div className='input-fields'>
               <p>Payment tokens</p>
               <select className='dropDown' name='Payment' onChange={(data) => { this.setState({ CurrencyId: data.target.value }); }}>
-                <option value="none" selected disabled hidden>Select as an option</option>
+                <option value="none" selected disabled hidden>{this.state.defaultpaymentnname}</option>
 
                 {
                   this.state.Currencydata1.map((playerData, k) => {
@@ -454,12 +507,24 @@ class UpdateNFT extends React.Component {
                 width={100}
                 className="input-field"
                 name='contract'
+                disabled
                 value={this.state.ContractAddress1}
                 onChange={(data) => { this.setState({ ContractAddress1: data.target.value }) }}
               />
             </div>
-            <p style={{ whiteSpace: 'nowrap' }} >    <Switch defaultChecked size="small" />  Freeze MetaData </p>
-          </div>
+            <p style={{ whiteSpace: 'nowrap' }} >    <h5 className="">Freeze metadata?</h5>
+                <Formm>
+                  <Formm.Switch
+                    type="switch"
+                    id="custom-switch"
+                    label="Checking it will permanently freeze the metadata and can be sold on marketplace."
+                    checked={this.state.isSwitchOn}
+                    onChange={() => {
+                    this.setState({isSwitchOn: !this.state.isSwitchOn})
+                  }}
+                  />
+                </Formm></p>
+             </div>
           <div className="col-md-4 col-sm-10 col-lg-4">
             <div className="pt-2"></div>
             <div className="pt-2"></div>
@@ -467,6 +532,7 @@ class UpdateNFT extends React.Component {
               <p style={{ cursor: "pointer" }}>
                 Image Preview
               </p>
+              <input type="file" onChange={this.uploadPicture} className="inputimage"/>
               <div style={{ height: "55%" }}>
 
                 <div className='prevItmImgSec'>

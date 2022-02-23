@@ -7,6 +7,8 @@ import {
   BaseUrlGet,
 } from "../Constants/BusinessManager";
 import swal from "sweetalert";
+import { approveContract } from './metamask'
+
 import { Calendar, CheckSquare, Edit, Eye, Heart, MinusCircle } from "react-feather";
 import Modal from "react-bootstrap/Modal";
 import { Button, Table } from "react-bootstrap";
@@ -28,6 +30,7 @@ import { data } from "jquery";
 const mapStateToProps = (state) => {
   return {};
 };
+const delay = (t) => new Promise((resolve) => setTimeout(resolve, t));
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -51,6 +54,7 @@ class NFTDetail extends React.Component {
       tableHead: ["Inv #", "Amount", "Detail", "Date"],
       descriptionModel: false,
       periodModal: false,
+      Price:0,
       AccountDetail: {},
       // DOB: new Date(),
       // kycVerified: true,
@@ -63,8 +67,8 @@ class NFTDetail extends React.Component {
       CurrencyName: "",
     };
   }
-
-  async componentDidMount() {
+  async getnft()
+  {
     try {
       const data = await SendHttpRequest(
         BaseUrl1 + "/GetNftMarketById?nftId=" + localStorage.getItem("NFTID") + "&accountId=" + localStorage.getItem("NftaccountId"),
@@ -85,6 +89,77 @@ class NFTDetail extends React.Component {
     }
 
   }
+  async componentDidMount() {
+    this.getnft();
+  }
+  // componentDidMount(){
+  //   console.log("dgfsgrrsfhgdgfsgrrsfhg" + this.state);
+  // }
+  async sellNft(nftTokenId, contractAddress, id) {
+              
+        this.setState({ImageModal:false})
+    console.log("payddddddddddddddlkoad", nftTokenId, contractAddress);
+    
+    axios({
+      method: "GET",
+      url: "http://198.187.28.244:7577/api/v1/Nft/GetMarketNftAddress",
+      headers: {
+        accept: "text/plain",
+        "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
+
+      }
+    }).then((response) => {
+      console.log("payddddddddddddddlkoad", this.state);
+
+      const payload = {
+        approved: response?.data.data,
+        tokenId: nftTokenId,
+      };
+      const payloadMarket = {
+        nftContractId: contractAddress,
+        tokenId: nftTokenId,
+        price: this.state.Price,
+        // marketAddress: resAddress
+      };
+      console.log("paylkoad", payload);
+      console.log("payloadMarket", payloadMarket);
+
+      approveContract(payload,contractAddress,payloadMarket).then((res)=>{
+      console.log("hashhhhhhhhhhhhhh", res.res.hash, res.response.hash);
+      delay(12000).then(async () => {
+        var postBody = {
+          nftId: id,
+          price: this.state.Price,
+          approvalTransactionHash: res.response.hash,
+          openOrderTransactionHash: res.res.hash
+        }
+        axios({
+          method: "POST",
+          url: "http://198.187.28.244:7577/api/v1/Amin/SellNftMarket",
+          data: postBody,
+          headers: {
+            // accept: "text/plain",
+            // "Content-Type": "multipart/form-data",
+            Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
+    
+          }
+        }).then((response) => {
+                      
+        console.log("LETS GO BRO", response);
+
+        }).catch((e)=>{
+        console.log("ererer", e);
+
+        })
+      })
+        
+      }).catch((e)=>{
+        console.log("err", e);
+      })
+    })
+  }
+ 
   render() {
 
     return (
@@ -108,6 +183,7 @@ class NFTDetail extends React.Component {
               <p>{this.state.nftDATA.name}</p>
               <p><b>By </b></p>
               <p>{this.state.nftDATA.creatorName}</p>
+              
 
               <p style={{ fontWeight: "bold" }}> Funky 213 </p>
               <p>owner By {" "}{this.state.nftDATA.ownerName} </p>
@@ -121,7 +197,28 @@ class NFTDetail extends React.Component {
 
               {this.state.nftDATA.description}
               Created By{this.state.nftDATA.creatorName}
+
+
               <div className="full-div">
+              {this.state.nftDATA.isMinted ? (
+                  <>
+                  {this.state.nftDATA.staus !== "ReadyForSell" ? (
+                  <Button
+                    className="collection-button"
+                    style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder" }}
+                    onClick={() => {
+                      this.setState({ ImageModal: true })
+                    }}
+                  >
+                    Sell NFT
+                  </Button>
+                  ):(
+                    <p>
+                      NFT sent to marketplace
+                    </p>
+                  )}
+                  </>
+                ) : (
                 <Link to="/UpdateNFt" className="reg-btn blue"  >  <Button
                   className="collection-button"
                   style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder" }}
@@ -132,9 +229,33 @@ class NFTDetail extends React.Component {
                 >
                   Update</Button>
                 </Link>
+                 )}
               </div>
             </div>
-
+            <Modal
+              centered
+              size="lg"
+              show={this.state.ImageModal}
+            >
+              <Modal.Body>
+                <div style={{ textAlign: "center" }} className="">
+                  <p> Price</p>
+                  <input
+                    type="text"
+                    required
+                    placeholder="enter Price for one item[BNB] "
+                    width={50}
+                    className="input-field"
+                    name='Price'
+                    value={this.state.Price}
+                    onChange={(data) => { this.setState({ Price: data.target.value }) }}
+                  />
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <button className='Modal-div-cancel-button' onClick={()=>this.sellNft(this.state.nftDATA.nftTokenId, this.state.nftDATA.contractAddress, this.state.nftDATA.id)} > OK </button>
+              </Modal.Footer>
+            </Modal>
             <div className="detail-card">
               <h3> Listing </h3>
               <table

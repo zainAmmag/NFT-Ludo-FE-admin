@@ -48,14 +48,35 @@ class CreateNt extends React.Component {
             Price: 0,
             ChainId: 0,
             NftProperties: [],
+            imageset:"",
             NftLevels: [],
             ImageModal: false,
             NftStats: [],
             Image: {},
             ImagePreview: {},
-            Blockchaindata: [],
-            CategoryData: [],
-            Currencydata: [],
+            imageok:true,
+            Blockchaindata:[
+                {
+                    chainID: 97,
+                    name:"Binance Smart Chain"
+                },
+            ],
+            CategoryData:[],
+            Currencydata: [
+          {
+            blockchainId: 2,
+            canUpdate: true,
+            currencyType: "Token",
+            decimals: 18,
+            id: 9,
+            image: null,
+            name: "BNB",
+            rateInUSD: 528.7,
+            shortName: "BNB",
+            smartContractAddress: "0x9Ce7B893A8aBe688803121e1bcCc68D069C01f51",
+            uuid: "793b259c-532d-4dff-a51c-06d609c64b63",
+          },
+            ],
             SelectedBlockchain: [],
             falsemessage: "",
             successmessage: "",
@@ -123,10 +144,7 @@ class CreateNt extends React.Component {
         }
     }
     async componentDidMount() {
-        this.BlockchainNames();
         this.CategoriesIdd();
-        this.CurrencyIdget();
-        console.log(localStorage.getItem("TokenofAdminsigned"))
     }
 
     clearall = () => {
@@ -150,6 +168,14 @@ class CreateNt extends React.Component {
         this.setState({ successmessage: "" })
         this.setState({ errormessage: "" })
         var bodyFormData = new FormData();
+        if(!this.state.imageset)
+        { this.setState({imageok:false})
+            return 
+        } 
+        else
+        {
+            this.setState({imageok:true})
+        }    
         bodyFormData.append("Name", this.state.Name);
         bodyFormData.append("TokenId", this.state.TokenId);
         bodyFormData.append("ContractAddress", this.state.ContractAddress);
@@ -209,6 +235,7 @@ class CreateNt extends React.Component {
 
     uploadPicture = (e) => {
         this.setState({ Image: e.target.files[0] })
+        this.setState({imageset:'set'})
         this.setState({ ImagePreview: URL.createObjectURL(e.target.files[0]) })
     };
     FindBlockchainName(data) {
@@ -230,10 +257,7 @@ class CreateNt extends React.Component {
                     <div className="col-md-8 col-sm-12 col-lg-8">
                         <div className='row'>
                             <div className="col-md-12">
-                                <div className='input-fields'>
-                                    <p style={{ cursor: "pointer" }}>
-                                        Banner Image
-                                    </p>
+                                
                                     <Modal
                                         centered
                                         size="lg"
@@ -258,10 +282,6 @@ class CreateNt extends React.Component {
                                             <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
                                         </Modal.Footer>
                                     </Modal>
-                                    <div className='upload-section '>
-                                        <input type="file" onChange={this.uploadPicture} className="inputSec" />
-                                    </div>
-                                </div>
                             </div>
                             <div className="col-md-12">
                                 <div className='input-fields'>
@@ -270,7 +290,7 @@ class CreateNt extends React.Component {
                                         type="text"
                                         required
                                         // placeholder="e.g 'Crypto Funk' "
-                                        placeholder='Enter Your Name'
+                                        placeholder='Enter NFt Name'
                                         width={100}
                                         className="input-field"
                                         name='Name'
@@ -307,7 +327,7 @@ class CreateNt extends React.Component {
                                 <div className='input-fields'>
                                     <p>Collection</p>
                                     <select className='dropDown' name='Category' onChange={(data) => { console.log("dmkdsmmsd", this.state.BlockChainname_); this.setState({ CategoryId: data.target.value }); }}>
-                                        <option value="none" selected disabled hidden>Select an Option</option>
+                                        <option value="none" selected disabled hidden>Select as an Option</option>
                                         {
                                             this.state.CategoryData.map((playerData, k) => {
                                                 return (
@@ -334,7 +354,7 @@ class CreateNt extends React.Component {
                                 <div className='input-fields'>
                                     <p>Blockchain</p>
                                     <select className='dropDown' name='BlockChainName' onChange={(data) => { this.FindBlockchainName(data.target.value); this.setState({ ChainId: data.target.value }); }}>
-                                        <option value="none" selected disabled hidden>Select an Option</option>
+                                        <option value="none" selected disabled hidden>Select as an Option</option>
                                         {
                                             this.state.Blockchaindata.map((playerData, k) => {
                                                 return (
@@ -347,7 +367,7 @@ class CreateNt extends React.Component {
                                 <div className='input-fields'>
                                     <p>Payment tokens</p>
                                     <select className='dropDown' name='Payment' onChange={(data) => { this.setState({ CurrencyId: data.target.value }); }}>
-                                        <option value="none" selected disabled hidden>Select an Option</option>
+                                        <option value="none" selected disabled hidden>Select ass an Option</option>
                                         {
                                             this.state.Currencydata.map((playerData, k) => {
                                                 return (
@@ -381,13 +401,16 @@ class CreateNt extends React.Component {
                             <p style={{ cursor: "pointer" }}>
                                 Image Preview
                             </p>
+                            <input type="file" onChange={this.uploadPicture} className='inputimage'/>
                             <div className='prevItmImgSec'>
                                 <img
-                                    src={this.state.ImagePreview}
-                                    alt="profileImage"
+                                    src={this.state.imageset!=""?this.state.ImagePreview:' '}
                                     className="avatar-immage"
                                 />
                             </div>
+                            {!this.state.imageok && (
+            <div style={{ color: "#F61C04" }}>Please Select Image</div>
+          )}
                         </div>
                     </div>
                     <div className='col-lg-12 col-md-12 col-sm-12'>

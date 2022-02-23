@@ -1,21 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { SocialIcon } from 'react-social-icons';
-
+import { Clipboard } from "react-feather";
 import { Col } from "react-bootstrap";
 import profilePic from "../Assets/images/profilePic.png";
-
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import "../Assets/css/custom.css";
 import Email from "@material-ui/icons/Email"
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWalletSharp'
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { SendHttpRequest } from "../component/utility";
 import FavoriteIcon from '@material-ui/icons/Favorite';
-
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { setIsLoaderActive } from "../actions/index";
 import {
   BaseUrl,
 } from "../Constants/BusinessManager";
+
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setIsLoaderActive: bindActionCreators(setIsLoaderActive, dispatch),
+  };
+};
 class UserDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -29,6 +40,7 @@ class UserDetail extends React.Component {
       IsTickerHovered: false,
       categoryNumber: 0,
       BaseCurrency: 0,
+      collectionset:false,
       RenderFinished: false,
 
       FN: "No data available",
@@ -46,6 +58,9 @@ class UserDetail extends React.Component {
         console.log("data" + data.message);
         console.log(...data.data);
         this.setState({ NFtData: data.data })
+        this.setState({collectionset:true})
+        
+        this.props.setIsLoaderActive(false);
       } else {
         console.log("data" + data.message);
       }
@@ -76,6 +91,7 @@ class UserDetail extends React.Component {
     }
 
   }
+  
   render() {
     var arr = [];
     for (var i = 0; i < this.state.categoryNumber; i++) {
@@ -136,11 +152,18 @@ class UserDetail extends React.Component {
                 <div>
                   <p> <PersonOutlineIcon /> {" " + localStorage.getItem("username")} </p>
                   <p> <Email />{" " + localStorage.getItem("email")}</p>
-                  <p> <AccountBalanceWalletIcon /> {localStorage.getItem("address")}</p>
+                  <p> <AccountBalanceWalletIcon /> {localStorage.getItem("address")} 
+                  {" "}
+                  <CopyToClipboard text={localStorage.getItem("address")}
+                     onCopy={() => this.setState({copied: true})}>
+                 <Clipboard />
+                   </CopyToClipboard>
+                   {this.state.copied ? <span style={{color: 'red'}}>Copied.</span> : null}
+                  </p>
 
-                  <p> <SocialIcon network="twitter" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} />
+                  <p> <a href={localStorage.getItem("twitterLink")}> <SocialIcon network="twitter" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} /> </a>
                     {" " + localStorage.getItem("twitterLink")}</p>
-                  <p> <SocialIcon network="instagram" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} />
+                  <p> <a href={localStorage.getItem("instagramLink")}> <SocialIcon network="instagram" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} /></a>
                     {" " + localStorage.getItem("instagramLink")}</p>
                   <p>  {"Bio :" + localStorage.getItem("bio")}</p>
                 </div>
@@ -153,58 +176,93 @@ class UserDetail extends React.Component {
         {/* <div id="container">
           <div className="row"> */}
           <div className="full-div">
-            {this.state.collectiondata.length > 0 ? (
-              <>
-                {
-                  this.state.collectiondata.map((playerData, k) => (
-                    <>
-                      <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
-                        <div
-                          className="card2">
-                          <div >
-                            <div className="panal">
+          <div className="row">
+          {this.state.collectiondata.length > 0 ? (
+                  <>
+                    {
+                      this.state.collectiondata.map((playerData, k) => {
+                        return (
+                          <>
+                          <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3
+                          } sm={1}  >
+                            <div
+                              className="card2NFT">
+                              <div >
+                                <div className="panal">
+                               
+                                  <img
+                                    src={"http://198.187.28.244:7577/" + playerData.bannerImage}
+                                    alt="profileImage"
+                                    className="NFT-immage-NFT"
+                                    onClick={() => {
+                                      this.props.setIsLoaderActive(true);
+                                      this.GetNFTbycollectionId(playerData.id)
+                                    }}
+                                  />
+                                 
+    
+                                  <div className="">
+                                    <img
+                                      src={"http://198.187.28.244:7577/" + playerData.logoImage}
+                                      alt="profileImage"
+                                      className="NFT-immage3"
+                                    />
+                                  </div>
+                                  <h5 className="nft-heading">   {playerData.name + " "}</h5>
+                                   <l>
+                                      <a
+                                        onClick={() => {
+                                          this.GetNFTbycollectionId(playerData.id)
+    
+                                        }}
+                                        className="view-all-btn"
+                                      >
+                                        Details
+                                      </a>
+                                  </l>
+                                </div>
+                              </div>
+                            </div>{" "}
+                          </Col>
+                        </>
+                        )
+                      })}
+                  </>
+                ) : (
+                  <div style={{ alignItems: "center", alignContent: "center" }}>
+                    <p
+                      style={{
+                        textAlign: "center",
+                        color: "white",
+                        fontSize: 20,
+                      }}
+                    >
+                      No Collection
+                    </p>
+                  </div>
+                )}
+          </div>
+          </div>
+          {/* </div>
+        </div> */}
 
-                              <img
-                                src={"http://198.187.28.244:7577/" + playerData.logoImage}
-                                alt="profileImage"
-                                className="NFT-immage"
-                              />
-                              <button
-                                style={{ background: 'transparent', border: 0 }}
-                                onClick={() => { this.GetNFTbycollectionId(playerData.id) }}>
-                                <img
-                                  src={"http://198.187.28.244:7577/" + playerData.bannerImage}
-                                  alt="profileImage"
-                                  className="NFT-banner-immage"
-                                />
-                              </button>
-                              <h5 style={{ color: "black", paddingTop: "6%" }}>{playerData.name}</h5>
-                            </div>
-                          </div>
-                        </div>{" "}
-                      </Col>
-                    </>
-                  ))}
-              </>
-            ) : (
-              <div style={{ alignItems: "center", alignContent: "center" }}>
+
+
+        <h1>NFT's:</h1>
+        {!this.state.collectionset?(
+              <div className="card" style={{ alignItems: "center", alignContent: "center", width: "100%" }}>
                 <p
+                  className="margin-ud"
                   style={{
                     textAlign: "center",
                     color: "white",
                     fontSize: 20,
                   }}
                 >
-                  No Collection
+                  <h2>   Click on Collection to view NFT's  </h2>
                 </p>
               </div>
-            )}
-
-          </div>
-          {/* </div>
-        </div> */}
-
-        <h1>NFT's:</h1>
+            ):(    
         <div id="container">
           <div className="row">
             {this.state.NFtData.length > 0 ? (
@@ -218,7 +276,7 @@ class UserDetail extends React.Component {
                           <div >
                             <div className="panal">
                               <img
-                                src={"http://198.187.28.244:7577/" + playerData.bannerImage}
+                                src={"http://198.187.28.244:7577/" + playerData.image}
                                 alt="profileImage"
                                 className="NFT-immage-NFT"
                               />
@@ -273,9 +331,11 @@ class UserDetail extends React.Component {
 
           </div>
         </div>
+             ) }
       </div>
+
     );
   }
 }
 
-export default UserDetail;
+export default connect(mapStateToProps, mapDispatchToProps)( UserDetail);
