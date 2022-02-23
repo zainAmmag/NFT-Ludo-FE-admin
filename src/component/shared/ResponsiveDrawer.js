@@ -148,7 +148,7 @@ function ResponsiveDrawer(props) {
             <div className="user-details w-100">
               <div className="avatar">
                 <Link to="/ProjectManagement">
-                  <h1>Admin panal</h1>
+                  <h1>Admin panel</h1>
                 </Link>
               </div>
             </div>

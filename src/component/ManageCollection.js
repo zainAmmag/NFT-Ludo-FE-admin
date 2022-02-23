@@ -125,29 +125,51 @@ class UserDetail extends React.Component {
                       this.state.collectiondata.map((playerData, k) => {
                         return (
                           <>
-                            <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={3} >
-                        
-                                  <div className="panal1 card2">
-                                    <div className="img-pnl">
-                                      <img src={"http://198.187.28.244:7577/" + playerData.logoImage} className="NFT-immage" />
-                                      <Link to="/ShowCollectionDetail">
-                                        <button
-                                          style={{ background: 'transparent', border: 0 }}
-                                          onClick={() => { localStorage.setItem("CollectionDetail", playerData.id) }}
-                                         >
-                                          <img
-                                            src={"http://198.187.28.244:7577/" + playerData.bannerImage}
-                                            className="NFT-banner-immage"
-                                           />
-                                        
-                                        </button>
-                                      </Link>
-                                    </div>
-                                    <h5 style={{ color: "black", paddingTop: "6%" }}>{playerData.name}
-                                    </h5>
+                       <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3
+                          } sm={1}  >
+                            <div
+                              className="card2NFT">
+                              <div >
+                                <div className="panal">
+                               
+                                  <img
+                                    src={"http://198.187.28.244:7577/" + playerData.bannerImage}
+                                    alt="profileImage"
+                                    className="NFT-immage-NFT"
+                                    onClick={() => {
+                                      this.props.setIsLoaderActive(true);
+                                      this.GetNFTbycollectionId(playerData.id)
+                                    }}
+                                  />
+                                 
+    
+                                  <div className="">
+                                    <img
+                                      src={"http://198.187.28.244:7577/" + playerData.logoImage}
+                                      alt="profileImage"
+                                      className="NFT-immage3"
+                                    />
                                   </div>
-                            {" "}
-                            </Col>
+                                  <h5 className="nft-heading">   {playerData.name + " "}</h5>
+                                   <l>
+                                   <Link to="/ShowCollectionDetail">
+                                      <a
+                                        onClick={() => {
+                                         localStorage.setItem("CollectionDetail", playerData.id) 
+    
+                                        }}
+                                        className="view-all-btn"
+                                      >
+                                        Details
+                                      </a>
+                                      </Link>
+                                  </l>
+                                </div>
+                              </div>
+                            </div>{" "}
+                          </Col>
+
+
                           </>
                         )
                       })}

@@ -183,12 +183,11 @@ class UserDetail extends React.Component {
                       this.state.collectiondata.map((playerData, k) => {
                         return (
                           <>
-                          <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3
-                          } sm={1}  >
+                          <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3} sm={1}>
                             <div
                               className="card2NFT">
                               <div >
-                                <div className="panal">
+                                <div className="panel">
                                
                                   <img
                                     src={"http://198.187.28.244:7577/" + playerData.bannerImage}
@@ -259,7 +258,7 @@ class UserDetail extends React.Component {
                     fontSize: 20,
                   }}
                 >
-                  <h2>   Click on Collection to view NFT's  </h2>
+                  <h2>   Click on a Collection to view NFT's  </h2>
                 </p>
               </div>
             ):(    
@@ -274,7 +273,7 @@ class UserDetail extends React.Component {
                         <div
                           className="card2NFT">
                           <div >
-                            <div className="panal">
+                            <div className="panel">
                               <img
                                 src={"http://198.187.28.244:7577/" + playerData.image}
                                 alt="profileImage"
@@ -289,7 +288,7 @@ class UserDetail extends React.Component {
                                 />
                               </div>
                               <h5 className="nft-heading">  price</h5>
-                              <p className="note"> Price {playerData.buyPrice + " "}NB </p>
+                              <p className="note"> Price {playerData.buyPrice + " "}BNB </p>
                               <l>
 
                                 <Link to="/nftdetail">

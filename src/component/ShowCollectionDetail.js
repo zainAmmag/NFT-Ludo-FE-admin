@@ -190,7 +190,7 @@ class CollectionDetail extends React.Component {
                               <div
                                 className="card2NFT">
                                 <div >
-                                  <div className="panal">
+                                  <div className="panel">
                                     <img
                                       src={"http://198.187.28.244:7577/" + playerData.image}
                                       alt="profileImage"
@@ -260,7 +260,7 @@ class CollectionDetail extends React.Component {
                           <div
                             className="card2NFT">
                             <div >
-                              <div className="panal">
+                              <div className="panel">
                                 <img
                                   src={"http://198.187.28.244:7577/" + playerData.image}
                                   alt="profileImage"

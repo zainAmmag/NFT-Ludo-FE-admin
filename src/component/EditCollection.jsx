@@ -66,7 +66,7 @@ class EditCollection extends React.Component {
             Blockchaindata:[
                 {
                     chainID: 97,
-                    name:"Binance Smart Chain",
+                    name:"Binance Smart Chain",  
                     shortName:"BNB",
                 },
             ],
@@ -105,7 +105,6 @@ class EditCollection extends React.Component {
         };
     }
    
-
 
     async GetCollection() {
         var temp = "";
@@ -164,6 +163,7 @@ class EditCollection extends React.Component {
 
     }
     async CategoriesIdd() {
+        
         try {
             const data = await SendHttpRequest(
                 BaseUrl + "/Nft/GetNftCollectionCategories",
@@ -201,13 +201,12 @@ class EditCollection extends React.Component {
     }
     submit = (data) => {
         console.log(this.state.BlockChainName)
-
         console.log(this.state.CategoryId)
         console.log(this.state.CurrencyId)
         this.setState({ falsemessage: "" })
         this.setState({ successmessage: "" })
         this.setState({ errormessage: "" })
-        //   this.HandleOpen();
+       
         var bodyFormData = new FormData();
         bodyFormData.append("Name", this.state.Name);
         bodyFormData.append("Url", this.state.ExternalLink);
@@ -220,8 +219,8 @@ class EditCollection extends React.Component {
         bodyFormData.append("TLink", this.state.TLink);
         bodyFormData.append("PercentageFee", this.state.PercentageFee);
         bodyFormData.append("CategoryId", this.state.CategoryId);
-        bodyFormData.append("ChainId", this.state.BlockChainName);
-        bodyFormData.append("CurrencyId", this.state.CurrencyId);
+        bodyFormData.append("ChainId",this.state.collectiondata.chainID);
+        bodyFormData.append("CurrencyId",this.state.collectiondata.currencyId);
         bodyFormData.append("SensitveContent", this.state.SensitveContent);
         bodyFormData.append("LogoImage", this.state.LogoImage);
         bodyFormData.append("FeaturedImage", this.state.FeaturedImage);
@@ -244,13 +243,15 @@ class EditCollection extends React.Component {
             console.log(response.data.message);
             if (response.data.message == "Collection already exist") {
                 this.setState({ falsemessage: response.data.message })
-
+                
             }
             else if (response.data.message == "Data successfully Updated") {
+                
                 this.setState({ successmessage: response.data.message })
             }
             else {
                 this.setState({ errormessage: response.data.message })
+                // return this.props.history.push("/ShowCollectionDetail");
             }
             // console.log(");
         })
@@ -308,7 +309,7 @@ class EditCollection extends React.Component {
                                     size="lg"
                                     show={this.state.ImageModal}
                                 >
-                                    <Modal.Body>
+                                    <Modal.Body >
                                         <div style={{ textAlign: "center" }} className="Modal-div">
                                             <div className='Modal-div-notcreated'>
                                                 {this.state.falsemessage === "" ? "" : this.state.falsemessage}
@@ -322,10 +323,13 @@ class EditCollection extends React.Component {
                                             </div>
 
                                         </div>
-                                    </Modal.Body>
-                                    <Modal.Footer>
+                                        <Modal.Footer>
                                         <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
-                                    </Modal.Footer>
+                                        </Modal.Footer>
+                                    </Modal.Body>
+                                   
+                                       
+                                   
                                 </Modal>
                         
                             <div className='input-fields'>

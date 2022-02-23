@@ -335,7 +335,6 @@ class CreateCollection extends React.Component {
                                 <input
                                     type="text"
                                     required
-                                    placeholder="e.g 'this is very limited item' "
                                     width={100}
                                     className="description-field"
                                     name='Description'
@@ -346,7 +345,7 @@ class CreateCollection extends React.Component {
                             <div className='input-fields'>
                                 <p>Category</p>
                                 <select className='dropDown' name='Category' onChange={(data) => { this.setState({ CategoryId: data.target.value }); }}>
-                                    <option value="none" selected disabled hidden>Select as an Option</option>
+                                    <option value="none" selected disabled hidden>Select Category</option>
                                     {
                                         this.state.CategoryData.map((playerData, k) => {
                                             return (
@@ -360,7 +359,7 @@ class CreateCollection extends React.Component {
                             <div className='input-fields'>
                                 <p>Blockchain</p>
                                 <select className='dropDown' name='BlockChainName' onChange={(data) => { this.setState({ BlockChainName: data.target.value }); }}>
-                                    <option value="none" selected disabled hidden>Select as an Option</option>
+                                    <option value="none" selected disabled hidden>Select Blockchain</option>
                                     {
                                         this.state.Blockchaindata.map((playerData, k) => {
                                             return (
@@ -373,7 +372,7 @@ class CreateCollection extends React.Component {
                             <div className='input-fields'>
                                 <p>Payment tokens</p>
                                 <select className='dropDown' name='Payment' onChange={(data) => { this.setState({ CurrencyId: data.target.value }); }}>
-                                    <option value="none" selected disabled hidden>Select  as an Option</option>
+                                    <option value="none" selected disabled hidden>Select Payment token</option>
                                     {
                                         this.state.Currencydata.map((playerData, k) => {
                                             return (

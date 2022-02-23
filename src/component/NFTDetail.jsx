@@ -180,32 +180,31 @@ class NFTDetail extends React.Component {
           </div>
           <div className="col-lg-6 col-md-12 col-sm-12">
             <div className="Nft-user-detail">
-              <p>{this.state.nftDATA.name}</p>
-              <p><b>By </b></p>
+              <h3>{this.state.nftDATA.name}</h3>
+              <p>By</p>
               <p>{this.state.nftDATA.creatorName}</p>
+              
               
 
               <p style={{ fontWeight: "bold" }}> Funky 213 </p>
-              <p>owner By {" "}{this.state.nftDATA.ownerName} </p>
+              <p >price:{this.state.nftDATA.bidInitialMinimumAmount ? this.state.nftDATA.bidInitialMaximumAmount : 0} </p>
               <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart /> {" "}{this.state.nftDATA.ratings}     </p>
-
             </div>
             <div className="detail-card">
-              <p>min price---{this.state.nftDATA.bidInitialMinimumAmount ? this.state.nftDATA.bidInitialMaximumAmount : 0}
-                max price----{this.state.nftDATA.bidInitialMaximumAmount ? this.state.nftDATA.bidInitialMaximumAmount : 0} </p>
+              
               <h3>Description</h3>
 
               {this.state.nftDATA.description}
-              Created By{this.state.nftDATA.creatorName}
-
-
-              <div className="full-div">
+              {/* Created By{this.state.nftDATA.creatorName} */}
+              {/* {this.state.nftDATA.nftDATA.Price} */}
+              
+             <div className="full-div" style={{textAlign:"end"}}>
               {this.state.nftDATA.isMinted ? (
                   <>
                   {this.state.nftDATA.staus !== "ReadyForSell" ? (
                   <Button
                     className="collection-button"
-                    style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder" }}
+                    style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder", }}
                     onClick={() => {
                       this.setState({ ImageModal: true })
                     }}
@@ -221,7 +220,7 @@ class NFTDetail extends React.Component {
                 ) : (
                 <Link to="/UpdateNFt" className="reg-btn blue"  >  <Button
                   className="collection-button"
-                  style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder" }}
+                  style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder", }}
                   onClick={() => {
                     localStorage.setItem("Updatenftid", this.state.nftDATA.id)
                     localStorage.setItem("Updatenftaccountid", this.state.nftDATA.accountId)

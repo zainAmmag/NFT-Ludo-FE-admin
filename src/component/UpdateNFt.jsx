@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from "react";
 import '../../src/Assets/css/custom.css';
+import { Link } from 'react-router-dom';
 import { Button } from 'bootstrap';
 import avatar from '../Assets/images/avatar.png'
 import { mint } from './metamask'
@@ -209,7 +210,7 @@ class UpdateNFT extends React.Component {
     console.log("sssa", this.state.Currencydata1.find((item, index) => item.id == this.state.CurrencyId1))
 
   }
-  clearall = () => {
+  clearall = (data) => {
     this.setState({ Name: "" })
     this.setState({ ExternalLink: "" })
     this.setState({ Description: "" })
@@ -221,7 +222,7 @@ class UpdateNFT extends React.Component {
     this.setState({ MediumLink: "" })
   }
   submit = (data) => {
-   
+  
     this.props.setIsLoaderActive(true);
     console.log("block", this.state.BlockChainname_)
     console.log("chain", this.state.ChainId)
@@ -550,7 +551,8 @@ class UpdateNFT extends React.Component {
           <div className='col-md-12'>
             <div style={{ display: "flex" }}>
               <button className='create-list' onClick={() => { this.submit() }}>Update NFT</button>
-              <button className='create-list' onClick={() => { this.clearall() }}>Clear</button>
+             <Link to="nftdetail">  <button className='create-list' onClick={() => { this.clearall() }}>Cancel</button>
+             </Link>
             </div>
           </div>
         </div>

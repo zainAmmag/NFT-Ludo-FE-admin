@@ -188,7 +188,7 @@ class MenageAccount extends React.Component {
                                           {value.isVerfiedAccount ? 'Verified' : 'Unverified'}
                                         </TableCell>
                                         <TableCell className="Text-white">
-                                          {value.accountStatus == "Active" ? 'UnBlock' : 'Block'}
+                                          {value.accountStatus == "Active" ? 'UnBlock' : 'Blocked'}
                                         </TableCell>
 
                                         <TableCell className="Text-white">
@@ -327,7 +327,7 @@ class MenageAccount extends React.Component {
                                             {value.isVerfiedAccount ? 'Verified' : 'Unverified'}
                                           </TableCell>
                                           <TableCell className="Text-white">
-                                            {value.accountStatus == "Active" ? 'UnBlock' : 'Block'}
+                                            {value.accountStatus == "Active" ? 'UnBlock' : 'Blocked'}
                                           </TableCell>
   
                                           <TableCell className="Text-white">

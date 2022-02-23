@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import '../../src/Assets/css/custom.css';
 import { Button } from 'bootstrap';
 import avatar from '../Assets/images/avatar.png'
+import { Link } from "react-router-dom";
 import {
     BaseUrl,
 } from "../Constants/BusinessManager";
@@ -223,6 +224,7 @@ class CreateNt extends React.Component {
 
                 }
                 else if (response.data.message == "Data successfully added") {
+                    return this.props.history.push("/ManageNFt");
                     this.setState({ successmessage: response.data.message })
                 }
                 else {
@@ -327,7 +329,7 @@ class CreateNt extends React.Component {
                                 <div className='input-fields'>
                                     <p>Collection</p>
                                     <select className='dropDown' name='Category' onChange={(data) => { console.log("dmkdsmmsd", this.state.BlockChainname_); this.setState({ CategoryId: data.target.value }); }}>
-                                        <option value="none" selected disabled hidden>Select as an Option</option>
+                                        <option value="none" selected disabled hidden>Select Collection</option>
                                         {
                                             this.state.CategoryData.map((playerData, k) => {
                                                 return (
@@ -354,7 +356,7 @@ class CreateNt extends React.Component {
                                 <div className='input-fields'>
                                     <p>Blockchain</p>
                                     <select className='dropDown' name='BlockChainName' onChange={(data) => { this.FindBlockchainName(data.target.value); this.setState({ ChainId: data.target.value }); }}>
-                                        <option value="none" selected disabled hidden>Select as an Option</option>
+                                        <option value="none" selected disabled hidden>Select Blockchain</option>
                                         {
                                             this.state.Blockchaindata.map((playerData, k) => {
                                                 return (
@@ -367,7 +369,7 @@ class CreateNt extends React.Component {
                                 <div className='input-fields'>
                                     <p>Payment tokens</p>
                                     <select className='dropDown' name='Payment' onChange={(data) => { this.setState({ CurrencyId: data.target.value }); }}>
-                                        <option value="none" selected disabled hidden>Select ass an Option</option>
+                                        <option value="none" selected disabled hidden>Select Payment token</option>
                                         {
                                             this.state.Currencydata.map((playerData, k) => {
                                                 return (
@@ -402,7 +404,7 @@ class CreateNt extends React.Component {
                                 Image Preview
                             </p>
                             <input type="file" onChange={this.uploadPicture} className='inputimage'/>
-                            <div className='prevItmImgSec'>
+                            <div className='prevItmImgSecs'>
                                 <img
                                     src={this.state.imageset!=""?this.state.ImagePreview:' '}
                                     className="avatar-immage"
@@ -416,7 +418,8 @@ class CreateNt extends React.Component {
                     <div className='col-lg-12 col-md-12 col-sm-12'>
                         <div style={{ display: "flex" }}>
                             <button className='create-list' onClick={() => { this.submit() }}>Create NFT</button>
-                            <button className='create-list' onClick={() => { this.clearall() }}>Clear</button>
+                            <Link to="/ManageNFt"> <button className='create-list' onClick={() => { this.clearall() }}>Cancel</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
