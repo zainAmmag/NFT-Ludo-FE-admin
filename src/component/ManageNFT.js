@@ -45,6 +45,13 @@ class CollectionDetail extends React.Component {
       IsTickerHovered: false,
       categoryNumber: 0,
       price: 0,
+      Blockchaindata:[
+        {
+            chainID: 97,
+            name:"Binance Smart Chain",
+            shortName:"BNB",
+        },
+    ],
       BaseCurrency: 0,
       RenderFinished: false,
       NftcollectionId: 0,
@@ -106,7 +113,6 @@ class CollectionDetail extends React.Component {
   }
   async componentDidMount() {
     this.GetNFTS();
-    this.GetNFTbycollectionId();
   }
   render() {
     var arr = [];
@@ -114,8 +120,12 @@ class CollectionDetail extends React.Component {
     for (var i = 0; i < this.state.categoryNumber; i++) {
       arr.push(this.state.moviesData[this.state.categoryNumber1].Name);
     }
-    return (
+    return (          
       <div className="container-fluid body-content" id="">
+            
+        <div id="container" className="text-center">
+          <Link to="/createNFT" className="Link create-list">  Create NFT  </Link>
+          </div>
         <h1>NFT's:</h1>
 
         <div id="container">
@@ -150,7 +160,8 @@ class CollectionDetail extends React.Component {
                 {
                   this.state.NFtData.map((playerData, k) => (
                     <>
-                      <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
+                      <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3
+                      } sm={1}  >
                         <div
                           className="card2NFT">
                           <div >
@@ -168,8 +179,8 @@ class CollectionDetail extends React.Component {
                                   className="NFT-immage3"
                                 />
                               </div>
-                              <h5 className="nft-heading">  price</h5>
-                              <p className="note"> Price {playerData.buyPrice + " "}NB </p>
+                              <h5 className="nft-heading">   {playerData.name + " "}</h5>
+                              <p className="note"> Price {playerData.buyPrice + " "}  { this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
                               <l>
 
                                 <Link to="/nftdetail">
@@ -184,17 +195,6 @@ class CollectionDetail extends React.Component {
                                     Details
                                   </a>
                                 </Link>
-
-                                <a
-                                  onClick={() => {
-                                    this.setState({ ImageModal: true })
-
-                                  }}
-                                  className="view-all-btn"
-                                >
-                                  Sell this NFt
-                                </a>
-
                                 <FavoriteIcon />   {playerData.ratings}
                               </l>
                             </div>

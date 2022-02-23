@@ -9,10 +9,23 @@ import {
 } from "../Constants/BusinessManager";
 import { SendHttpRequest } from "../component/utility";
 
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import { setIsLoaderActive } from "../actions/index";
 import { Component } from 'react'
 import { contains } from 'jquery';
 import Modal from "react-bootstrap/Modal";
+import { bindActionCreators } from "redux";
+
+const mapStateToProps = (state) => {
+    return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setIsLoaderActive: bindActionCreators(setIsLoaderActive, dispatch),
+    };
+};
 
 
 class EditCollection extends React.Component {
@@ -34,6 +47,9 @@ class EditCollection extends React.Component {
             MediumLink: "",
             TLink: "",
             collectiondata: [],
+            categoryname:"",
+            Chainname:"",
+            paymentname:"",
             PercentageFee: 0,
             CategoryId: 0,
             ChainId: 0,
@@ -47,20 +63,48 @@ class EditCollection extends React.Component {
             BannerPreview: {},
             LogoPreview: {},
             FeatPreview: {},
-            Blockchaindata: [],
-            CategoryData: [],
-            Currencydata: [],
+            Blockchaindata:[
+                {
+                    chainID: 97,
+                    name:"Binance Smart Chain",
+                    shortName:"BNB",
+                },
+            ],
+            CategoryData: [
+                    {id: 1, name: 'Art'},
+                    {id: 2, name: 'Music'},
+                {id: 3, name: 'Photography'},
+            {id: 4, name: 'Utility'},
+                {id: 5, name: 'Virtual Worlds'},
+            {id: 6, name: 'Trading Cards'},   
+            {id: 7, name: 'Collectibles'},
+            {id: 8, name: 'Domain Names'},
+            {id: 9, name: 'Sports'}
+                ],
+            Currencydata: [
+          {
+            blockchainId: 2,
+            canUpdate: true,
+            currencyType: "Token",
+            decimals: 18,
+            id: 9,
+            image: null,
+            name: "BNB",
+            rateInUSD: 528.7,
+            shortName: "BNB",
+            smartContractAddress: "0x9Ce7B893A8aBe688803121e1bcCc68D069C01f51",
+            uuid: "793b259c-532d-4dff-a51c-06d609c64b63",
+          },
+            ],
+            URL: "",
+    isTrueVal: false,
             modalVisible: false,
             falsemessage: "",
             successmessage: "",
             errormessage: "",
         };
     }
-    componentDidMount() {
-        this.submit()
-        this.HandelChange()
-    }
-
+   
 
 
     async GetCollection() {
@@ -105,7 +149,12 @@ class EditCollection extends React.Component {
                 this.setState({ featuredImage: temp })
                 temp = this.state.collectiondata.featuredImage;
                 this.setState({ FeatPreview: "http://198.187.28.244:7577/" + temp })
-
+                this.setState({ categoryname:  this.state.CategoryData.find((item, index) => item.id == this.state.collectiondata.categoryId).name})
+                this.setState({ BlockChainName:   this.state.Blockchaindata.find((item, index) => item.chainID == this.state.collectiondata.chainID).name})
+                this.setState({ paymentname:  this.state.Currencydata.find((item, index) => item.id == this.state.collectiondata.currencyId).name})
+                 if(this.state.categoryname!=""&&this.state.BlockChainName!=""&&this.state.paymentname!="") 
+                 this.props.setIsLoaderActive(false);
+                          
             } else {
                 console.log("data" + data.message)
             }
@@ -122,7 +171,7 @@ class EditCollection extends React.Component {
                 "GET"
             );
             if (data.isSuccess) {
-                console.log(...data.data);
+                console.log(data.data);
                 this.setState({ CategoryData: data.data })
             } else {
                 console.log("data" + data.message);
@@ -133,52 +182,11 @@ class EditCollection extends React.Component {
         }
 
     }
-
-    async CurrencyIdget() {
-        try {
-            const data = await SendHttpRequest(
-                BaseUrl + "/BlockChain/GetAllCurrency",
-                {},
-                "GET"
-            );
-            if (data.isSuccess) {
-                console.log(...data.data);
-                this.setState({ Currencydata: data.data })
-
-            } else {
-                console.log("data" + data.message);
-            }
-        } catch (error) {
-            // localStorage.clear();
-            return;
-        }
-
-    }
-    async BlockchainNames() {
-        try {
-            const data = await SendHttpRequest(
-                BaseUrl + "/BlockChain/GetAllBlockChain",
-                {},
-                "GET"
-            );
-            if (data.isSuccess) {
-                console.log(...data.data);
-                this.setState({ Blockchaindata: data.data })
-            } else {
-                console.log("data" + data.message);
-            }
-        } catch (error) {
-            // localStorage.clear();
-            return;
-        }
-    }
     async componentDidMount() {
+        this.props.setIsLoaderActive(true);
+       
         this.GetCollection();
-        this.BlockchainNames();
-        this.CategoriesIdd();
-        this.CurrencyIdget();
-        console.log(localStorage.getItem("TokenofAdminsigned"))
-        this.setState({ ImageModal: false });
+         this.setState({ ImageModal: false });
     }
     clearall = () => {
         this.setState({ Name: "" })
@@ -268,7 +276,22 @@ class EditCollection extends React.Component {
         this.setState({ ImageModal: false })
     }
 
-
+    urlPatternValidation = URL => {
+        const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');    
+        return regex.test(URL);
+      };
+      changeUrl = event => {
+        const { value } = event.target;
+        const isTrueVal = !value || this.urlPatternValidation(value);
+        this.setState({
+          URL: value,
+          isTrueVal
+        });
+      };
+      onSubmit = () => {
+        const { URL } = this.state;
+        console.log("Here is the site url: ", URL);
+      };
     render() {
         const handleClose1 = () => this.setState({ ImageModal: false });
         return (
@@ -279,21 +302,7 @@ class EditCollection extends React.Component {
                             <h1 className='f-Heading'>Edit Collection</h1>
                         </div>
                         <div className="col-md-8 col-sm-12 col-lg-8">
-                            <div className='input-fields'>
-                                <p style={{ cursor: "pointer", }}>
-                                    Logo Image
-                                </p>
-                                <div className='upload-section '>
-                                    <input type="file" onChange={this.LogoImageset} className="inputSec" />
-                                </div>
-                            </div>
-                            <div className='input-fields'>
-                                <p style={{ cursor: "pointer", }}>
-                                    Feature Image
-                                </p>
-                                <div className='upload-section '>
-                                    <input type="file" onChange={this.FeatureImageSet} className="inputSec" />
-                                </div>
+                           
                                 <Modal
                                     centered
                                     size="lg"
@@ -318,22 +327,14 @@ class EditCollection extends React.Component {
                                         <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
                                     </Modal.Footer>
                                 </Modal>
-                            </div>
-                            <div className='input-fields'>
-                                <p style={{ cursor: "pointer", }}>
-                                    Banner Image
-                                </p>
-                                <div className='upload-section '>
-                                    <input type="file" onChange={this.uploadPicture} className="inputSec" />
-                                </div>
-                            </div>
+                        
                             <div className='input-fields'>
                                 <p>Name</p>
                                 <input
                                     type="text"
                                     required
                                     // placeholder="e.g 'Crypto Funk' "
-                                    placeholder='Enter Your Name'
+                                    placeholder='Enter Collection Name'
                                     width={100}
                                     className="input-field"
                                     name='Name'
@@ -370,7 +371,7 @@ class EditCollection extends React.Component {
                             <div className='input-fields'>
                                 <p>Category</p>
                                 <select className='dropDown' name='Category' onChange={(data) => { this.setState({ CategoryId: data.target.value }); }}>
-                                    <option value="none" selected disabled hidden>Select an Option</option>
+                                    <option value="none" selected disabled hidden>{this.state.categoryname}</option>
                                     {
                                         this.state.CategoryData.map((playerData, k) => {
                                             return (
@@ -384,7 +385,7 @@ class EditCollection extends React.Component {
                             <div className='input-fields'>
                                 <p>Blockchain</p>
                                 <select className='dropDown' name='BlockChainName' onChange={(data) => { this.setState({ BlockChainName: data.target.value }); }}>
-                                    <option value="none" selected disabled hidden>Select an Option</option>
+                                    <option value="none" selected disabled hidden>{this.state.BlockChainName}</option>
                                     {
                                         this.state.Blockchaindata.map((playerData, k) => {
                                             return (
@@ -397,7 +398,7 @@ class EditCollection extends React.Component {
                             <div className='input-fields'>
                                 <p>Payment tokens</p>
                                 <select className='dropDown' name='Payment' onChange={(data) => { this.setState({ CurrencyId: data.target.value }); }}>
-                                    <option value="none" selected disabled hidden>Select an Option</option>
+                                    <option value="none" selected disabled hidden>{this.state.paymentname}</option>
                                     {
                                         this.state.Currencydata.map((playerData, k) => {
                                             return (
@@ -476,9 +477,10 @@ class EditCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Logo Image
                                 </p>
+                                <input type="file" accept="image/*" onChange={this.LogoImageset} className="inputimage"/ >
                                 <div style={{ height: "55%" }}>
                                     <div className='prevItmImgSec'>
-                                        <img src={this.state.LogoPreview} alt="profileImage" className="avatar-immage" />
+                                        <img src={this.state.LogoPreview} alt="profileImage" className="avatar-immagelogo" />
                                     </div>
                                 </div>
                             </div>
@@ -487,6 +489,7 @@ class EditCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Featured Image
                                 </p>
+                                <input type="file" accept="image/*" onChange={this.FeatureImageSet} className="inputimage" />
                                 <div style={{ height: "55%" }}>
                                     <div className='prevItmImgSec'>
                                         <img src={this.state.FeatPreview} alt="profileImage" className="avatar-immage" />
@@ -498,6 +501,8 @@ class EditCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Banner Image
                                 </p>
+                                <input type="file" accept="image/*" onChange={this.uploadPicture} className="inputimage" />
+                           
                                 <div style={{ height: "55%" }}>
 
                                     <div className='prevItmImgSec'>
@@ -514,7 +519,8 @@ class EditCollection extends React.Component {
                         <div className='col-md-12'>
                             <div style={{ display: "flex" }}>
                                 <button className='create-list' onClick={() => { this.submit() }}>Update Collection</button>
-                                <button className='create-list' onClick={() => { this.clearall() }}>Cencel</button>
+                                <Link to="/manageCollection" >  <button className='create-list' onClick={() => { this.clearall() }}>Cancel</button>
+                                  </Link>
                             </div>
                         </div>
                     </div>
@@ -523,4 +529,4 @@ class EditCollection extends React.Component {
         );
     }
 }
-export default EditCollection;
+export default connect(mapStateToProps, mapDispatchToProps) (EditCollection);
