@@ -42,10 +42,10 @@ import { getToken } from "../../Utils/Utils";
 
 
 const routes = [
-  {
-    path:'/ProjectManagement',
-    main:()=> <h2>ProjectManagement</h2>
-  },
+  // {
+  //   path:'/ProjectManagement',
+  //   main:()=> <h2>ProjectManagement</h2>
+  // },
   {
     path:'/manageAccount',
     main:()=> <h2>ManageAccount</h2>
@@ -162,10 +162,10 @@ function ResponsiveDrawer(props) {
               setisActive4(false);
               }}  
               className={isActive ? 'waves-effect active': 'waves-effect'} >
-            <Link id='1' to="/ProjectManagement" className="waves-effect">
+            {/* <Link id='1' to="/ProjectManagement" className="waves-effect">
               <Clipboard className="sidebarIcons mt-0" color="white" size={30} />
               <p className="LINK_OVERVIEW">Project Management</p>
-            </Link>
+            </Link> */}
             </ListItem>
 
           <ListItem onClick={()=>{ 

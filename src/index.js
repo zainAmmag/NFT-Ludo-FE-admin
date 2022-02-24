@@ -50,12 +50,12 @@ const Pages = () => {
                 >
                 </PrivateRoute>{" "}
 
-                <PrivateRoute
+                {/* <PrivateRoute
                   exact
                   path="/ProjectManagement"
                   component={ProjectManagement}
                 >
-                </PrivateRoute>{" "}
+                </PrivateRoute>{" "} */}
 
 
                 <PrivateRoute

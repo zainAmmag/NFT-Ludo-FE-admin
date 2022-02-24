@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { SocialIcon } from 'react-social-icons';
-import { Clipboard } from "react-feather";
+import { Copy } from "react-feather";
 import { Col } from "react-bootstrap";
 import profilePic from "../Assets/images/profilePic.png";
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import "../Assets/css/custom.css";
 import Email from "@material-ui/icons/Email"
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWalletSharp'
@@ -17,6 +17,9 @@ import { setIsLoaderActive } from "../actions/index";
 import {
   BaseUrl,
 } from "../Constants/BusinessManager";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const mapStateToProps = (state) => {
   return {};
@@ -40,7 +43,7 @@ class UserDetail extends React.Component {
       IsTickerHovered: false,
       categoryNumber: 0,
       BaseCurrency: 0,
-      collectionset:false,
+      collectionset: false,
       RenderFinished: false,
 
       FN: "No data available",
@@ -58,8 +61,8 @@ class UserDetail extends React.Component {
         console.log("data" + data.message);
         console.log(...data.data);
         this.setState({ NFtData: data.data })
-        this.setState({collectionset:true})
-        
+        this.setState({ collectionset: true })
+
         this.props.setIsLoaderActive(false);
       } else {
         console.log("data" + data.message);
@@ -91,7 +94,7 @@ class UserDetail extends React.Component {
     }
 
   }
-  
+  notify = () => toast("Copied");
   render() {
     var arr = [];
     for (var i = 0; i < this.state.categoryNumber; i++) {
@@ -152,19 +155,22 @@ class UserDetail extends React.Component {
                 <div>
                   <p> <PersonOutlineIcon /> {" " + localStorage.getItem("username")} </p>
                   <p> <Email />{" " + localStorage.getItem("email")}</p>
-                  <p> <AccountBalanceWalletIcon /> {localStorage.getItem("address")} 
-                  {" "}
-                  <CopyToClipboard text={localStorage.getItem("address")}
-                     onCopy={() => this.setState({copied: true})}>
-                 <Clipboard />
-                   </CopyToClipboard>
-                   {this.state.copied ? <span style={{color: 'red'}}>Copied.</span> : null}
+                  <p> <AccountBalanceWalletIcon /> {localStorage.getItem("address")}
+                    {" "}
+                    <CopyToClipboard text={localStorage.getItem("address")}
+                      onCopy={() => this.setState({ copied: true })}>
+                      <Copy style={{cursor:"pointer"}}/>
+                    </CopyToClipboard>
+                    {this.state.copied ? <span style={{ fontSize: 12, marginLeft: '1%' }}>Copied.</span> : null}
+
                   </p>
 
-                  <p> <a href={localStorage.getItem("twitterLink")}> <SocialIcon network="twitter" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} /> </a>
+                  <p className="links"> <a href={localStorage.getItem("twitterLink")}> <SocialIcon network="twitter" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} /> </a>
                     {" " + localStorage.getItem("twitterLink")}</p>
-                  <p> <a href={localStorage.getItem("instagramLink")}> <SocialIcon network="instagram" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} /></a>
+
+                  <p className="links"> <a href={localStorage.getItem("instagramLink")}> <SocialIcon network="instagram" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} /></a>
                     {" " + localStorage.getItem("instagramLink")}</p>
+
                   <p>  {"Bio :" + localStorage.getItem("bio")}</p>
                 </div>
               </div>
@@ -175,166 +181,166 @@ class UserDetail extends React.Component {
         <h1>Collections :</h1>
         {/* <div id="container">
           <div className="row"> */}
-          <div className="full-div">
+        <div className="full-div">
           <div className="row">
-          {this.state.collectiondata.length > 0 ? (
-                  <>
-                    {
-                      this.state.collectiondata.map((playerData, k) => {
-                        return (
-                          <>
-                          <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3} sm={1}>
-                            <div
-                              className="card2NFT">
-                              <div >
-                                <div className="panel">
-                               
+            {this.state.collectiondata.length > 0 ? (
+              <>
+                {
+                  this.state.collectiondata.map((playerData, k) => {
+                    return (
+                      <>
+                        <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3} sm={1}>
+                          <div
+                            className="card2NFT">
+                            <div >
+                              <div className="panel">
+
+                                <img
+                                  src={"http://198.187.28.244:7577/" + playerData.bannerImage}
+                                  alt="profileImage"
+                                  className="NFT-immage-NFT"
+                                  onClick={() => {
+                                    this.props.setIsLoaderActive(true);
+                                    this.GetNFTbycollectionId(playerData.id)
+                                  }}
+                                />
+
+
+                                <div className="">
                                   <img
-                                    src={"http://198.187.28.244:7577/" + playerData.bannerImage}
+                                    src={"http://198.187.28.244:7577/" + playerData.logoImage}
                                     alt="profileImage"
-                                    className="NFT-immage-NFT"
-                                    onClick={() => {
-                                      this.props.setIsLoaderActive(true);
-                                      this.GetNFTbycollectionId(playerData.id)
-                                    }}
+                                    className="NFT-immage3"
                                   />
-                                 
-    
-                                  <div className="">
-                                    <img
-                                      src={"http://198.187.28.244:7577/" + playerData.logoImage}
-                                      alt="profileImage"
-                                      className="NFT-immage3"
-                                    />
-                                  </div>
-                                  <h5 className="nft-heading">   {playerData.name + " "}</h5>
-                                   <l>
-                                      <a
-                                        onClick={() => {
-                                          this.GetNFTbycollectionId(playerData.id)
-    
-                                        }}
-                                        className="view-all-btn"
-                                      >
-                                        Details
-                                      </a>
-                                  </l>
                                 </div>
+                                <h5 className="nft-heading">   {playerData.name + " "}</h5>
+                                <l>
+                                  <a
+                                    onClick={() => {
+                                      this.GetNFTbycollectionId(playerData.id)
+
+                                    }}
+                                    className="view-all-btn"
+                                  >
+                                    Details
+                                  </a>
+                                </l>
                               </div>
-                            </div>{" "}
-                          </Col>
-                        </>
-                        )
-                      })}
-                  </>
-                ) : (
-                  <div style={{ alignItems: "center", alignContent: "center" }}>
-                    <p
-                      style={{
-                        textAlign: "center",
-                        color: "white",
-                        fontSize: 20,
-                      }}
-                    >
-                      No Collection
-                    </p>
-                  </div>
-                )}
+                            </div>
+                          </div>{" "}
+                        </Col>
+                      </>
+                    )
+                  })}
+              </>
+            ) : (
+              <div style={{ alignItems: "center", alignContent: "center" }}>
+                <p
+                  style={{
+                    textAlign: "center",
+                    color: "white",
+                    fontSize: 20,
+                  }}
+                >
+                  No Collection
+                </p>
+              </div>
+            )}
           </div>
-          </div>
-          {/* </div>
+        </div>
+        {/* </div>
         </div> */}
 
 
 
         <h1>NFT's:</h1>
-        {!this.state.collectionset?(
-              <div className="card" style={{ alignItems: "center", alignContent: "center", width: "100%" }}>
-                <p
-                  className="margin-ud"
-                  style={{
-                    textAlign: "center",
-                    color: "white",
-                    fontSize: 20,
-                  }}
-                >
-                  <h2>   Click on a Collection to view NFT's  </h2>
-                </p>
-              </div>
-            ):(    
-        <div id="container">
-          <div className="row">
-            {this.state.NFtData.length > 0 ? (
-              <>
-                {
-                  this.state.NFtData.map((playerData, k) => (
-                    <>
-                      <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
-                        <div
-                          className="card2NFT">
-                          <div >
-                            <div className="panel">
-                              <img
-                                src={"http://198.187.28.244:7577/" + playerData.image}
-                                alt="profileImage"
-                                className="NFT-immage-NFT"
-                              />
-
-                              <div className="">
-                                <img
-                                  src={"http://198.187.28.244:7577/" + playerData.logoImage}
-                                  alt="profileImage"
-                                  className="NFT-immage3"
-                                />
-                              </div>
-                              <h5 className="nft-heading">  price</h5>
-                              <p className="note"> Price {playerData.buyPrice + " "}BNB </p>
-                              <l>
-
-                                <Link to="/nftdetail">
-                                  <a
-                                    onClick={() => {
-                                      localStorage.setItem("NFTID", playerData.id)
-                                      localStorage.setItem("NftaccountId", playerData.accountId)
-
-                                    }}
-                                    className="view-all-btn"
-                                  >
-                                    Detail
-                                  </a>
-                                </Link>
-                                <FavoriteIcon />   {playerData.ratings}
-                              </l>
-
-                            </div>
-                          </div>
-                        </div>{" "}
-                      </Col>
-                    </>
-                  ))}
-              </>
-            ) : (
-              <div className="card" style={{ alignItems: "center", alignContent: "center", width: "100%" }}>
-                <p
-                  className="margin-ud"
-                  style={{
-                    textAlign: "center",
-                    color: "white",
-                    fontSize: 20,
-                  }}
-                >
-                  <h2>   No NFT To Show  </h2>
-                </p>
-              </div>
-            )}
-
+        {!this.state.collectionset ? (
+          <div className="card" style={{ alignItems: "center", alignContent: "center", width: "100%" }}>
+            <p
+              className="margin-ud"
+              style={{
+                textAlign: "center",
+                color: "white",
+                fontSize: 20,
+              }}
+            >
+              <h2>   Click on a Collection to view NFT's  </h2>
+            </p>
           </div>
-        </div>
-             ) }
+        ) : (
+          <div id="container">
+            <div className="row">
+              {this.state.NFtData.length > 0 ? (
+                <>
+                  {
+                    this.state.NFtData.map((playerData, k) => (
+                      <>
+                        <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={4} >
+                          <div
+                            className="card2NFT">
+                            <div >
+                              <div className="panel">
+                                <img
+                                  src={"http://198.187.28.244:7577/" + playerData.image}
+                                  alt="profileImage"
+                                  className="NFT-immage-NFT"
+                                />
+
+                                <div className="">
+                                  <img
+                                    src={"http://198.187.28.244:7577/" + playerData.logoImage}
+                                    alt="profileImage"
+                                    className="NFT-immage3"
+                                  />
+                                </div>
+                                <h5 className="nft-heading">  price</h5>
+                                <p className="note"> Price {playerData.buyPrice + " "}BNB </p>
+                                <l>
+
+                                  <Link to="/nftdetail">
+                                    <a
+                                      onClick={() => {
+                                        localStorage.setItem("NFTID", playerData.id)
+                                        localStorage.setItem("NftaccountId", playerData.accountId)
+
+                                      }}
+                                      className="view-all-btn"
+                                    >
+                                      Detail
+                                    </a>
+                                  </Link>
+                                  <FavoriteIcon />   {playerData.ratings}
+                                </l>
+
+                              </div>
+                            </div>
+                          </div>{" "}
+                        </Col>
+                      </>
+                    ))}
+                </>
+              ) : (
+                <div className="card" style={{ alignItems: "center", alignContent: "center", width: "100%" }}>
+                  <p
+                    className="margin-ud"
+                    style={{
+                      textAlign: "center",
+                      color: "white",
+                      fontSize: 20,
+                    }}
+                  >
+                    <h2>   No NFT To Show  </h2>
+                  </p>
+                </div>
+              )}
+
+            </div>
+          </div>
+        )}
       </div>
 
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)( UserDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);

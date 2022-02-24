@@ -113,6 +113,7 @@ class CollectionDetail extends React.Component {
   }
   async componentDidMount() {
     this.GetNFTS();
+    this.props.setIsLoaderActive(true);
   }
   render() {
     var arr = [];
@@ -148,10 +149,11 @@ class CollectionDetail extends React.Component {
                   onChange={(data) => { this.setState({ Price: data.target.value }) }}
                 />
               </div>
-            </Modal.Body>
-            <Modal.Footer>
+              <Modal.Footer>
               <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
             </Modal.Footer>
+            </Modal.Body>
+           
           </Modal>
 
           <div className="row">

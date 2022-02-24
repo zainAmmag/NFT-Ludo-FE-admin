@@ -398,10 +398,11 @@ class UpdateNFT extends React.Component {
                     </div>
 
                   </div>
-                </Modal.Body>
-                <Modal.Footer>
+                  <Modal.Footer>
                   <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
                 </Modal.Footer>
+                </Modal.Body>
+               
               </Modal>
           
             <div className='input-fields'>

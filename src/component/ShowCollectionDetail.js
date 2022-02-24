@@ -205,7 +205,7 @@ class CollectionDetail extends React.Component {
                                       />
                                     </div>
                                     <h5 className="nft-heading">  price</h5>
-                                    <p className="note"> Price {playerData.buyPrice + " "}NB </p>
+                                    <p className="note"> Price {playerData.buyPrice + " "}BNB </p>
 
                                     <l>
 

@@ -181,8 +181,8 @@ class NFTDetail extends React.Component {
           <div className="col-lg-6 col-md-12 col-sm-12">
             <div className="Nft-user-detail">
               <h3>{this.state.nftDATA.name}</h3>
-              <p>By</p>
-              <p>{this.state.nftDATA.creatorName}</p>
+              <p>By:{this.state.nftDATA.creatorName}</p>
+              
               
               
 
@@ -201,7 +201,7 @@ class NFTDetail extends React.Component {
              <div className="full-div" style={{textAlign:"end"}}>
               {this.state.nftDATA.isMinted ? (
                   <>
-                  {this.state.nftDATA.staus !== "ReadyForSell" ? (
+                  {this.state.nftDATA.staus !== "ReadyForSell" && this.state.nftDATA.isAdminNft ? (
                   <Button
                     className="collection-button"
                     style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder", }}
@@ -218,6 +218,8 @@ class NFTDetail extends React.Component {
                   )}
                   </>
                 ) : (
+                  <>
+                  {this.state.nftDATA.isAdminNft && (
                 <Link to="/UpdateNFt" className="reg-btn blue"  >  <Button
                   className="collection-button"
                   style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder", }}
@@ -228,6 +230,8 @@ class NFTDetail extends React.Component {
                 >
                   Update</Button>
                 </Link>
+                  )}
+                  </>
                  )}
               </div>
             </div>
@@ -250,10 +254,11 @@ class NFTDetail extends React.Component {
                     onChange={(data) => { this.setState({ Price: data.target.value }) }}
                   />
                 </div>
-              </Modal.Body>
-              <Modal.Footer>
+                <Modal.Footer>
                 <button className='Modal-div-cancel-button' onClick={()=>this.sellNft(this.state.nftDATA.nftTokenId, this.state.nftDATA.contractAddress, this.state.nftDATA.id)} > OK </button>
               </Modal.Footer>
+              </Modal.Body>
+              
             </Modal>
             <div className="detail-card">
               <h3> Listing </h3>

@@ -17,6 +17,8 @@ import { contains } from 'jquery';
 import Modal from "react-bootstrap/Modal";
 import { bindActionCreators } from "redux";
 
+
+
 const mapStateToProps = (state) => {
     return {};
 };
@@ -27,12 +29,19 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
+//  this.useEffect(() => {
+//     if(Object.keys(this.formError).length == 0 && this.isSubmit()){
+//         console.log(this.formValues);
+//     }
+// } , [this.formError])
 
 class EditCollection extends React.Component {
 
     constructor() {
         super()
         this.state = {
+            // isSubmit: false,
+            // formError: "",
             // selectedFile: null,
             // optionValue: "",
             Name: "",
@@ -47,9 +56,9 @@ class EditCollection extends React.Component {
             MediumLink: "",
             TLink: "",
             collectiondata: [],
-            categoryname:"",
-            Chainname:"",
-            paymentname:"",
+            categoryname: "",
+            Chainname: "",
+            paymentname: "",
             PercentageFee: 0,
             CategoryId: 0,
             ChainId: 0,
@@ -63,48 +72,48 @@ class EditCollection extends React.Component {
             BannerPreview: {},
             LogoPreview: {},
             FeatPreview: {},
-            Blockchaindata:[
+            Blockchaindata: [
                 {
                     chainID: 97,
-                    name:"Binance Smart Chain",  
-                    shortName:"BNB",
+                    name: "Binance Smart Chain",
+                    shortName: "BNB",
                 },
             ],
             CategoryData: [
-                    {id: 1, name: 'Art'},
-                    {id: 2, name: 'Music'},
-                {id: 3, name: 'Photography'},
-            {id: 4, name: 'Utility'},
-                {id: 5, name: 'Virtual Worlds'},
-            {id: 6, name: 'Trading Cards'},   
-            {id: 7, name: 'Collectibles'},
-            {id: 8, name: 'Domain Names'},
-            {id: 9, name: 'Sports'}
-                ],
+                { id: 1, name: 'Art' },
+                { id: 2, name: 'Music' },
+                { id: 3, name: 'Photography' },
+                { id: 4, name: 'Utility' },
+                { id: 5, name: 'Virtual Worlds' },
+                { id: 6, name: 'Trading Cards' },
+                { id: 7, name: 'Collectibles' },
+                { id: 8, name: 'Domain Names' },
+                { id: 9, name: 'Sports' }
+            ],
             Currencydata: [
-          {
-            blockchainId: 2,
-            canUpdate: true,
-            currencyType: "Token",
-            decimals: 18,
-            id: 9,
-            image: null,
-            name: "BNB",
-            rateInUSD: 528.7,
-            shortName: "BNB",
-            smartContractAddress: "0x9Ce7B893A8aBe688803121e1bcCc68D069C01f51",
-            uuid: "793b259c-532d-4dff-a51c-06d609c64b63",
-          },
+                {
+                    blockchainId: 2,
+                    canUpdate: true,
+                    currencyType: "Token",
+                    decimals: 18,
+                    id: 9,
+                    image: null,
+                    name: "BNB",
+                    rateInUSD: 528.7,
+                    shortName: "BNB",
+                    smartContractAddress: "0x9Ce7B893A8aBe688803121e1bcCc68D069C01f51",
+                    uuid: "793b259c-532d-4dff-a51c-06d609c64b63",
+                },
             ],
             URL: "",
-    isTrueVal: false,
+            isTrueVal: false,
             modalVisible: false,
             falsemessage: "",
             successmessage: "",
             errormessage: "",
         };
     }
-   
+    initialValues = { name: "", externalLink: "", description: "", category: "", blockchain: "", paymentTokens: "", Links: "" };
 
     async GetCollection() {
         var temp = "";
@@ -148,12 +157,12 @@ class EditCollection extends React.Component {
                 this.setState({ featuredImage: temp })
                 temp = this.state.collectiondata.featuredImage;
                 this.setState({ FeatPreview: "http://198.187.28.244:7577/" + temp })
-                this.setState({ categoryname:  this.state.CategoryData.find((item, index) => item.id == this.state.collectiondata.categoryId).name})
-                this.setState({ BlockChainName:   this.state.Blockchaindata.find((item, index) => item.chainID == this.state.collectiondata.chainID).name})
-                this.setState({ paymentname:  this.state.Currencydata.find((item, index) => item.id == this.state.collectiondata.currencyId).name})
-                 if(this.state.categoryname!=""&&this.state.BlockChainName!=""&&this.state.paymentname!="") 
-                 this.props.setIsLoaderActive(false);
-                          
+                this.setState({ categoryname: this.state.CategoryData.find((item, index) => item.id == this.state.collectiondata.categoryId).name })
+                this.setState({ BlockChainName: this.state.Blockchaindata.find((item, index) => item.chainID == this.state.collectiondata.chainID).name })
+                this.setState({ paymentname: this.state.Currencydata.find((item, index) => item.id == this.state.collectiondata.currencyId).name })
+                if (this.state.categoryname != "" && this.state.BlockChainName != "" && this.state.paymentname != "")
+                    this.props.setIsLoaderActive(false);
+
             } else {
                 console.log("data" + data.message)
             }
@@ -163,7 +172,7 @@ class EditCollection extends React.Component {
 
     }
     async CategoriesIdd() {
-        
+
         try {
             const data = await SendHttpRequest(
                 BaseUrl + "/Nft/GetNftCollectionCategories",
@@ -184,9 +193,9 @@ class EditCollection extends React.Component {
     }
     async componentDidMount() {
         this.props.setIsLoaderActive(true);
-       
+
         this.GetCollection();
-         this.setState({ ImageModal: false });
+        this.setState({ ImageModal: false });
     }
     clearall = () => {
         this.setState({ Name: "" })
@@ -206,7 +215,7 @@ class EditCollection extends React.Component {
         this.setState({ falsemessage: "" })
         this.setState({ successmessage: "" })
         this.setState({ errormessage: "" })
-       
+
         var bodyFormData = new FormData();
         bodyFormData.append("Name", this.state.Name);
         bodyFormData.append("Url", this.state.ExternalLink);
@@ -219,8 +228,8 @@ class EditCollection extends React.Component {
         bodyFormData.append("TLink", this.state.TLink);
         bodyFormData.append("PercentageFee", this.state.PercentageFee);
         bodyFormData.append("CategoryId", this.state.CategoryId);
-        bodyFormData.append("ChainId",this.state.collectiondata.chainID);
-        bodyFormData.append("CurrencyId",this.state.collectiondata.currencyId);
+        bodyFormData.append("ChainId", this.state.collectiondata.chainID);
+        bodyFormData.append("CurrencyId", this.state.collectiondata.currencyId);
         bodyFormData.append("SensitveContent", this.state.SensitveContent);
         bodyFormData.append("LogoImage", this.state.LogoImage);
         bodyFormData.append("FeaturedImage", this.state.FeaturedImage);
@@ -243,16 +252,18 @@ class EditCollection extends React.Component {
             console.log(response.data.message);
             if (response.data.message == "Collection already exist") {
                 this.setState({ falsemessage: response.data.message })
-                
+
             }
-            else if (response.data.message == "Data successfully Updated") {
-                
+            else if (response.data.message == "Data successfully Updated") {   
                 this.setState({ successmessage: response.data.message })
+                this.props.history.push("/ShowCollectionDetail");   
             }
+            
             else {
                 this.setState({ errormessage: response.data.message })
                 // return this.props.history.push("/ShowCollectionDetail");
             }
+
             // console.log(");
         })
     }
@@ -278,21 +289,37 @@ class EditCollection extends React.Component {
     }
 
     urlPatternValidation = URL => {
-        const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');    
+        const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
         return regex.test(URL);
-      };
-      changeUrl = event => {
+    };
+    changeUrl = event => {
         const { value } = event.target;
         const isTrueVal = !value || this.urlPatternValidation(value);
         this.setState({
-          URL: value,
-          isTrueVal
+            URL: value,
+            isTrueVal
         });
-      };
-      onSubmit = () => {
+    };
+    onSubmit = () => {
         const { URL } = this.state;
         console.log("Here is the site url: ", URL);
-      };
+    };
+    // handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     this.setState({ formError: this.validation(this.formValues) });
+    //     this.setState({ isSubmit: true })
+    // }
+
+
+    // validation = (value) => {
+    //     const errors = {}
+    //     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    //     if (!value.name) {
+    //         errors.name = "Name is Required"
+    //     }
+    //     return errors;
+    // };
+
     render() {
         const handleClose1 = () => this.setState({ ImageModal: false });
         return (
@@ -303,13 +330,13 @@ class EditCollection extends React.Component {
                             <h1 className='f-Heading'>Edit Collection</h1>
                         </div>
                         <div className="col-md-8 col-sm-12 col-lg-8">
-                           
+                            {/* <form onSubmit={this.handleSubmit}> */}
                                 <Modal
                                     centered
                                     size="lg"
                                     show={this.state.ImageModal}
                                 >
-                                    <Modal.Body >
+                                    <Modal.Body>
                                         <div style={{ textAlign: "center" }} className="Modal-div">
                                             <div className='Modal-div-notcreated'>
                                                 {this.state.falsemessage === "" ? "" : this.state.falsemessage}
@@ -324,155 +351,154 @@ class EditCollection extends React.Component {
 
                                         </div>
                                         <Modal.Footer>
-                                        <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
+                                            <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
                                         </Modal.Footer>
                                     </Modal.Body>
-                                   
-                                       
-                                   
-                                </Modal>
-                        
-                            <div className='input-fields'>
-                                <p>Name</p>
-                                <input
-                                    type="text"
-                                    required
-                                    // placeholder="e.g 'Crypto Funk' "
-                                    placeholder='Enter Collection Name'
-                                    width={100}
-                                    className="input-field"
-                                    name='Name'
-                                    value={this.state.Name}
-                                    onChange={(data) => { this.setState({ Name: data.target.value }) }}
-                                />
-                            </div>
-                            <div className='input-fields'>
-                                <p>External Link</p>
-                                <input
-                                    type="text"
-                                    required
-                                    placeholder="e.g 'https://www.yoursite.com/item/123' "
-                                    width={100}
-                                    className="input-field"
-                                    name='ExternalLink'
-                                    value={this.state.ExternalLink}
-                                    onChange={(data) => { this.setState({ ExternalLink: data.target.value }) }}
-                                />
-                            </div>
-                            <div className='input-fields'>
-                                <p>Description</p>
-                                <input
-                                    type="text"
-                                    required
-                                    placeholder="e.g 'this is very limited item' "
-                                    width={100}
-                                    className="description-field"
-                                    name='Description'
-                                    value={this.state.Description}
-                                    onChange={(data) => { this.setState({ Description: data.target.value }) }}
-                                />
-                            </div>
-                            <div className='input-fields'>
-                                <p>Category</p>
-                                <select className='dropDown' name='Category' onChange={(data) => { this.setState({ CategoryId: data.target.value }); }}>
-                                    <option value="none" selected disabled hidden>{this.state.categoryname}</option>
-                                    {
-                                        this.state.CategoryData.map((playerData, k) => {
-                                            return (
-                                                <option value={playerData.id}> {playerData.name}</option>
-                                            );
-                                        })
-                                    }
 
-                                </select>
-                            </div>
-                            <div className='input-fields'>
-                                <p>Blockchain</p>
-                                <select className='dropDown' name='BlockChainName' onChange={(data) => { this.setState({ BlockChainName: data.target.value }); }}>
-                                    <option value="none" selected disabled hidden>{this.state.BlockChainName}</option>
-                                    {
-                                        this.state.Blockchaindata.map((playerData, k) => {
-                                            return (
-                                                <option value={playerData.chainID}> {playerData.name}</option>
-                                            );
-                                        })
-                                    }
-                                </select>
-                            </div>
-                            <div className='input-fields'>
-                                <p>Payment tokens</p>
-                                <select className='dropDown' name='Payment' onChange={(data) => { this.setState({ CurrencyId: data.target.value }); }}>
-                                    <option value="none" selected disabled hidden>{this.state.paymentname}</option>
-                                    {
-                                        this.state.Currencydata.map((playerData, k) => {
-                                            return (
-                                                <option value={playerData.id}> {playerData.name}</option>
-                                            );
-                                        })
-                                    }
-                                </select>
-                            </div>
-                            <div className='input-fields'>
-                                <p>Links </p >
-                                <input
-                                    type="text"
-                                    required
-                                    placeholder="www.Discord.com "
-                                    width={100}
-                                    className="input-field"
-                                    name='Discord'
-                                    value={this.state.DiscordLink}
-                                    onChange={(data) => { this.setState({ DiscordLink: data.target.value }) }}
-                                />
-                            </div>
-                            <div className='input-fields'>
-                                <input
-                                    type="text"
-                                    required
-                                    placeholder="www.Twitter.com "
-                                    width={100}
-                                    className="input-field"
-                                    name='twitter'
-                                    value={this.state.TwitterLink}
-                                    onChange={(data) => { this.setState({ TwitterLink: data.target.value }) }}
-                                />
-                            </div>
-                            <div className='input-fields'>
-                                <input
-                                    type="text"
-                                    required
-                                    placeholder="www.Instagram.com"
-                                    width={100}
-                                    className="input-field"
-                                    name='instagram'
-                                    value={this.state.InstagramLink}
-                                    onChange={(data) => { this.setState({ InstagramLink: data.target.value }) }}
-                                />
-                            </div>
-                            <div className='input-fields'>
-                                <input
-                                    type="text"
-                                    required
-                                    placeholder="www.TLink.com"
-                                    width={100}
-                                    className="input-field"
-                                    name='tLink'
-                                    value={this.state.TLink}
-                                    onChange={(data) => { this.setState({ TLink: data.target.value }) }}
-                                />
-                            </div>
-                            <div className='input-fields'>
-                                <input
-                                    type="text"
-                                    required
-                                    placeholder="www.MediumLink.com"
-                                    width={100}
-                                    className="input-field"
-                                    name='mediumLink'
-                                    value={this.state.MediumLink}
-                                    onChange={(data) => { this.setState({ MediumLink: data.target.value }) }}
-                                />
-                            </div>
+                                </Modal>
+
+                                <div className='input-fields'>
+                                    <p>Name</p>
+                                    <input
+                                        type="text"
+                                        required
+                                        // placeholder="e.g 'Crypto Funk' "
+                                        placeholder='Enter Collection Name'
+                                        width={100}
+                                        className="input-field"
+                                        name='Name'
+                                        value={this.state.Name}
+                                        onChange={(data) => { this.setState({ Name: data.target.value }) }}
+                                    />
+                                </div>
+                                <div className='input-fields'>
+                                    <p>External Link</p>
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder="e.g 'https://www.yoursite.com/item/123' "
+                                        width={100}
+                                        className="input-field"
+                                        name='ExternalLink'
+                                        value={this.state.ExternalLink}
+                                        onChange={(data) => { this.setState({ ExternalLink: data.target.value }) }}
+                                    />
+                                </div>
+                                <div className='input-fields'>
+                                    <p>Description</p>
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder="e.g 'this is very limited item' "
+                                        width={100}
+                                        className="description-field"
+                                        name='Description'
+                                        value={this.state.Description}
+                                        onChange={(data) => { this.setState({ Description: data.target.value }) }}
+                                    />
+                                </div>
+                                <div className='input-fields'>
+                                    <p>Category</p>
+                                    <select className='dropDown' name='Category' onChange={(data) => { this.setState({ CategoryId: data.target.value }); }}>
+                                        <option value="none" selected disabled hidden>{this.state.categoryname}</option>
+                                        {
+                                            this.state.CategoryData.map((playerData, k) => {
+                                                return (
+                                                    <option value={playerData.id}> {playerData.name}</option>
+                                                );
+                                            })
+                                        }
+
+                                    </select>
+                                </div>
+                                <div className='input-fields'>
+                                    <p>Blockchain</p>
+                                    <select className='dropDown' name='BlockChainName' onChange={(data) => { this.setState({ BlockChainName: data.target.value }); }}>
+                                        <option value="none" selected disabled hidden>{this.state.BlockChainName}</option>
+                                        {
+                                            this.state.Blockchaindata.map((playerData, k) => {
+                                                return (
+                                                    <option value={playerData.chainID}> {playerData.name}</option>
+                                                );
+                                            })
+                                        }
+                                    </select>
+                                </div>
+                                <div className='input-fields'>
+                                    <p>Payment tokens</p>
+                                    <select className='dropDown' name='Payment' onChange={(data) => { this.setState({ CurrencyId: data.target.value }); }}>
+                                        <option value="none" selected disabled hidden>{this.state.paymentname}</option>
+                                        {
+                                            this.state.Currencydata.map((playerData, k) => {
+                                                return (
+                                                    <option value={playerData.id}> {playerData.name}</option>
+                                                );
+                                            })
+                                        }
+                                    </select>
+                                </div>
+                                <div className='input-fields'>
+                                    <p>Links </p >
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder="www.Discord.com "
+                                        width={100}
+                                        className="input-field"
+                                        name='Discord'
+                                        value={this.state.DiscordLink}
+                                        onChange={(data) => { this.setState({ DiscordLink: data.target.value }) }}
+                                    />
+                                </div>
+                                <div className='input-fields'>
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder="www.Twitter.com "
+                                        width={100}
+                                        className="input-field"
+                                        name='twitter'
+                                        value={this.state.TwitterLink}
+                                        onChange={(data) => { this.setState({ TwitterLink: data.target.value }) }}
+                                    />
+                                </div>
+                                <div className='input-fields'>
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder="www.Instagram.com"
+                                        width={100}
+                                        className="input-field"
+                                        name='instagram'
+                                        value={this.state.InstagramLink}
+                                        onChange={(data) => { this.setState({ InstagramLink: data.target.value }) }}
+                                    />
+                                </div>
+                                <div className='input-fields'>
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder="www.TLink.com"
+                                        width={100}
+                                        className="input-field"
+                                        name='tLink'
+                                        value={this.state.TLink}
+                                        onChange={(data) => { this.setState({ TLink: data.target.value }) }}
+                                    />
+                                </div>
+                                <div className='input-fields'>
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder="www.MediumLink.com"
+                                        width={100}
+                                        className="input-field"
+                                        name='mediumLink'
+                                        value={this.state.MediumLink}
+                                        onChange={(data) => { this.setState({ MediumLink: data.target.value }) }}
+                                    />
+                                </div>
+                            {/* </form> */}
                         </div>
                         <div className="col-md-4 col-sm-10 col-lg-4">
                             <div className="pt-2"></div>
@@ -481,7 +507,7 @@ class EditCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Logo Image
                                 </p>
-                                <input type="file" accept="image/*" onChange={this.LogoImageset} className="inputimage"/ >
+                                <input type="file" accept="image/*" onChange={this.LogoImageset} className="inputimage" />
                                 <div style={{ height: "55%" }}>
                                     <div className='prevItmImgSec'>
                                         <img src={this.state.LogoPreview} alt="profileImage" className="avatar-immagelogo" />
@@ -506,7 +532,7 @@ class EditCollection extends React.Component {
                                     Banner Image
                                 </p>
                                 <input type="file" accept="image/*" onChange={this.uploadPicture} className="inputimage" />
-                           
+
                                 <div style={{ height: "55%" }}>
 
                                     <div className='prevItmImgSec'>
@@ -524,13 +550,14 @@ class EditCollection extends React.Component {
                             <div style={{ display: "flex" }}>
                                 <button className='create-list' onClick={() => { this.submit() }}>Update Collection</button>
                                 <Link to="/manageCollection" >  <button className='create-list' onClick={() => { this.clearall() }}>Cancel</button>
-                                  </Link>
+                                </Link>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </>
         );
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps) (EditCollection);
+export default connect(mapStateToProps, mapDispatchToProps)(EditCollection);

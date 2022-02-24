@@ -225,8 +225,7 @@ export class ProfileImageChange extends Component {
                 />
               ) : null}
             </div>
-          </Modal.Body>
-          <Modal.Footer
+            <Modal.Footer
             style={{ background: "transparent", background: "black" }}
           >
             {this.state.files.length > 0 ? (
@@ -246,6 +245,8 @@ export class ProfileImageChange extends Component {
               Close
             </Button>
           </Modal.Footer>
+          </Modal.Body>
+         
         </Modal>
       </>
     );

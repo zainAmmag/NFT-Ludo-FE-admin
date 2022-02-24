@@ -228,14 +228,14 @@ const OrderStatus = function () {
                        </> }
                    <p style={{textAlign:"centered",color:"red"}}>{errormessage==""?'':errormessage}</p>
                 </div>
-                   
-              </Modal.Body>
-              <Modal.Footer>
+                <Modal.Footer>
                 
                 <button className='Modal-div-cancel-button' onClick={()=>{SubmitToken()}} > OK </button>
                 <button className='Modal-div-cancel-button' onClick={()=>{cancel()}} > cancel </button>
        
               </Modal.Footer>
+              </Modal.Body>
+         
             </Modal>
                 <div style={{
                     display: "flex", alignItems: "center", justifyContent: "space-between",

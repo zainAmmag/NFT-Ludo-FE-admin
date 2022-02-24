@@ -5,9 +5,11 @@ import { SendHttpRequest } from "./utility";
 import {
   BaseUrl,
 } from "../Constants/BusinessManager";
+import { connect } from "react-redux";
 import swal from "sweetalert";
 import { Link } from "react-router-dom";
-
+import { setIsLoaderActive } from "../actions/index";
+import { bindActionCreators } from "redux";
 import { CheckSquare, Eye, MinusCircle } from "react-feather";
 import TablePagination from "@material-ui/core/TablePagination"
 import Table from "@material-ui/core/Table";
@@ -18,6 +20,18 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Search } from "react-feather";
+
+
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setIsLoaderActive: bindActionCreators(setIsLoaderActive, dispatch),
+  };
+};
+
 class OrderDetail extends React.Component {
 
   constructor(props) {
@@ -33,6 +47,7 @@ class OrderDetail extends React.Component {
   }
 
   async componentDidMount() {
+    this.props.setIsLoaderActive(true);
     try {
       var data = await SendHttpRequest(
         BaseUrl + "/Amin/GetAllOrderNft",
@@ -40,6 +55,7 @@ class OrderDetail extends React.Component {
         "GET"
       );
       if (data.isSuccess) {
+        this.props.setIsLoaderActive(false);
         this.setState({ tableData: data.data });
         console.log("data", data.message);
 
@@ -49,6 +65,7 @@ class OrderDetail extends React.Component {
       }
     }
     catch (error) {
+      this.props.setIsLoaderActive(false);
       console.log(error);
       return swal({
         icon: "error",
@@ -102,10 +119,11 @@ class OrderDetail extends React.Component {
                               <TableRow style={{ color: "#fff" }}>
                                 <TableCell className="Text-white">Nft Owner Name</TableCell>
                                 <TableCell className="Text-white">NFT Name</TableCell>
+                                <TableCell className="Text-white">Order No</TableCell>
                                 <TableCell className="Text-white">Order Date</TableCell>
                                 <TableCell className="Text-white">Order Time</TableCell>
                                 <TableCell className="Text-white">Order Status</TableCell>
-                                <TableCell className="Text-white">Detail</TableCell>
+                                {/* <TableCell className="Text-white">Detail</TableCell> */}
                               </TableRow>
                             </TableHead>
                             <TableBody style={{ color: "#fff" }} className="Text-white">
@@ -118,13 +136,14 @@ class OrderDetail extends React.Component {
                                       <TableRow key={index} className="Text-white">
                                         <TableCell className="Text-white">{value.nftOwnerName}</TableCell>
                                         <TableCell className="Text-white">{value.nftName} </TableCell>
+                                        <TableCell className="Text-white">{value.nftOrderId} </TableCell>
                                         <TableCell className="Text-white">{value.orderCreatedTime.slice(0, 10)}</TableCell>
                                         <TableCell className="Text-white">{value.orderCreatedTime.slice(11, 19)}</TableCell>
                                         <TableCell className="Text-white">{value.orderStatus} </TableCell>
 
-                                        <TableCell className="Text-white">
+                                        {/* <TableCell className="Text-white">
                                           {value.accountStatus == "Active" ? 'UnBlock' : 'Block'}
-                                        </TableCell>
+                                        </TableCell> */}
 
                                         <TableCell>
                                         <Link to={{
@@ -194,6 +213,7 @@ class OrderDetail extends React.Component {
                           <TableRow style={{ color: "#fff" }}>
                             <TableCell className="Text-white">Nft Owner Name</TableCell>
                             <TableCell className="Text-white">NFT Name</TableCell>
+                            <TableCell className="Text-white">Order No</TableCell>
                             <TableCell className="Text-white">Order Date</TableCell>
                             <TableCell className="Text-white">Order Time</TableCell>
                             <TableCell className="Text-white">Order Status</TableCell>
@@ -210,13 +230,14 @@ class OrderDetail extends React.Component {
                                   <TableRow key={index} className="Text-white">
                                     <TableCell className="Text-white">{value.nftOwnerName}</TableCell>
                                     <TableCell className="Text-white">{value.nftName} </TableCell>
+                                    <TableCell className="Text-white">{value.orderNo} </TableCell>
                                     <TableCell className="Text-white">{value.orderCreatedTime.slice(0, 10)}</TableCell>
                                     <TableCell className="Text-white">{value.orderCreatedTime.slice(11, 19)}</TableCell>
                                     <TableCell className="Text-white">{value.orderStatus} </TableCell>
 
-                                    <TableCell className="Text-white">
+                                    {/* <TableCell className="Text-white">
                                       {value.accountStatus == "Active" ? 'UnBlock' : 'Block'}
-                                    </TableCell>
+                                    </TableCell> */}
 
                                     <TableCell>
                                       <Link to="">
@@ -264,4 +285,4 @@ class OrderDetail extends React.Component {
     );
   }
 }
-export default OrderDetail;
+export default connect(mapStateToProps, mapDispatchToProps)(OrderDetail) ;

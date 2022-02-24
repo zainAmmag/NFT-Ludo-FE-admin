@@ -128,6 +128,20 @@ class CreateCollection extends React.Component {
         this.setState({ MediumLink: "" })
     }
     submit = (data) => {
+
+        // if(this.state.Name!=""){
+        //     if(!this.urlPatternValidation(this.state.Name)) 
+        //      this.setState({Name:false})
+        //    else
+        //      this.setState({Name:true}) }
+
+        if(this.state.Name!=""){
+            if(!this.namevalidation(this.state.Name)) 
+             this.setState({Name:false})
+           else
+             this.setState({Name:true}) }
+
+
         if(this.state.DiscordLink!=""){
         if(!this.urlPatternValidation(this.state.DiscordLink)) 
          this.setState({discordok:false})
@@ -164,7 +178,8 @@ class CreateCollection extends React.Component {
           else
         this.setState({Nameok:true})
     }    
-        if(this.state.discordok&&this.state.twitterok&&this.state.instagramok&&this.state.tLinkok&&this.state.mediumLinkok&&this.state.Nameok)
+    // if(!this.state.name&&!this.state.ExternalLink&&!this.state.Description&&!this.state.CategoryId&&!this.state.ChainId&&!this.state.Nameok)
+        if(!this.state.discordok&&!this.state.twitterok&&!this.state.instagramok&&!this.state.tLinkok&&!this.state.mediumLinkok&&!this.state.Nameok)
           {
             this.setState({ falsemessage: "" })
             this.setState({ successmessage: "" })
@@ -292,12 +307,13 @@ class CreateCollection extends React.Component {
                                             <div className='Modal-div-notcreated'>
                                                 {this.state.errormessage === "" ? "" : this.state.errormessage}
                                             </div>
- 
+                                            <Modal.Footer>
                                             <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
+                                            </Modal.Footer>
                                         </div>
                                     </Modal.Body>
-                                    <Modal.Footer>
-                                    </Modal.Footer>
+                                    
+                                    
                                 </Modal>
                          
                             <div className='input-fields'>
