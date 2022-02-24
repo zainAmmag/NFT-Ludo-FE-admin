@@ -191,6 +191,7 @@ class UpdateNFT extends React.Component {
     }
   }
   async componentDidMount() {
+    this.CategoriesIdd();
     this.GetSelectedNft();
     this.findcurrencyid();
     console.log(localStorage.getItem("TokenofAdminsigned"))
@@ -224,7 +225,7 @@ class UpdateNFT extends React.Component {
   submit = (data) => {
   
     this.props.setIsLoaderActive(true);
-    console.log("block", this.state.BlockChainname_)
+    console.log("block", this.state.BlockChainname_1)
     console.log("chain", this.state.ChainId)
     console.log("categoty", this.state.CategoryId)
     console.log("curency", this.state.CurrencyId)
