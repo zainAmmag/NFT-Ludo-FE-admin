@@ -176,8 +176,8 @@ class CollectionDetail extends React.Component {
         </div>
         <div className="pt-2"></div>
         <h1>NFT's:</h1>
-        <div className="full-div mb-txt-center">
-          <div className="row">
+        <div className=" container full-div mb-txt-center" >
+          <div className="row"  >
             {
               this.state.Search.length == 0 ? (
                 <>  {
@@ -186,7 +186,7 @@ class CollectionDetail extends React.Component {
                       {
                         this.state.NFtData.map((playerData, k) => (
                           <>
-                            <Col key={k} style={{ paddingTop: "15px" }} md={6} lg={4} >
+                            <Col key={k} style={{ paddingTop: "15px" }} md={6} lg={3} >
                               <div
                                 className="card2NFT">
                                 <div >

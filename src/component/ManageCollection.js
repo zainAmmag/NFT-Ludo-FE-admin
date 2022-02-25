@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { SocialIcon } from 'react-social-icons';
-
+import defaultImg from "../../src/Assets/images/default.png";
 import { Col } from "react-bootstrap";
 import profilePic from "../Assets/images/profilePic.png";
 import { Carousel } from 'react-responsive-carousel';
@@ -133,7 +133,7 @@ class UserDetail extends React.Component {
                                   <div className="panal">
 
                                     <img
-                                      src={"http://198.187.28.244:7577/" + playerData.bannerImage}
+                                      src={playerData.bannerImage? "http://198.187.28.244:7577/" + playerData.bannerImage: defaultImg}
                                       alt="profileImage"
                                       className="NFT-immage-NFT"
                                       onClick={() => {
@@ -145,7 +145,7 @@ class UserDetail extends React.Component {
 
                                     <div className="">
                                       <img
-                                        src={"http://198.187.28.244:7577/" + playerData.logoImage}
+                                        src={playerData.logoImage? "http://198.187.28.244:7577/" + playerData.logoImage: defaultImg}
                                         alt="profileImage"
                                         className="NFT-immage3"
                                       />

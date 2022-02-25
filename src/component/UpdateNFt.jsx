@@ -74,7 +74,12 @@ class UpdateNFT extends React.Component {
       freezedata: false,
       isSwitchOn: false,
       ImagePreview: {},
-      Blockchaindata1: [],
+      Blockchaindata1:   [
+        {
+            chainID: 97,
+            name:"Binance Smart Chain"
+        },
+    ],
       CategoryData1: [],
       Currencydata1: [
         {
@@ -299,12 +304,12 @@ class UpdateNFT extends React.Component {
             }).then((resdata) => {
                   console.log("res updateeeeee", resdata)
                   this.setState({ ImageModal: true })
-                  this.props.setIsLoaderActive(true);
+                  this.props.setIsLoaderActive(false);
                   this.setState({ errormessage: "NFT updated successfully" })
                   return this.props.history.push("/nftdetail");
                   
                 }).catch((e) => {
-                  this.props.setIsLoaderActive(true);
+                  this.props.setIsLoaderActive(false);
                   console.log("errorrrrrrrrrrrrr updateeeeee", e)
   
                 })
@@ -328,13 +333,35 @@ class UpdateNFT extends React.Component {
     //   this.setState({ errormessage: "Fill Form Correctly" })
     // }
     else {
+      var bodyFormData1 = new FormData();
+
+      bodyFormData1.append("NftId", localStorage.getItem("Updatenftid"));
+      bodyFormData1.append("Name", this.state.Name1);
+      bodyFormData1.append("TokenId", this.state.TokenId1);
+      bodyFormData1.append("ExternalLink", this.state.ExternalLink1);
+      bodyFormData1.append("Description", this.state.Description1);
+      bodyFormData1.append("UnlockableContent", this.state.Unlockablecontent1);
+      bodyFormData1.append("UnlockableContentNote", this.state.Unlockablecontentnote1);
+      bodyFormData1.append("SensitiveContent", this.state.SesitiveData1);
+      bodyFormData1.append("Supply", this.state.Supply1);
+      bodyFormData1.append("CurrencyId", this.state.PrevNftdata.currencyId);
+      bodyFormData1.append("CollectionId", this.state.PrevNftdata.collectionId);
+      bodyFormData1.append("BlockChainName", this.state .defaultcurrencyname);
+      bodyFormData1.append("Price", this.state.Price1);
+      bodyFormData1.append("ChainId",  this.state.Blockchaindata1.find((item, index) => item.name == this.state.defaultcurrencyname).chainID);
+      bodyFormData1.append("FreezeData", this.state.freezedata);
+       bodyFormData.append("Image", this.state.Image1);
+      console.log("WHYYY BRO", this.state.isSwitchOn);
+    bodyFormData1.append("Image", this.state.ImagePreview);
+    console.table([...bodyFormData])
+
       console.log("not update")
       this.props.setIsLoaderActive(true);
       axios({
         method: "PUT",
         url: "http://198.187.28.244:7577/api/v1/Amin/EditNft",
 
-        data: bodyFormData,
+        data: bodyFormData1,
         headers: {
           accept: "text/plain",
           "Content-Type": "multipart/form-data",
@@ -346,8 +373,8 @@ class UpdateNFT extends React.Component {
         this.setState({ ImageModal: true })
         console.log(response.data.message);
         console.log("daadd" + response.statusText);
-        if (response.data.message == "Data successfully added") {
-          this.setState({ successmessage: response.data.message })
+        if (response.data.message == "Nft successfully updated") {
+          this.setState({ successmessage: "NFT successfully updated"})
           this.props.setIsLoaderActive(true);
         }
         else {
@@ -360,8 +387,15 @@ class UpdateNFT extends React.Component {
     }
   }
   uploadPicture = (e) => {
-    this.setState({ Image: e.target.files[0] })
-    this.setState({ ImagePreview: URL.createObjectURL(e.target.files[0]) })
+    let img = e.target.files[0];
+    
+    this.setState({ Image1: ""})
+    this.setState({ Image1: e.target.files[0] })
+    this.setState({ ImagePreview: URL.createObjectURL(img) })
+    console.log("this.state.ImagePreview", img)
+    console.log("EVENT", e.target.files)
+    console.log("this.state.ImagePreview", URL.createObjectURL(img))
+    // console.log("this.state.ImagePreview", this.state.)
   };
   FindBlockchainName(data) {
 
@@ -374,7 +408,11 @@ class UpdateNFT extends React.Component {
   }
 
   render() {
-    const handleClose1 = () => this.setState({ ImageModal: false });
+    const handleClose1 = () =>{
+     this.setState({ ImageModal: false })
+     this.props.setIsLoaderActive(false);
+     return this.props.history.push("/ManageNFt");
+    }
     return (
       <div className='container'>
         <div className="row">
@@ -414,12 +452,12 @@ class UpdateNFT extends React.Component {
                 type="text"
                 required
                 // placeholder="e.g 'Crypto Funk' "
-                placeholder='Enter Your Name'
+                placeholder='Enter NFT Name'
                 width={100}
                 className="input-field"
                 name='Name'
                 value={this.state.Name1}
-                onChange={(data) => { this.setState({ Name1: data.target.value }) }}
+                onChange={(data) => { this.setState({ Name1:"" }) ; this.setState({ Name1: data.target.value }) }}
               />
             </div>
             <div className='input-fields'>

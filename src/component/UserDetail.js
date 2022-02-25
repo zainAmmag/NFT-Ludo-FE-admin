@@ -165,13 +165,13 @@ class UserDetail extends React.Component {
 
                   </p>
 
-                  <p className="links"> <a href={localStorage.getItem("twitterLink")}> <SocialIcon network="twitter" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} /> </a>
-                    {" " + localStorage.getItem("twitterLink")}</p>
+                  <a href={localStorage.getItem("twitterLink")}>  <p className="links">  <SocialIcon network="twitter" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} />
+                    {" " + localStorage.getItem("twitterLink")}</p> </a>
 
-                  <p className="links"> <a href={localStorage.getItem("instagramLink")}> <SocialIcon network="instagram" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} /></a>
-                    {" " + localStorage.getItem("instagramLink")}</p>
+                    <a href={localStorage.getItem("instagramLink")}> <p className="links"> <SocialIcon network="instagram" fgColor="black" bgColor="white" style={{ height: 25, width: 25 }} />
+                    {" " + localStorage.getItem("instagramLink")}</p> </a>
 
-                  <p>  {"Bio :" + localStorage.getItem("bio")}</p>
+                  <p>  {"Bio: " + localStorage.getItem("bio")}</p>
                 </div>
               </div>
             </div>
@@ -181,7 +181,7 @@ class UserDetail extends React.Component {
         <h1>Collections :</h1>
         {/* <div id="container">
           <div className="row"> */}
-        <div className="full-div">
+        <div className="container">
           <div className="row">
             {this.state.collectiondata.length > 0 ? (
               <>
@@ -264,11 +264,11 @@ class UserDetail extends React.Component {
                 fontSize: 20,
               }}
             >
-              <h2>   Click on a Collection to view NFT's  </h2>
+              <h2> Click on a Collection to view NFT's  </h2>
             </p>
           </div>
         ) : (
-          <div id="container">
+          <div className="container">
             <div className="row">
               {this.state.NFtData.length > 0 ? (
                 <>

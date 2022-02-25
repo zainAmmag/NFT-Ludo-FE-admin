@@ -1,4 +1,5 @@
 import React from "react";
+import defaultImg from "../../src/Assets/images/default.png";
 import { Link } from "react-router-dom";
 import { SocialIcon } from 'react-social-icons';
 import { Col } from "react-bootstrap";
@@ -45,13 +46,13 @@ class CollectionDetail extends React.Component {
       IsTickerHovered: false,
       categoryNumber: 0,
       price: 0,
-      Blockchaindata:[
+      Blockchaindata: [
         {
-            chainID: 97,
-            name:"Binance Smart Chain",
-            shortName:"BNB",
+          chainID: 97,
+          name: "Binance Smart Chain",
+          shortName: "BNB",
         },
-    ],
+      ],
       BaseCurrency: 0,
       RenderFinished: false,
       NftcollectionId: 0,
@@ -63,7 +64,7 @@ class CollectionDetail extends React.Component {
     console.log("collectiondata", localStorage.getItem("CollectionDetail"))
     try {
       const data = await SendHttpRequest(
-        BaseUrl + "/Amin/GetMyAllAdminNfts",
+        BaseUrl + "/Amin/GetMyAllAdminNfts?PageSize=0&CurrentPage=0",
         {},
         "GET"
       );
@@ -121,12 +122,12 @@ class CollectionDetail extends React.Component {
     for (var i = 0; i < this.state.categoryNumber; i++) {
       arr.push(this.state.moviesData[this.state.categoryNumber1].Name);
     }
-    return (          
+    return (
       <div className="container-fluid body-content" id="">
-            
+
         <div id="container" className="text-center">
           <Link to="/createNFT" className="Link create-list">  Create NFT  </Link>
-          </div>
+        </div>
         <h1>NFT's:</h1>
 
         <div id="container">
@@ -150,20 +151,19 @@ class CollectionDetail extends React.Component {
                 />
               </div>
               <Modal.Footer>
-              <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
-            </Modal.Footer>
+                <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
+              </Modal.Footer>
             </Modal.Body>
-           
-          </Modal>
 
-          <div className="row">
+          </Modal>
+          <div className="">
+          <div className="row" >
             {this.state.NFtData.length > 0 ? (
               <>
                 {
                   this.state.NFtData.map((playerData, k) => (
                     <>
-                      <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3
-                      } sm={1}  >
+                      <Col key={k} style={{ paddingTop: "15px" }}  lg={3} md={4}   style={{display:"flex",justifyContent:"center",marginTop:"20px"}}>
                         <div
                           className="card2NFT">
                           <div >
@@ -176,13 +176,14 @@ class CollectionDetail extends React.Component {
 
                               <div className="">
                                 <img
-                                  src={"http://198.187.28.244:7577/" + playerData.logoImage}
+
+                                  src={playerData.logoImage ? "http://198.187.28.244:7577/" + playerData.logoImage : defaultImg}
                                   alt="profileImage"
                                   className="NFT-immage3"
                                 />
                               </div>
                               <h5 className="nft-heading">   {playerData.name + " "}</h5>
-                              <p className="note"> Price {playerData.buyPrice + " "}  { this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
+                              <p className="note"> Price {playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
                               <l>
 
                                 <Link to="/nftdetail">
@@ -221,8 +222,9 @@ class CollectionDetail extends React.Component {
               </div>
             )}
           </div>
+          </div>
         </div>
-      </div>
+       </div>
     );
   }
 }

@@ -83,6 +83,10 @@ class CreateNt extends React.Component {
             modalVisible: false,
             successmessage: "",
             errormessage: "",
+            nftModel: false,
+            nftName: false,
+            nftExternalLink: false,
+            nftPrice: false,
         };
 
     }
@@ -169,6 +173,19 @@ class CreateNt extends React.Component {
         this.setState({ falsemessage: "" })
         this.setState({ successmessage: "" })
         this.setState({ errormessage: "" })
+
+        if(this.state.Name === ''){
+            this.setState({nftName: true})
+           
+        }
+        if(this.state.ExternalLink === ''){
+            this.setState({nftExternalLink: true})
+           
+        }
+        if(this.state.Price === 0){
+            this.setState({nftPrice: true})
+           
+        }
         var bodyFormData = new FormData();
         if(!this.state.imageset)
         { this.setState({imageok:false})
@@ -177,7 +194,8 @@ class CreateNt extends React.Component {
         else
         {
             this.setState({imageok:true})
-        }    
+        }
+            
         bodyFormData.append("Name", this.state.Name);
         bodyFormData.append("TokenId", this.state.TokenId);
         bodyFormData.append("ContractAddress", this.state.ContractAddress);
@@ -226,8 +244,8 @@ class CreateNt extends React.Component {
                 }
                 
                 else if (response.data.message == "Data successfully added") {
-                    this.setState({ ImageModal: true })
-                    return this.props.history.push("/ManageNFt");
+                    this.setState({ nftModel: true })
+                   
                     this.setState({ successmessage: response.data.message })
                     
                 }
@@ -256,6 +274,13 @@ class CreateNt extends React.Component {
 
     render() {
         const handleClose1 = () => this.setState({ ImageModal: false });
+        const handleClose2 = () =>{ 
+            
+            this.setState({ nftModel: false })
+            return this.props.history.push("/ManageNFt");
+            
+        };
+
         return (
             <div className="container">
                 <div className="row">
@@ -289,40 +314,69 @@ class CreateNt extends React.Component {
                                         </Modal.Footer>
                                     </Modal>
                             </div>
+
+                             {/* create nft success model */}
+                             {this.state.nftModel && (<>
+                                <div className="col-md-12">
+                                
+                                <Modal
+                                    centered
+                                    size="lg"
+                                    show={this.state.nftModel}
+                                >
+                                    <Modal.Body>
+                                        <div style={{ textAlign: "center" }} className="Modal-div">
+                                        <div className='Modal-div-created'>
+                                                NFT Added successfully
+                                            </div>
+                                           
+
+                                        </div>
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <button className='Modal-div-cancel-button' onClick={handleClose2} > OK </button>
+                                    </Modal.Footer>
+                                </Modal>
+                        </div>
+                             </>)}
+                           
                             <div className="col-md-12">
                                 <div className='input-fields'>
                                     <p>Name</p>
+                                   
                                     <input
                                         type="text"
                                         required
                                         // placeholder="e.g 'Crypto Funk' "
-                                        placeholder='Enter NFt Name'
+                                        placeholder='Enter NFT Name'
                                         width={100}
                                         className="input-field"
                                         name='Name'
                                         value={this.state.Name}
                                         onChange={(data) => { this.setState({ Name: data.target.value }) }}
                                     />
+                                     {this.state.nftName &&(<><span style={{color: 'red'}}>Name required</span></>)}
                                 </div>
                                 <div className='input-fields'>
                                     <p>External Link</p>
                                     <input
                                         type="text"
                                         required
-                                        placeholder="e.g 'https://www.yoursite.com/item/123' "
+                                        placeholder="https://www.yoursite.com "
                                         width={100}
                                         className="input-field"
                                         name='ExternalLink'
                                         value={this.state.ExternalLink}
                                         onChange={(data) => { this.setState({ ExternalLink: data.target.value }) }}
                                     />
+                                     {this.state.nftExternalLink &&(<><span style={{color: 'red'}}>Link required</span></>)}
                                 </div>
                                 <div className='input-fields'>
                                     <p>Description</p>
                                     <input
                                         type="text"
                                         required
-                                        placeholder="e.g 'this is very limited item' "
+                                        placeholder="add limited Description' "
                                         width={100}
                                         className="description-field"
                                         name='Description'
@@ -347,7 +401,7 @@ class CreateNt extends React.Component {
                                 <div className='input-fields'>
                                     <p>Price</p>
                                     <input
-                                        type="text"
+                                        type="number"
                                         required
                                         placeholder="enter Price for one item[BNB] "
                                         width={100}
@@ -356,6 +410,7 @@ class CreateNt extends React.Component {
                                         value={this.state.Price}
                                         onChange={(data) => { this.setState({ Price: data.target.value }) }}
                                     />
+                                     {this.state.nftPrice &&(<><span style={{color: 'red'}}>0 Price</span></>)}
                                 </div>
                                 <div className='input-fields'>
                                     <p>Blockchain</p>

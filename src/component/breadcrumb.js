@@ -26,6 +26,26 @@ export default function CollapsedBreadcrumbs() {
                         </Link>
                     )
                 }
+
+                {
+                    window.location.pathname === '/userDetail' && (
+                        <Link to="/userDetail" className="waves-effect">
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}><Link to="/manageAccount"> Manage Account </Link> / User Detail</p>
+                        </Link>
+                    )
+                }
+
+
+                {
+                    window.location.pathname === '/nftdetail' && (
+                        <Link to="/nftdetail" className="waves-effect">
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}><Link to="/manageAccount"> Manage Account </Link> /<Link to="/userDetail">  User Detail </Link> / Nft Detail</p>
+                        </Link>
+                    )
+                }
+
+
+
                 {
                     window.location.pathname === '/orderDetail' && (
                         <Link to="/orderDetail" className="waves-effect">
@@ -57,6 +77,14 @@ export default function CollapsedBreadcrumbs() {
                         </Link>
                     )
                 }
+                   {
+                    window.location.pathname === '/ShowCollectionDetail' && (
+                        <Link to="/ShowCollectionDetail" className="waves-effect"  >
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}><Link to="/manageCollection">  Manage Collection</Link> / Collection Detail</p>
+                        </Link>
+                    )
+                }
+
                 {
                     window.location.pathname === "/createNFT" && (
                         <Link to="/createNFT" className="waves-effect">
@@ -64,6 +92,23 @@ export default function CollapsedBreadcrumbs() {
                         </Link>
                     )
                 }
+
+
+                {
+                    window.location.pathname === '/ManageNFt' && (
+                        <Link to="/ManageNFt" className="waves-effect">
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}>Manage NFt</p>
+                        </Link>
+                    )
+                }
+
+{/* {
+                    window.location.pathname === '/nftdetail' && (
+                        <Link to="/nftdetail" className="waves-effect">
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}><Link to="/ManageNFt">  Manage NFt</Link> / Nft Detail</p>
+                        </Link>
+                    )
+                } */}
             </Breadcrumbs>
         </div>
     );

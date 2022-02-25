@@ -1,5 +1,8 @@
 import React from "react";
 import { SendHttpRequest } from "./utility";
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWalletSharp';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { Copy } from "react-feather";
 import {
   BaseUrl1,
   AuthenticationTokenId,
@@ -145,16 +148,18 @@ class NFTDetail extends React.Component {
     
           }
         }).then((response) => {
-                      
+         
         console.log("LETS GO BRO", response);
 
         }).catch((e)=>{
+          this.props.setIsLoaderActive(false);
         console.log("ererer", e);
 
         })
       })
         
       }).catch((e)=>{
+        this.props.setIsLoaderActive(false);
         console.log("err", e);
       })
     })
@@ -170,12 +175,19 @@ class NFTDetail extends React.Component {
             <div className="pt-4" />
             <div className="detail-card">
               <h3>Details</h3>
-              <p><b>Contract Address</b> {this.state.nftDATA.contractAddress}</p>
-              <p><b>Token</b> IDv213</p>
-              <p><b>Token</b> Standard</p>
+              <p><b>Contract Address</b> {this.state.nftDATA.contractAddress}
+              {" "}
+               <CopyToClipboard text={localStorage.getItem("address")}
+                      onCopy={() => this.setState({ copied: true })}>
+                      <Copy style={{cursor:"pointer"}}/>
+                    </CopyToClipboard >
+                    
+                    </p>
+              <p><b>Token IDv</b> {this.state.nftDATA.id}</p>
+              <p><b>Token Standard</b> BEP-20</p>
             </div>
             <div className="detail-card">
-              <h3>Properties</h3>
+              <h3>{this.state.nftDATA.NftProperties}</h3>
             </div>
           </div>
           <div className="col-lg-6 col-md-12 col-sm-12">
@@ -183,11 +195,9 @@ class NFTDetail extends React.Component {
               <h3>{this.state.nftDATA.name}</h3>
               <p>By:{this.state.nftDATA.creatorName}</p>
               
-              
-              
 
-              <p style={{ fontWeight: "bold" }}> Funky 213 </p>
-              <p >price:{this.state.nftDATA.bidInitialMinimumAmount ? this.state.nftDATA.bidInitialMaximumAmount : 0} </p>
+              <p style={{ fontWeight: "bold" }}> {this.state.nftDATA.collectionName} </p>
+              <p >price:{this.state.nftDATA.bidInitialMinimumAmount ? this.state.nftDATA.bidInitialMaximumAmount : this.state.nftDATA.buyPrice } </p>
               <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart /> {" "}{this.state.nftDATA.ratings}     </p>
             </div>
             <div className="detail-card">
@@ -207,6 +217,9 @@ class NFTDetail extends React.Component {
                     style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder", }}
                     onClick={() => {
                       this.setState({ ImageModal: true })
+                      this.props.setIsLoaderActive(false);
+                      
+                    //  this.state.ImageModal ==true? "Are you sure to sell Nft " :""
                     }}
                   >
                     Sell NFT
@@ -219,6 +232,7 @@ class NFTDetail extends React.Component {
                   </>
                 ) : (
                   <>
+                   
                   {this.state.nftDATA.isAdminNft && (
                 <Link to="/UpdateNFt" className="reg-btn blue"  >  <Button
                   className="collection-button"
@@ -248,7 +262,7 @@ class NFTDetail extends React.Component {
                     required
                     placeholder="enter Price for one item[BNB] "
                     width={50}
-                    className="input-field"
+                    className="input-field1"
                     name='Price'
                     value={this.state.Price}
                     onChange={(data) => { this.setState({ Price: data.target.value }) }}
@@ -256,6 +270,7 @@ class NFTDetail extends React.Component {
                 </div>
                 <Modal.Footer>
                 <button className='Modal-div-cancel-button' onClick={()=>this.sellNft(this.state.nftDATA.nftTokenId, this.state.nftDATA.contractAddress, this.state.nftDATA.id)} > OK </button>
+             
               </Modal.Footer>
               </Modal.Body>
               

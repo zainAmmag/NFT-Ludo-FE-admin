@@ -223,9 +223,8 @@ class CreateCollection extends React.Component {
     
                 }
                 else if (response.data.message == "Data successfully added") {
-                    
+                    this.setState({ successmessage: response.data.message })
                     return this.props.history.push("/manageCollection");
-                     this.setState({ successmessage: response.data.message })
                 }
                 else {
                     this.setState({ errormessage: response.data.message })
@@ -283,7 +282,7 @@ class CreateCollection extends React.Component {
      } 
      
     render() {
-        const handleClose1 = () => this.setState({ ImageModal: false });
+        const handleClose1 = () =>{ this.setState({ ImageModal: false })};
         return (
             <>
                 <div className='container'>
