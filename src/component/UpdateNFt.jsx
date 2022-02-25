@@ -299,11 +299,12 @@ class UpdateNFT extends React.Component {
             }).then((resdata) => {
                   console.log("res updateeeeee", resdata)
                   this.setState({ ImageModal: true })
-                  this.props.setIsLoaderActive(false);
-                  return this.props.history.push("/nftdetail");
+                  this.props.setIsLoaderActive(true);
                   this.setState({ errormessage: "NFT updated successfully" })
+                  return this.props.history.push("/nftdetail");
+                  
                 }).catch((e) => {
-                  this.props.setIsLoaderActive(false);
+                  this.props.setIsLoaderActive(true);
                   console.log("errorrrrrrrrrrrrr updateeeeee", e)
   
                 })
@@ -347,6 +348,7 @@ class UpdateNFT extends React.Component {
         console.log("daadd" + response.statusText);
         if (response.data.message == "Data successfully added") {
           this.setState({ successmessage: response.data.message })
+          this.props.setIsLoaderActive(true);
         }
         else {
           this.setState({ errormessage: response.data.message })

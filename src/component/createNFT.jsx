@@ -80,6 +80,7 @@ class CreateNt extends React.Component {
             ],
             SelectedBlockchain: [],
             falsemessage: "",
+            modalVisible: false,
             successmessage: "",
             errormessage: "",
         };
@@ -216,16 +217,19 @@ class CreateNt extends React.Component {
                 }
             }).then((response) => {
                 this.props.setIsLoaderActive(false);
-                this.setState({ ImageModal: true })
+                // this.setState({ ImageModal: true })
                 console.log(response.data.message);
                 console.log("daadd" + response.statusText);
                 if (response.data.message == "Collection already exist") {
                     this.setState({ falsemessage: response.data.message })
-
+                    this.setState({ ImageModal: true })
                 }
+                
                 else if (response.data.message == "Data successfully added") {
+                    this.setState({ ImageModal: true })
                     return this.props.history.push("/ManageNFt");
                     this.setState({ successmessage: response.data.message })
+                    
                 }
                 else {
                     this.setState({ errormessage: response.data.message })
