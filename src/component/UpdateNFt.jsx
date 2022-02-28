@@ -53,15 +53,17 @@ class UpdateNFT extends React.Component {
       Description1: "",
       Unlockablecontent1: false,
       Unlockablecontentnote1: "",
-
+      vname: true,
       SesitiveData1: false,
+      vExternalLink: true,
       Supply1: 0,
+      vprice: true,
       Feetransitiondata1: "",
       CategoryId1: 0,
       CurrencyId1: 9,
       CollectionId1: 0,
       BlockChainname_1: "",
-      Price1: 0,
+      Price: 0,
       ChainId1: 97,
       NftProperties1: [],
       NftLevels1: [],
@@ -70,16 +72,17 @@ class UpdateNFT extends React.Component {
       defaultcurrencyname: "",
       defaultpaymentnname: "",
       NftStats1: [],
+
       Image1: {},
       freezedata: false,
       isSwitchOn: false,
       ImagePreview: {},
-      Blockchaindata1:   [
+      Blockchaindata1: [
         {
-            chainID: 97,
-            name:"Binance Smart Chain"
+          chainID: 97,
+          name: "Binance Smart Chain"
         },
-    ],
+      ],
       CategoryData1: [],
       Currencydata1: [
         {
@@ -95,7 +98,7 @@ class UpdateNFT extends React.Component {
           smartContractAddress: "0x9Ce7B893A8aBe688803121e1bcCc68D069C01f51",
           uuid: "793b259c-532d-4dff-a51c-06d609c64b63",
         },
-          ],
+      ],
       SelectedBlockchain1: [],
       falsemessage: "",
       successmessage: "",
@@ -141,52 +144,36 @@ class UpdateNFT extends React.Component {
         "GET"
       );
       if (data.isSuccess) {
-        
+
         console.log("Collection data" + data.message);
         console.log(data.data);
         this.setState({ PrevNftdata: data.data })
         console.log("PrevNftdata", this.state.PrevNftdata);
         console.log("Edit Collection " + data.data.name);
         console.log("Collection data1", this.state.collectiondata);
-        console.log("Collection data2", this.state.collectiondata);
-        temp = this.state.PrevNftdata.name;
-        this.setState({ Name1: temp })
-        tempnum = this.state.PrevNftdata.nftTokenId;
-        this.setState({ TokenId1: tempnum })
-        temp = this.state.PrevNftdata.externalLink;
-        this.setState({ ExternalLink1: temp })
-        temp = this.state.PrevNftdata.description;
-        this.setState({ Description1: temp })
-        tempbool = this.state.PrevNftdata.unlockableContent;
-        this.setState({ unlockableContent1: tempbool })
-        temp = this.state.PrevNftdata.unlockableContentNote;
-        this.setState({ unlockableContentNote1: temp })
-        tempbool = this.state.PrevNftdata.sensitiveContent;
-        this.setState({ SesitiveData1: tempbool })
-        tempnum = this.state.PrevNftdata.supply;
-        this.setState({ Supply1: tempnum })
-        tempnum = this.state.PrevNftdata.currencyId;
-        this.setState({ currencyId1: tempnum })
-        console.log("currencyId1:", tempnum)
-
-        console.log("currencyId2:", this.state.currencyId1)
-        // this.findcurrencyid()
-        tempnum = this.state.PrevNftdata.collectionId;
-        this.setState({ collectionId1: tempnum })
-        temp = this.state.PrevNftdata.blockChainName
-        this.setState({ defaultcurrencyname: temp })
-        tempnum = this.state.PrevNftdata.buyPrice;
-        this.setState({ Price: tempnum })
+        console.log("Collection data2", this.state.collectiondata)
+        this.setState({ Name1: this.state.PrevNftdata.name })
+        this.setState({ TokenId1: this.state.PrevNftdata.nftTokenId })
+        this.setState({ ExternalLink1: this.state.PrevNftdata.externalLink })
+        this.setState({ Description1: this.state.PrevNftdata.description })
+        this.setState({ unlockableContent1: this.state.PrevNftdata.unlockableContent })
+        this.setState({ unlockableContentNote1: this.state.PrevNftdata.unlockableContentNote })
+        this.setState({ SesitiveData1: this.state.PrevNftdata.sensitiveContent })
+        this.setState({ Supply1: this.state.PrevNftdata.supply })
+        this.setState({ currencyId1: this.state.PrevNftdata.currencyId })
+        this.setState({ collectionId1: this.state.PrevNftdata.collectionId })
+        this.setState({ defaultcurrencyname: this.state.PrevNftdata.blockChainName })
+        this.setState({ Price: this.state.PrevNftdata.buyPrice })
         temp = this.state.PrevNftdata.image
-        this.setState({ image1: temp })
+        this.setState({ image1: this.state.PrevNftdata.image })
         this.setState({ ImagePreview: "http://198.187.28.244:7577/" + temp })
         temp = this.state.PrevNftdata.collectionName
         this.setState({ defaultcollctionname: temp })
         temp = this.state.PrevNftdata.contractAddress
         this.setState({ ContractAddress1: temp })
-        console.log("zazzaazazaz",this.state.CurrencyId1 )
-        this.setState({defaultpaymentnname: this.state.Currencydata1.find((item, index) => item.id == this.state.PrevNftdata.currencyId).name})
-        console.log("dsddddsdsdd",this.state.defaultpaymentnname)
+        console.log("zazzaazazaz", this.state.CurrencyId1)
+        this.setState({ defaultpaymentnname: this.state.Currencydata1.find((item, index) => item.id == this.state.PrevNftdata.currencyId).name })
+        console.log("dsddddsdsdd", this.state.defaultpaymentnname)
       }
       else {
         console.log("data" + data.message)
@@ -216,6 +203,11 @@ class UpdateNFT extends React.Component {
     console.log("sssa", this.state.Currencydata1.find((item, index) => item.id == this.state.CurrencyId1))
 
   }
+  urlPatternValidation = URL => {
+    const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
+
+    return regex.test(URL);
+  };
   clearall = (data) => {
     this.setState({ Name: "" })
     this.setState({ ExternalLink: "" })
@@ -228,7 +220,18 @@ class UpdateNFT extends React.Component {
     this.setState({ MediumLink: "" })
   }
   submit = (data) => {
-  
+    const name = /^[a-zA-Z0-9]*$/;
+    const price = /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
+    const temp = this.state.Name1
+    console.log(this.state.Price, "kedwwd")
+    const temp1 = this.state.Price.toString()
+    console.log(temp1, "kesaasasasaasasdwwd")
+    if (temp?.match(name)) this.setState({ vname: true })
+    if (!temp?.match(name)) { this.setState({ vname: false }); return; }
+    if (this.urlPatternValidation(this.state.ExternalLink1)) this.setState({ vExternalLink: true })
+    if (!this.urlPatternValidation(this.state.ExternalLink1)) { this.setState({ vExternalLink: false }); return; }
+    if (temp1?.match(price)) this.setState({ vprice: true })
+    if (!temp1?.match(price)) { this.setState({ vprice: false }); return; }
     this.props.setIsLoaderActive(true);
     console.log("block", this.state.BlockChainname_1)
     console.log("chain", this.state.ChainId)
@@ -238,10 +241,10 @@ class UpdateNFT extends React.Component {
     this.setState({ successmessage: "" })
     this.setState({ errormessage: "" })
     var bodyFormData = new FormData();
-    console.log("state.CurrencyId1",this.state.PrevNftdata.currencyId)
-         console.log("state.CategoryId1",this.state.PrevNftdata.collectionId)
-         console.log("state.chainID1",)
-
+    console.log("state.CurrencyId1", this.state.PrevNftdata.currencyId)
+    console.log("state.CategoryId1", this.state.PrevNftdata.collectionId)
+    console.log("state.chainID1",)
+    this.props.setIsLoaderActive(true);
     bodyFormData.append("NftId", localStorage.getItem("Updatenftid"));
     bodyFormData.append("Name", this.state.Name1);
     bodyFormData.append("TokenId", this.state.TokenId1);
@@ -253,9 +256,9 @@ class UpdateNFT extends React.Component {
     bodyFormData.append("Supply", this.state.Supply1);
     bodyFormData.append("CurrencyId", this.state.PrevNftdata.currencyId);
     bodyFormData.append("CollectionId", this.state.PrevNftdata.collectionId);
-    bodyFormData.append("BlockChainName", this.state .defaultcurrencyname);
-    bodyFormData.append("Price", this.state.Price1);
-    bodyFormData.append("ChainId",  this.state.Blockchaindata1.find((item, index) => item.name == this.state.defaultcurrencyname).chainID);
+    bodyFormData.append("BlockChainName", this.state.defaultcurrencyname);
+    bodyFormData.append("Price", this.state.Price);
+    bodyFormData.append("ChainId", this.state.Blockchaindata1.find((item, index) => item.name == this.state.defaultcurrencyname).chainID);
     bodyFormData.append("FreezeData", this.state.freezedata);
     bodyFormData.append("Image", this.state.Image1);
     console.log("WHYYY BRO", this.state.isSwitchOn);
@@ -281,45 +284,45 @@ class UpdateNFT extends React.Component {
           axios({
             method: "PUT",
             url: "http://198.187.28.244:7577/api/v1/Amin/EditNft",
-    
+
             data: bodyFormData,
             headers: {
               accept: "text/plain",
               "Content-Type": "multipart/form-data",
               Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
-    
+
             }
-          }).then(async(response) => {
+          }).then(async (response) => {
             axios({
               method: "POST",
               url: `http://198.187.28.244:7577/api/v1/Amin/FreezeNft`,
-      
+
               data: postBody,
               headers: {
                 // accept: "text/plain",
                 // "Content-Type": "multipart/form-data",
                 Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
-      
+
               }
             }).then((resdata) => {
-                  console.log("res updateeeeee", resdata)
-                  this.setState({ ImageModal: true })
-                  this.props.setIsLoaderActive(false);
-                  this.setState({ errormessage: "NFT updated successfully" })
-                  return this.props.history.push("/nftdetail");
-                  
-                }).catch((e) => {
-                  this.props.setIsLoaderActive(false);
-                  console.log("errorrrrrrrrrrrrr updateeeeee", e)
-  
-                })
-            }).catch((e)=>{
+              console.log("res updateeeeee", resdata)
+              this.setState({ ImageModal: true })
               this.props.setIsLoaderActive(false);
-              console.log("eeeee updateeeeee", e)
-  
+              this.setState({ errormessage: "NFT updated successfully" })
+              return this.props.history.push("/nftdetail");
+
+            }).catch((e) => {
+              this.props.setIsLoaderActive(false);
+              console.log("errorrrrrrrrrrrrr updateeeeee", e)
+
             })
+          }).catch((e) => {
+            this.props.setIsLoaderActive(false);
+            console.log("eeeee updateeeeee", e)
+
+          })
         })
-        
+
 
 
       }).catch((e) => {
@@ -346,14 +349,13 @@ class UpdateNFT extends React.Component {
       bodyFormData1.append("Supply", this.state.Supply1);
       bodyFormData1.append("CurrencyId", this.state.PrevNftdata.currencyId);
       bodyFormData1.append("CollectionId", this.state.PrevNftdata.collectionId);
-      bodyFormData1.append("BlockChainName", this.state .defaultcurrencyname);
-      bodyFormData1.append("Price", this.state.Price1);
-      bodyFormData1.append("ChainId",  this.state.Blockchaindata1.find((item, index) => item.name == this.state.defaultcurrencyname).chainID);
+      bodyFormData1.append("BlockChainName", this.state.defaultcurrencyname);
+      bodyFormData1.append("Price", this.state.Price);
+      bodyFormData1.append("ChainId", this.state.Blockchaindata1.find((item, index) => item.name == this.state.defaultcurrencyname).chainID);
       bodyFormData1.append("FreezeData", this.state.freezedata);
-       bodyFormData.append("Image", this.state.Image1);
+      bodyFormData1.append("Image", this.state.Image1);
       console.log("WHYYY BRO", this.state.isSwitchOn);
-    bodyFormData1.append("Image", this.state.ImagePreview);
-    console.table([...bodyFormData])
+      console.table([...bodyFormData])
 
       console.log("not update")
       this.props.setIsLoaderActive(true);
@@ -374,7 +376,7 @@ class UpdateNFT extends React.Component {
         console.log(response.data.message);
         console.log("daadd" + response.statusText);
         if (response.data.message == "Nft successfully updated") {
-          this.setState({ successmessage: "NFT successfully updated"})
+          this.setState({ successmessage: "NFT successfully updated" })
           this.props.setIsLoaderActive(true);
         }
         else {
@@ -388,8 +390,8 @@ class UpdateNFT extends React.Component {
   }
   uploadPicture = (e) => {
     let img = e.target.files[0];
-    
-    this.setState({ Image1: ""})
+
+    this.setState({ Image1: "" })
     this.setState({ Image1: e.target.files[0] })
     this.setState({ ImagePreview: URL.createObjectURL(img) })
     console.log("this.state.ImagePreview", img)
@@ -408,10 +410,10 @@ class UpdateNFT extends React.Component {
   }
 
   render() {
-    const handleClose1 = () =>{
-     this.setState({ ImageModal: false })
-     this.props.setIsLoaderActive(false);
-     return this.props.history.push("/ManageNFt");
+    const handleClose1 = () => {
+      this.setState({ ImageModal: false })
+      this.props.setIsLoaderActive(false);
+      return this.props.history.push("/ManageNFt");
     }
     return (
       <div className='container'>
@@ -421,31 +423,31 @@ class UpdateNFT extends React.Component {
           </div>
           <div className="col-md-8 col-sm-12 col-lg-8">
             <Modal
-                centered
-                size="lg"
-                show={this.state.ImageModal}
-              >
-                <Modal.Body>
-                  <div style={{ textAlign: "center" }} className="Modal-div">
-                    <div className='Modal-div-notcreated'>
-                      {this.state.falsemessage === "" ? "" : this.state.falsemessage}
-                    </div>
-
-                    <div className='Modal-div-created'>
-                      {this.state.successmessage === "" ? "" : this.state.successmessage}
-                    </div>
-                    <div className='Modal-div-notcreated'>
-                      {this.state.errormessage === "" ? "" : this.state.errormessage}
-                    </div>
-
+              centered
+              size="lg"
+              show={this.state.ImageModal}
+            >
+              <Modal.Body>
+                <div style={{ textAlign: "center" }} className="Modal-div">
+                  <div className='Modal-div-notcreated'>
+                    {this.state.falsemessage === "" ? "" : this.state.falsemessage}
                   </div>
-                  <Modal.Footer>
+
+                  <div className='Modal-div-created'>
+                    {this.state.successmessage === "" ? "" : this.state.successmessage}
+                  </div>
+                  <div className='Modal-div-notcreated'>
+                    {this.state.errormessage === "" ? "" : this.state.errormessage}
+                  </div>
+
+                </div>
+                <Modal.Footer>
                   <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
                 </Modal.Footer>
-                </Modal.Body>
-               
-              </Modal>
-          
+              </Modal.Body>
+
+            </Modal>
+
             <div className='input-fields'>
               <p>Name</p>
               <input
@@ -457,8 +459,11 @@ class UpdateNFT extends React.Component {
                 className="input-field"
                 name='Name'
                 value={this.state.Name1}
-                onChange={(data) => { this.setState({ Name1:"" }) ; this.setState({ Name1: data.target.value }) }}
+                onChange={(data) => { this.setState({ Name1: "" }); this.setState({ Name1: data.target.value }) }}
               />
+              {!this.state.vname && (
+                <div style={{ color: "#F61C04" }}>Name is not valid.</div>
+              )}
             </div>
             <div className='input-fields'>
               <p>External Link</p>
@@ -472,6 +477,9 @@ class UpdateNFT extends React.Component {
                 value={this.state.ExternalLink1}
                 onChange={(data) => { this.setState({ ExternalLink1: data.target.value }) }}
               />
+              {!this.state.vExternalLink && (
+                <div style={{ color: "#F61C04" }}>Url is not valid.</div>
+              )}
             </div>
             <div className='input-fields'>
               <p>Description</p>
@@ -508,9 +516,12 @@ class UpdateNFT extends React.Component {
                 width={100}
                 className="input-field"
                 name='Price'
-                value={this.state.Price1}
-                onChange={(data) => { this.setState({ Price1: data.target.value }) }}
+                value={this.state.Price}
+                onChange={(data) => { this.setState({ Price: data.target.value }) }}
               />
+              {!this.state.vprice && (
+                <div style={{ color: "#F61C04" }}>Price is not valid.</div>
+              )}
             </div>
             <div className='input-fields'>
               <p>Blockchain</p>
@@ -556,18 +567,18 @@ class UpdateNFT extends React.Component {
               />
             </div>
             <p style={{ whiteSpace: 'nowrap' }} >    <h5 className="">Freeze metadata?</h5>
-                <Formm>
-                  <Formm.Switch
-                    type="switch"
-                    id="custom-switch"
-                    label="Checking it will permanently freeze the metadata and can be sold on marketplace."
-                    checked={this.state.isSwitchOn}
-                    onChange={() => {
-                    this.setState({isSwitchOn: !this.state.isSwitchOn})
+              <Formm>
+                <Formm.Switch
+                  type="switch"
+                  id="custom-switch"
+                  label="Checking it will permanently freeze the metadata and can be sold on marketplace."
+                  checked={this.state.isSwitchOn}
+                  onChange={() => {
+                    this.setState({ isSwitchOn: !this.state.isSwitchOn })
                   }}
-                  />
-                </Formm></p>
-             </div>
+                />
+              </Formm></p>
+          </div>
           <div className="col-md-4 col-sm-10 col-lg-4">
             <div className="pt-2"></div>
             <div className="pt-2"></div>
@@ -575,7 +586,7 @@ class UpdateNFT extends React.Component {
               <p style={{ cursor: "pointer" }}>
                 Image Preview
               </p>
-              <input type="file" onChange={this.uploadPicture} className="inputimage"/>
+              <input type="file" onChange={this.uploadPicture} className="inputimage" />
               <div style={{ height: "55%" }}>
 
                 <div className='prevItmImgSec'>
@@ -593,8 +604,8 @@ class UpdateNFT extends React.Component {
           <div className='col-md-12'>
             <div style={{ display: "flex" }}>
               <button className='create-list' onClick={() => { this.submit() }}>Update NFT</button>
-             <Link to="nftdetail">  <button className='create-list' onClick={() => { this.clearall() }}>Cancel</button>
-             </Link>
+              <Link to="nftdetail">  <button className='create-list' onClick={() => { this.clearall() }}>Cancel</button>
+              </Link>
             </div>
           </div>
         </div>

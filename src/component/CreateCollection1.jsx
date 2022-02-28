@@ -50,20 +50,29 @@ class CreateCollection extends React.Component {
             InstagramLink: "",
             MediumLink: "",
             TLink: "",
+            vname:true,
+            vExternalLink:true,
             PercentageFee: 0,
             CategoryId: 0,
             ChainId: 0,
+            vprice:true,
+            bannerset:false,
+            logoset:false,
+            featureset:false,
             ImageModal: false,
             CurrencyId: "",
             SensitveContent: false,
             LogoImage: {},
             WebsiteLink: "",
             FeaturedImage: {},
+            vFeaturedImage:true,
             discordok:true,
             mediumLinkok:true,
             BannerImage: {},
+            vBannerImage:true,
             BannerPreview: {},
             LogoPreview: {},
+            vLogoImage:true,
             FeatPreview: {},
             Blockchaindata:[
                 {
@@ -129,62 +138,48 @@ class CreateCollection extends React.Component {
     }
     submit = (data) => {
 
-        // if(this.state.Name!=""){
-        //     if(!this.urlPatternValidation(this.state.Name)) 
-        //      this.setState({Name:false})
-        //    else
-        //      this.setState({Name:true}) }
-
-        if(this.state.Name!=""){
-            if(!this.namevalidation(this.state.Name)) 
-             this.setState({Name:false})
-           else
-             this.setState({Name:true}) }
-
-
-        if(this.state.DiscordLink!=""){
-        if(!this.urlPatternValidation(this.state.DiscordLink)) 
-         this.setState({discordok:false})
-       else
-         this.setState({discordok:true}) }
-    if(this.state.TwitterLink!=""){
-    if(!this.urlPatternValidation(this.state.TwitterLink)) 
-    this.setState({twitterok:false})
-    else
-    this.setState({twitterok:true})
-    }
-    if(this.state.InstagramLink!=""){
-    if(!this.urlPatternValidation(this.state.InstagramLink)) 
-    this.setState({instagramok:false})
-    else
-    this.setState({instagramok:true})
-    }
-    if(this.state.MediumLink!=""){
-    if(!this.urlPatternValidation(this.state.MediumLink)) 
-    this.setState({mediumLinkok:false})
-    else
-    this.setState({mediumLinkok:true})
-    }
-    if(this.state.TLink!=""){
-    if(!this.urlPatternValidation(this.state.TLink)) 
-    this.setState({tLinkok:false})
-      else
-    this.setState({tLinkok:true})
-    }  
-    if(this.state.Name!="")
-    {
-        if(!this.namevalidation(this.state.Name)) 
-        this.setState({Nameok:false})
-          else
-        this.setState({Nameok:true})
-    }    
-    // if(!this.state.name&&!this.state.ExternalLink&&!this.state.Description&&!this.state.CategoryId&&!this.state.ChainId&&!this.state.Nameok)
-        if(!this.state.discordok&&!this.state.twitterok&&!this.state.instagramok&&!this.state.tLinkok&&!this.state.mediumLinkok&&!this.state.Nameok)
-          {
+        const name = /^[a-zA-Z]*$/;
+         if(this.state.Name==""){{this.setState({vname:false});return ;} }
+        if (this.state.Name.match(name)) this.setState({vname:true})   
+        if (!this.state.Name.match(name)) {this.setState({vname:false});return ;} 
+        if (this.urlPatternValidation(this.state.ExternalLink))  this.setState({vExternalLink:true})
+        if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); return; }
+        if (this.urlPatternValidation(this.state.DiscordLink))  this.setState({discordok:true})
+        if (!this.urlPatternValidation(this.state.DiscordLink)) {this.setState({discordok:false}); return; }
+        if (this.urlPatternValidation(this.state.InstagramLink))  this.setState({instagramok:true})
+        if (!this.urlPatternValidation(this.state.InstagramLink)) {this.setState({instagramok:false}); return; }
+        if (this.urlPatternValidation(this.state.TLink))  this.setState({tLinkok:true})
+        if (!this.urlPatternValidation(this.state.TLink)) {this.setState({tLinkok:false}); return; }
+        
+        if (this.urlPatternValidation(this.state.TwitterLink))  this.setState({twitterok:true})
+        if (!this.urlPatternValidation(this.state.TwitterLink)) {this.setState({twitterok:false}); return; }
+        if (this.urlPatternValidation(this.state.MediumLink))  this.setState({mediumLinkok:true})
+        if (!this.urlPatternValidation(this.state.MediumLink)) {this.setState({mediumLinkok:false}); return; }
+        if (!this.state.logoset) {
+            this.setState({ vLogoImage: false })
+            return
+        }
+        else this.setState({ vLogoImage: true }) 
+        if (!this.state.featureset) {
+            this.setState({ vFeaturedImage: false })
+            return
+            }
+            else {
+                this.setState({ vFeaturedImage: true })
+            }    
+        if (!this.state.bannerset) {
+            this.setState({ vBannerImage: false })
+            return
+        } 
+        else  this.setState({ vBannerImage: true })
+             
+ 
+   
             this.setState({ falsemessage: "" })
             this.setState({ successmessage: "" })
             this.setState({ errormessage: "" })
             //   this.HandleOpen();
+            this.props.setIsLoaderActive(true);
             var bodyFormData = new FormData();
             bodyFormData.append("Name", this.state.Name);
             bodyFormData.append("Url", this.state.UrlL);
@@ -220,18 +215,18 @@ class CreateCollection extends React.Component {
                 console.log(response.data.message);
                 if (response.data.message == "Collection already exist") {
                     this.setState({ falsemessage: response.data.message })
-    
+                    this.props.setIsLoaderActive(false);
                 }
                 else if (response.data.message == "Data successfully added") {
                     this.setState({ successmessage: response.data.message })
-                    return this.props.history.push("/manageCollection");
+                    this.props.setIsLoaderActive(false);
                 }
                 else {
                     this.setState({ errormessage: response.data.message })
                 }
                 // console.log(");
             })
-          }
+
           console.log("data is not ok")
           return
         console.log(this.state.CategoryId)
@@ -245,6 +240,7 @@ class CreateCollection extends React.Component {
           this.setState({
             logoimageset:"set",  
           })
+            this.setState({ logoset: true })
         this.setState({ LogoImage: e.target.files[0] })
         this.setState({ LogoPreview: URL.createObjectURL(e.target.files[0]) })
     };
@@ -252,6 +248,8 @@ class CreateCollection extends React.Component {
         this.setState({
             bannerimageset:"set",  
           })
+          this.setState({ bannerset: true })
+    
         this.setState({ BannerImage: e.target.files[0] })
         this.setState({ BannerPreview: URL.createObjectURL(e.target.files[0]) })
     };
@@ -261,6 +259,7 @@ class CreateCollection extends React.Component {
         this.setState({
             featureimageset:"set",  
           })
+          this.setState({ featureset: true })
         this.setState({ FeaturedImage: e.target.files[0] })
         this.setState({ FeatPreview: URL.createObjectURL(e.target.files[0]) })
     };
@@ -272,6 +271,7 @@ class CreateCollection extends React.Component {
     }
   
     urlPatternValidation = URL => {
+        if(URL=="") return true
         const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');    
         return regex.test(URL);
       };
@@ -282,7 +282,12 @@ class CreateCollection extends React.Component {
      } 
      
     render() {
-        const handleClose1 = () =>{ this.setState({ ImageModal: false })};
+        const handleClose1 = () =>{ 
+            this.setState({ ImageModal: false })
+           if(this.state.successmessage!="") 
+           return this.props.history.push("/manageCollection");
+          
+        };
         return (
             <>
                 <div className='container'>
@@ -328,8 +333,8 @@ class CreateCollection extends React.Component {
                                     value={this.state.Name}
                                     onChange={(data) => { this.setState({ Name: data.target.value }) }}
                                 />
-                                {!this.state.Nameok && (
-            <div style={{ color: "#F61C04" }}>Name contains only Alphabets</div>
+                                {!this.state.vname && (
+               <div style={{ color: "#F61C04" }}>Name contains only Alphabets and cannot be null </div>
           )}
                             </div>
                             <div className='input-fields'>
@@ -344,6 +349,9 @@ class CreateCollection extends React.Component {
                                     value={this.state.ExternalLink}
                                     onChange={(data) => { this.setState({ ExternalLink: data.target.value }) }}
                                 />
+                                   {!this.state.vExternalLink && (
+            <div style={{ color: "#F61C04" }}>Link is not valid</div>
+          )}
                             </div>
                             <div className='input-fields'>
                                 <p>Description</p>
@@ -490,6 +498,9 @@ class CreateCollection extends React.Component {
                                          /> }
                                     </div>
                                 </div>
+                                {!this.state.vLogoImage && (
+            <div style={{ color: "#F61C04" }}>Image Is required</div>
+          )}
                             </div>
                             <div className="pt-2"></div>
                             <div className='prevItem2'>
@@ -502,6 +513,9 @@ class CreateCollection extends React.Component {
                                         <img src={this.state.featureimageset?this.state.FeatPreview:' '} className="avatar-immage" />
                                     </div>
                                 </div>
+                                {!this.state.vFeaturedImage && (
+            <div style={{ color: "#F61C04" }}>Image Is required</div>
+          )}
                             </div>
 
                             <div className="pt-2"></div>
@@ -516,6 +530,9 @@ class CreateCollection extends React.Component {
                                         <img src={this.state.bannerimageset?this.state.BannerPreview:' '}  className="avatar-immage" />
                                     </div>
                                 </div>
+                                {!this.state.vBannerImage && (
+            <div style={{ color: "#F61C04" }}>Image Is required</div>
+          )}
                             </div>
 
 
@@ -533,4 +550,4 @@ class CreateCollection extends React.Component {
         );
     }
 }
-export default CreateCollection;
+export default  connect(mapStateToProps, mapDispatchToProps) (CreateCollection);

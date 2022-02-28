@@ -61,12 +61,14 @@ class EditCollection extends React.Component {
             paymentname: "",
             PercentageFee: 0,
             CategoryId: 0,
+            vname:true,
             ChainId: 0,
             ImageModal: false,
             CurrencyId: "",
             SensitveContent: false,
             LogoImage: {},
             WebsiteLink: "",
+            vExternalLink:true,
             FeaturedImage: {},
             BannerImage: {},
             BannerPreview: {},
@@ -111,6 +113,11 @@ class EditCollection extends React.Component {
             falsemessage: "",
             successmessage: "",
             errormessage: "",
+            instagramok:true,
+            tLinkok:true,
+            twitterok:true,
+            discordok:true,
+            mediumLinkok:true,
         };
     }
     initialValues = { name: "", externalLink: "", description: "", category: "", blockchain: "", paymentTokens: "", Links: "" };
@@ -209,13 +216,29 @@ class EditCollection extends React.Component {
         this.setState({ MediumLink: "" })
     }
     submit = (data) => {
-        console.log(this.state.BlockChainName)
-        console.log(this.state.CategoryId)
-        console.log(this.state.CurrencyId)
-        this.setState({ falsemessage: "" })
+
+        const name = /^[a-zA-Z]*$/;
+         if(this.state.Name!=""){
+        if (this.state.Name.match(name)) this.setState({vname:true})   
+        if (!this.state.Name.match(name)) {this.setState({vname:false});return ;} }
+        if (this.urlPatternValidation(this.state.ExternalLink))  this.setState({vExternalLink:true})
+        if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); return; }
+        if (this.urlPatternValidation(this.state.DiscordLink))  this.setState({discordok:true})
+        if (!this.urlPatternValidation(this.state.DiscordLink)) {this.setState({discordok:false}); return; }
+        if (this.urlPatternValidation(this.state.InstagramLink))  this.setState({instagramok:true})
+        if (!this.urlPatternValidation(this.state.InstagramLink)) {this.setState({instagramok:false}); return; }
+        if (this.urlPatternValidation(this.state.TLink))  this.setState({tLinkok:true})
+        if (!this.urlPatternValidation(this.state.TLink)) {this.setState({tLinkok:false}); return; }
+        
+        if (this.urlPatternValidation(this.state.TwitterLink))  this.setState({twitterok:true})
+        if (!this.urlPatternValidation(this.state.TwitterLink)) {this.setState({twitterok:false}); return; }
+        if (this.urlPatternValidation(this.state.MediumLink))  this.setState({mediumLinkok:true})
+        if (!this.urlPatternValidation(this.state.MediumLink)) {this.setState({mediumLinkok:false}); return; }
+       
+             this.setState({ falsemessage: "" })
         this.setState({ successmessage: "" })
         this.setState({ errormessage: "" })
-
+        this.props.setIsLoaderActive(true);
         var bodyFormData = new FormData();
         bodyFormData.append("Name", this.state.Name);
         bodyFormData.append("Url", this.state.ExternalLink);
@@ -254,7 +277,8 @@ class EditCollection extends React.Component {
                 this.setState({ falsemessage: response.data.message })
 
             }
-            else if (response.data.message == "Data successfully Updated") {   
+            else if (response.data.message == "Data successfully Updated") {  
+                this.props.setIsLoaderActive(true); 
                 this.setState({ successmessage: response.data.message })
                 this.props.history.push("/ShowCollectionDetail");   
             }
@@ -321,7 +345,11 @@ class EditCollection extends React.Component {
     // };
 
     render() {
-        const handleClose1 = () => this.setState({ ImageModal: false });
+        const handleClose1 = () =>{ 
+            if(this.state.successmessage!="") 
+            return this.props.history.push("/manageCollection");
+             this.setState({ ImageModal: false })
+         };
         return (
             <>
                 <div className='container'>
@@ -370,6 +398,9 @@ class EditCollection extends React.Component {
                                         value={this.state.Name}
                                         onChange={(data) => { this.setState({ Name: data.target.value }) }}
                                     />
+                                     {!this.state.vname && (
+            <div style={{ color: "#F61C04" }}>Name contains only Alphabets</div>
+          )}  
                                 </div>
                                 <div className='input-fields'>
                                     <p>External Link</p>
@@ -383,6 +414,9 @@ class EditCollection extends React.Component {
                                         value={this.state.ExternalLink}
                                         onChange={(data) => { this.setState({ ExternalLink: data.target.value }) }}
                                     />
+                                     {!this.state.vExternalLink && (
+            <div style={{ color: "#F61C04" }}>Link is not valid</div>
+          )}
                                 </div>
                                 <div className='input-fields'>
                                     <p>Description</p>
@@ -449,6 +483,9 @@ class EditCollection extends React.Component {
                                         value={this.state.DiscordLink}
                                         onChange={(data) => { this.setState({ DiscordLink: data.target.value }) }}
                                     />
+                                    {!this.state.discordok && (
+                 <div style={{ color: "#F61C04" }}>URL is not valid.</div>
+                                           )}
                                 </div>
                                 <div className='input-fields'>
                                     <input
@@ -461,6 +498,9 @@ class EditCollection extends React.Component {
                                         value={this.state.TwitterLink}
                                         onChange={(data) => { this.setState({ TwitterLink: data.target.value }) }}
                                     />
+                                      {!this.state.twitterok && (
+            <div style={{ color: "#F61C04" }}>URL is not valid.</div>
+          )}
                                 </div>
                                 <div className='input-fields'>
                                     <input
@@ -473,6 +513,9 @@ class EditCollection extends React.Component {
                                         value={this.state.InstagramLink}
                                         onChange={(data) => { this.setState({ InstagramLink: data.target.value }) }}
                                     />
+                                     {!this.state.instagramok && (
+            <div style={{ color: "#F61C04" }}>URL is not valid.</div>
+          )}
                                 </div>
                                 <div className='input-fields'>
                                     <input
@@ -485,6 +528,9 @@ class EditCollection extends React.Component {
                                         value={this.state.TLink}
                                         onChange={(data) => { this.setState({ TLink: data.target.value }) }}
                                     />
+                                      {!this.state.tLinkok && (
+            <div style={{ color: "#F61C04" }}>URL is not valid.</div>
+          )}
                                 </div>
                                 <div className='input-fields'>
                                     <input
@@ -497,6 +543,9 @@ class EditCollection extends React.Component {
                                         value={this.state.MediumLink}
                                         onChange={(data) => { this.setState({ MediumLink: data.target.value }) }}
                                     />
+                                      {!this.state.mediumLinkok && (
+            <div style={{ color: "#F61C04" }}>URL is not valid.</div>
+          )}
                                 </div>
                             {/* </form> */}
                         </div>

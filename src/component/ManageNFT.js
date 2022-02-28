@@ -23,6 +23,7 @@ import {
 
 } from "../Constants/BusinessManager";
 
+import { Search } from "react-feather";
 const mapStateToProps = (state) => {
   return {};
 };
@@ -46,6 +47,8 @@ class CollectionDetail extends React.Component {
       IsTickerHovered: false,
       categoryNumber: 0,
       price: 0,
+      Search: "",
+      Search1: "",
       Blockchaindata: [
         {
           chainID: 97,
@@ -116,6 +119,26 @@ class CollectionDetail extends React.Component {
     this.GetNFTS();
     this.props.setIsLoaderActive(true);
   }
+  Finduser = () => {
+    
+    console.log("called")
+    console.log(this.state.tableData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search1.toLowerCase())) )
+        // console.log("Present")
+        // else
+        // console.log("not Present")
+        
+    // return;
+    var temp = this.state.Search1;
+  //  temp=this.state.tableData.find ((item, index) => item.username == this.state.search)
+    this.setState({ Search: temp })
+  };
+ 
+  removeuser = () => {
+    console.log("dadaad", this.state.Search1.length);
+    if (this.state.Search1.length == 1)
+      this.setState({ Search: "" })
+
+  };
   render() {
     var arr = [];
     const handleClose1 = () => this.setState({ ImageModal: false });
@@ -124,8 +147,23 @@ class CollectionDetail extends React.Component {
     }
     return (
       <div className="container-fluid body-content" id="">
+ <p style={{ whiteSpace: "nowrap", textAlign: "center" }}>
+          <div className="search-panel">
+            <input
+              type="text"
+              required
+              placeholder="enter name to search"
+              className="input-field1"
+              name='search'
+              value={this.state.Search}
+              onChange={(data) => { this.Finduser(); this.setState({ Search: data.target.value });this.removeuser(); }}
 
+            />
+            <Search color="white" onClick={() => this.Finduser()} style={{ cursor: "pointer" }} />
+          </div>
+        </p>
         <div id="container" className="text-center">
+          
           <Link to="/createNFT" className="Link create-list">  Create NFT  </Link>
         </div>
         <h1>NFT's:</h1>
@@ -158,6 +196,9 @@ class CollectionDetail extends React.Component {
           </Modal>
           <div className="">
           <div className="row" >
+          {
+              this.state.Search.length == 0 ? (
+                <>
             {this.state.NFtData.length > 0 ? (
               <>
                 {
@@ -220,7 +261,76 @@ class CollectionDetail extends React.Component {
                   <h2>   No NFT To Show  </h2>
                 </p>
               </div>
-            )}
+            )}</>)
+            : (<>" "</>)}
+
+{
+              this.state.Search.length > 0 ? (
+                <>
+            {this.state.NFtData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search1.toLowerCase())).length > 0 ? (
+              <>
+                {
+                  this.state.NFtData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search1.toLowerCase())).map((playerData, k) => (
+                    <>
+                      <Col key={k} style={{ paddingTop: "15px" }}  lg={3} md={4}   style={{display:"flex",justifyContent:"center",marginTop:"20px"}}>
+                        <div
+                          className="card2NFT">
+                          <div >
+                            <div className="panel">
+                              <img
+                                src={"http://198.187.28.244:7577/" + playerData.image}
+                                alt="profileImage"
+                                className="NFT-immage-NFT"
+                              />
+
+                              <div className="">
+                                <img
+
+                                  src={playerData.logoImage ? "http://198.187.28.244:7577/" + playerData.logoImage : defaultImg}
+                                  alt="profileImage"
+                                  className="NFT-immage3"
+                                />
+                              </div>
+                              <h5 className="nft-heading">   {playerData.name + " "}</h5>
+                              <p className="note"> Price {playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
+                              <l>
+
+                                <Link to="/nftdetail">
+                                  <a
+                                    onClick={() => {
+                                      localStorage.setItem("NFTID", playerData.id)
+                                      localStorage.setItem("NftaccountId", playerData.accountId)
+
+                                    }}
+                                    className="view-all-btn"
+                                  >
+                                    Details
+                                  </a>
+                                </Link>
+                                <FavoriteIcon />   {playerData.ratings}
+                              </l>
+                            </div>
+                          </div>
+                        </div>{" "}
+                      </Col>
+                    </>
+                  ))}
+              </>
+            ) : (
+              <div className="card" style={{ alignItems: "center", alignContent: "center", width: "100%" }}>
+                <p
+                  className="margin-ud"
+                  style={{
+                    textAlign: "center",
+                    color: "white",
+                    fontSize: 20,
+                  }}
+                >
+                  <h2>   No NFT To Show  </h2>
+                </p>
+              </div>
+            )}</>)
+            : (<>" "</>)}
           </div>
           </div>
         </div>

@@ -57,7 +57,7 @@ class NFTDetail extends React.Component {
       tableHead: ["Inv #", "Amount", "Detail", "Date"],
       descriptionModel: false,
       periodModal: false,
-      Price:0,
+      Price: 0,
       AccountDetail: {},
       // DOB: new Date(),
       // kycVerified: true,
@@ -66,12 +66,17 @@ class NFTDetail extends React.Component {
         showToDate: "",
       },
       Rate: 0,
+      vprice: true,
+      nftproperties: [],
+      favourate: false,
+      vprice0: true,
+      favcount: 0,
       SelectedProject: null,
       CurrencyName: "",
+      favourateNFT: [],
     };
   }
-  async getnft()
-  {
+  async getnft() {
     try {
       const data = await SendHttpRequest(
         BaseUrl1 + "/GetNftMarketById?nftId=" + localStorage.getItem("NFTID") + "&accountId=" + localStorage.getItem("NftaccountId"),
@@ -83,6 +88,8 @@ class NFTDetail extends React.Component {
         console.log("daaddadadta" + data.message);
         console.log(data.data);
         this.setState({ nftDATA: data.data })
+        this.setState({ Price: this.state.nftDATA.buyPrice })
+        this.setState({ nftproperties: this.state.nftDATA.nftProperties })
       } else {
         console.log("data" + data.message);
       }
@@ -92,17 +99,117 @@ class NFTDetail extends React.Component {
     }
 
   }
+
+  async AddNftView() {
+    try {
+      const data = await SendHttpRequest(
+        BaseUrl1 + "/AddViewNft?NftId=" + localStorage.getItem("NFTID"),
+        {},
+        "POST"
+      );
+      if (data.isSuccess) {
+
+        console.log("daaddadadta" + data.message);
+      } else {
+        console.log("data" + data.message);
+      }
+    } catch (error) {
+      // localStorage.clear();
+      return;
+    }
+  }
+  async GetFavourateNFtcount() {
+    try {
+      const data = await SendHttpRequest(
+        BaseUrl1 + "/GetFavouriteNftCount?nftId=" + localStorage.getItem("NFTID"), {},
+        "GET"
+      );
+      if (data.isSuccess == true) {
+        console.log("View muhazibCount" + data.data)
+        this.setState({ favcount: data.data })
+      }
+    } catch (error) {
+
+      return;
+    }
+  }
+  async addfavourateNFt() {
+    try {
+      const data = await SendHttpRequest(
+        BaseUrl1 + "/AddFavouriteNft", { nftId: this.state.nftDATA.id, nftAddress: " " },
+        "POST"
+      );
+      if (data.isSuccess == true) {
+        await   this.GetFavourateNFtcount();
+        await this.GEtmyfavourateNft()
+        await  this.getnft();
+      }
+    } catch (error) {
+
+      return;
+    }
+  }
+  async removefavouratenft() {
+    try {
+      const data = await SendHttpRequest(
+        BaseUrl1 + "/RemoveFavouriteNft", { nftId: this.state.nftDATA.id, nftAddress: " " },
+        "PUT"
+      );
+      if (data.isSuccess == true) {
+        await   this.GetFavourateNFtcount();
+        await this.GEtmyfavourateNft()
+        await  this.getnft();
+      }
+    } catch (error) {
+
+      return;
+    }
+  }
+  async GEtmyfavourateNft() {
+    try {
+      const data = await SendHttpRequest(
+        BaseUrl1 + "/GetMyFavouriteNft", {},
+        "GET"
+      );
+      if (data.isSuccess == true) {
+        this.setState({ favourateNFT: data.data })
+        if (this.state.favourateNFT.filter((x) => x.nftTokenId == this.state.nftDATA.nftTokenId).length > 0) {
+          this.setState({ favourate: true })
+          console.log("nft is in favourate ")
+        }
+        else
+        {
+          this.setState({ favourate:false })
+         
+        }
+          console.log("nft is not favourate ")
+      }
+    } catch (error) {
+
+      return;
+    }
+  }
   async componentDidMount() {
-    this.getnft();
+    this.props.setIsLoaderActive(true);
+    await  this.getnft();
+    await this.AddNftView();
+    await   this.GetFavourateNFtcount();
+    await this.GEtmyfavourateNft()
+    
+    this.props.setIsLoaderActive(false);
   }
   // componentDidMount(){
   //   console.log("dgfsgrrsfhgdgfsgrrsfhg" + this.state);
   // }
   async sellNft(nftTokenId, contractAddress, id) {
-              
-        this.setState({ImageModal:false})
+    const price = /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
+    const temp = this.state.Price.toString();
+    if (!temp?.match(price)) { this.setState({ vprice: false }); return; }
+    if (this.state.Price == 0) { this.setState({ vprice0: false }); return; }
+    this.setState({ ImageModal: false })
+    this.props.setIsLoaderActive(true);
     console.log("payddddddddddddddlkoad", nftTokenId, contractAddress);
-    
+
     axios({
       method: "GET",
       url: "http://198.187.28.244:7577/api/v1/Nft/GetMarketNftAddress",
@@ -128,43 +235,46 @@ class NFTDetail extends React.Component {
       console.log("paylkoad", payload);
       console.log("payloadMarket", payloadMarket);
 
-      approveContract(payload,contractAddress,payloadMarket).then((res)=>{
-      console.log("hashhhhhhhhhhhhhh", res.res.hash, res.response.hash);
-      delay(12000).then(async () => {
-        var postBody = {
-          nftId: id,
-          price: this.state.Price,
-          approvalTransactionHash: res.response.hash,
-          openOrderTransactionHash: res.res.hash
-        }
-        axios({
-          method: "POST",
-          url: "http://198.187.28.244:7577/api/v1/Amin/SellNftMarket",
-          data: postBody,
-          headers: {
-            // accept: "text/plain",
-            // "Content-Type": "multipart/form-data",
-            Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
-    
+      approveContract(payload, contractAddress, payloadMarket).then((res) => {
+        console.log("hashhhhhhhhhhhhhh", res.res.hash, res.response.hash);
+        delay(12000).then(async () => {
+          var postBody = {
+            nftId: id,
+            price: this.state.Price,
+            approvalTransactionHash: res.response.hash,
+            openOrderTransactionHash: res.res.hash
           }
-        }).then((response) => {
-         
-        console.log("LETS GO BRO", response);
+          axios({
+            method: "POST",
+            url: "http://198.187.28.244:7577/api/v1/Amin/SellNftMarket",
+            data: postBody,
+            headers: {
+              // accept: "text/plain",
+              // "Content-Type": "multipart/form-data",
+              Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
 
-        }).catch((e)=>{
-          this.props.setIsLoaderActive(false);
-        console.log("ererer", e);
+            }
+          }).then((response) => {
 
+            console.log("LETS GO BRO", response);
+
+            this.props.setIsLoaderActive(false);
+            this.getnft();
+
+          }).catch((e) => {
+            this.props.setIsLoaderActive(false);
+            console.log("ererer", e);
+
+          })
         })
-      })
-        
-      }).catch((e)=>{
+
+      }).catch((e) => {
         this.props.setIsLoaderActive(false);
         console.log("err", e);
       })
     })
   }
- 
+
   render() {
 
     return (
@@ -176,77 +286,92 @@ class NFTDetail extends React.Component {
             <div className="detail-card">
               <h3>Details</h3>
               <p><b>Contract Address</b> {this.state.nftDATA.contractAddress}
-              {" "}
-               <CopyToClipboard text={localStorage.getItem("address")}
-                      onCopy={() => this.setState({ copied: true })}>
-                      <Copy style={{cursor:"pointer"}}/>
-                    </CopyToClipboard >
-                    
-                    </p>
+                {" "}
+                <CopyToClipboard text={localStorage.getItem("address")}
+                  onCopy={() => this.setState({ copied: true })}>
+                  <Copy style={{ cursor: "pointer" }} />
+                </CopyToClipboard >
+
+              </p>
               <p><b>Token IDv</b> {this.state.nftDATA.id}</p>
               <p><b>Token Standard</b> BEP-20</p>
             </div>
             <div className="detail-card">
-              <h3>{this.state.nftDATA.NftProperties}</h3>
+              <h3>Properties:</h3>
+              {
+                this.state.nftproperties.length > 0 ? (
+                  this.state.nftproperties.map((value, index) => {
+                    return (
+                      <div className="Properties" >
+                        <p>{value.name}</p>
+                        <p>{value.type}</p>
+                      </div>
+                    )
+                  })
+
+                ) :
+                  (
+                    <p>No Property to Show </p>
+                  )
+              }
+
             </div>
           </div>
           <div className="col-lg-6 col-md-12 col-sm-12">
             <div className="Nft-user-detail">
               <h3>{this.state.nftDATA.name}</h3>
               <p>By:{this.state.nftDATA.creatorName}</p>
-              
+
 
               <p style={{ fontWeight: "bold" }}> {this.state.nftDATA.collectionName} </p>
-              <p >price:{this.state.nftDATA.bidInitialMinimumAmount ? this.state.nftDATA.bidInitialMaximumAmount : this.state.nftDATA.buyPrice } </p>
-              <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart /> {" "}{this.state.nftDATA.ratings}     </p>
+              <p >price:{this.state.nftDATA.bidInitialMinimumAmount ? this.state.nftDATA.bidInitialMaximumAmount : this.state.nftDATA.buyPrice} </p>
+              <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart onClick={()=> { this.state.favourate?this.removefavouratenft():this.addfavourateNFt(); } } color={this.state.favourate?"red":"black"} fill={this.state.favourate?"red":"black"}  /> {" "}{this.state.favcount}     </p>
             </div>
             <div className="detail-card">
-              
+
               <h3>Description</h3>
 
               {this.state.nftDATA.description}
               {/* Created By{this.state.nftDATA.creatorName} */}
               {/* {this.state.nftDATA.nftDATA.Price} */}
-              
-             <div className="full-div" style={{textAlign:"end"}}>
-              {this.state.nftDATA.isMinted ? (
+
+              <div className="full-div" style={{ textAlign: "end" }}>
+                {this.state.nftDATA.isMinted ? (
                   <>
-                  {this.state.nftDATA.staus !== "ReadyForSell" && this.state.nftDATA.isAdminNft ? (
-                  <Button
-                    className="collection-button"
-                    style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder", }}
-                    onClick={() => {
-                      this.setState({ ImageModal: true })
-                      this.props.setIsLoaderActive(false);
-                      
-                    //  this.state.ImageModal ==true? "Are you sure to sell Nft " :""
-                    }}
-                  >
-                    Sell NFT
-                  </Button>
-                  ):(
-                    <p>
-                      NFT sent to marketplace
-                    </p>
-                  )}
+                    {this.state.nftDATA.staus !== "ReadyForSell" && this.state.nftDATA.isAdminNft ? (
+                      <Button
+                        className="collection-button"
+                        style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder", }}
+                        onClick={() => {
+                          this.setState({ ImageModal: true })
+                          //  this.state.ImageModal ==true? "Are you sure to sell Nft " :""
+                        }}
+                      >
+                        Sell NFT
+                      </Button>
+                    ) : (
+                      <p>
+                        NFT sent to marketplace
+                      </p>
+                    )}
                   </>
                 ) : (
                   <>
-                   
-                  {this.state.nftDATA.isAdminNft && (
-                <Link to="/UpdateNFt" className="reg-btn blue"  >  <Button
-                  className="collection-button"
-                  style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder", }}
-                  onClick={() => {
-                    localStorage.setItem("Updatenftid", this.state.nftDATA.id)
-                    localStorage.setItem("Updatenftaccountid", this.state.nftDATA.accountId)
-                  }}
-                >
-                  Update</Button>
-                </Link>
-                  )}
+
+                    {this.state.nftDATA.isAdminNft && (
+                      <Link to="/UpdateNFt" className="reg-btn blue"  >  <Button
+                        className="collection-button"
+                        style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder", }}
+                        onClick={() => {
+                          localStorage.setItem("Updatenftid", this.state.nftDATA.id)
+                          localStorage.setItem("Updatenftaccountid", this.state.nftDATA.accountId)
+                        }}
+                      >
+                        Update</Button>
+                      </Link>
+                    )}
                   </>
-                 )}
+                )}
               </div>
             </div>
             <Modal
@@ -267,13 +392,20 @@ class NFTDetail extends React.Component {
                     value={this.state.Price}
                     onChange={(data) => { this.setState({ Price: data.target.value }) }}
                   />
+                  {!this.state.vprice && (
+                    <div style={{ color: "#F61C04" }}>Price is not valid.</div>
+                  )}
+                  {!this.state.vprice0 && (
+                    <div style={{ color: "#F61C04" }}>Price cannot be 0.</div>
+                  )}
                 </div>
                 <Modal.Footer>
-                <button className='Modal-div-cancel-button' onClick={()=>this.sellNft(this.state.nftDATA.nftTokenId, this.state.nftDATA.contractAddress, this.state.nftDATA.id)} > OK </button>
-             
-              </Modal.Footer>
+                  <button className='Modal-div-cancel-button' onClick={() => this.sellNft(this.state.nftDATA.nftTokenId, this.state.nftDATA.contractAddress, this.state.nftDATA.id)} > OK </button>
+                  <button className='Modal-div-cancel-button' onClick={() => this.setState({ ImageModal: false })} > cancel </button>
+
+                </Modal.Footer>
               </Modal.Body>
-              
+
             </Modal>
             <div className="detail-card">
               <h3> Listing </h3>

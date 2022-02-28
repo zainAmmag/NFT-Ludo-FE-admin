@@ -82,10 +82,24 @@ class UserDetail extends React.Component {
 
   }
   Finduser = () => {
-
+    
+    console.log("called")
+    console.log(this.state.tableData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search1.toLowerCase())) )
+        // console.log("Present")
+        // else
+        // console.log("not Present")
+        
+    // return;
     var temp = this.state.Search1;
-    //  temp=this.state.tableData.find ((item, index) => item.username == this.state.search)
+  //  temp=this.state.tableData.find ((item, index) => item.username == this.state.search)
     this.setState({ Search: temp })
+  };
+ 
+  removeuser = () => {
+    console.log("dadaad", this.state.Search1.length);
+    if (this.state.Search1.length == 1)
+      this.setState({ Search: "" })
+
   };
   render() {
     var arr = [];
@@ -106,8 +120,8 @@ class UserDetail extends React.Component {
               placeholder="enter name to search"
               className="input-field1"
               name='search'
-              value={this.state.Search1}
-              onChange={(data) => { this.setState({ Search1: data.target.value }) }}
+              value={this.state.Search}
+              onChange={(data) => { this.Finduser();this.setState({ Search: data.target.value });this.removeuser();  }}
 
             />
             <Search color="white" onClick={() => this.Finduser()} style={{ cursor: "pointer" }} />
@@ -141,8 +155,6 @@ class UserDetail extends React.Component {
                                         this.GetNFTbycollectionId(playerData.id)
                                       }}
                                     />
-
-
                                     <div className="">
                                       <img
                                         src={playerData.logoImage? "http://198.187.28.244:7577/" + playerData.logoImage: defaultImg}
@@ -188,60 +200,75 @@ class UserDetail extends React.Component {
                   </div>
                 )}</>)
                 : (<>" "</>)}
-            {this.state.collectiondata.length > 0 ? (
-              <>
-
                 {
-                  this.state.collectiondata.filter((x) => x.name == this.state.Search).map((playerData, k) => {
-                    return (
+                  this.state.Search.length > 0 ? (
+                    <>  {this.state.collectiondata.filter((x) => x.name ?.toLowerCase().includes(this.state.Search.toLowerCase())).length > 0  ? (
                       <>
-                        <Col key={k} style={{ paddingTop: "15px" }} md={2} lg={3} >
-                        <div
-                                className="card2NFT">
-                                <div >
-                                  <div className="panal">
-
-                                    <img
-                                      src={"http://198.187.28.244:7577/" + playerData.bannerImage}
-                                      alt="profileImage"
-                                      className="NFT-immage-NFT"
-                                      onClick={() => {
-                                        this.props.setIsLoaderActive(true);
-                                        this.GetNFTbycollectionId(playerData.id)
-                                      }}
-                                    />
-                                    <div className="">
-                                      <img
-                                        src={"http://198.187.28.244:7577/" + playerData.logoImage}
-                                        alt="profileImage"
-                                        className="NFT-immage3"
-                                      />
-                                    </div>
-                                    <h5 className="nft-heading">   {playerData.name + " "}</h5>
-                                    <l>
-                                      <Link to="/ShowCollectionDetail">
-                                        <a
+                        {
+                          this.state.collectiondata.filter((x) => x.name ?.toLowerCase().includes(this.state.Search.toLowerCase())).map((playerData, k) => {
+                            return (
+                              <>
+                                <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3
+                                } sm={1}  >
+                                  <div
+                                    className="card2NFT">
+                                    <div >
+                                      <div className="panal">
+    
+                                        <img
+                                          src={playerData.bannerImage? "http://198.187.28.244:7577/" + playerData.bannerImage: defaultImg}
+                                          alt="profileImage"
+                                          className="NFT-immage-NFT"
                                           onClick={() => {
-                                            localStorage.setItem("CollectionDetail", playerData.id)
-
+                                            this.props.setIsLoaderActive(true);
+                                            this.GetNFTbycollectionId(playerData.id)
                                           }}
-                                          className="view-all-btn"
-                                        >
-                                          Details
-                                        </a>
-                                      </Link>
-                                    </l>
-                                  </div>
-                                </div>
-                              </div>{" "}
-                        </Col>
+                                        />
+                                        <div className="">
+                                          <img
+                                            src={playerData.logoImage? "http://198.187.28.244:7577/" + playerData.logoImage: defaultImg}
+                                            alt="profileImage"
+                                            className="NFT-immage3"
+                                          />
+                                        </div>
+                                        <h5 className="nft-heading">   {playerData.name + " "}</h5>
+                                        <l>
+                                          <Link to="/ShowCollectionDetail">
+                                            <a
+                                              onClick={() => {
+                                                localStorage.setItem("CollectionDetail", playerData.id)
+    
+                                              }}
+                                              className="view-all-btn"
+                                            >
+                                              Details
+                                            </a>
+                                          </Link>
+                                        </l>
+                                      </div>
+                                    </div>
+                                  </div>{" "}
+                                </Col>
+    
+    
+                              </>
+                            )
+                          })}
                       </>
-                    )
-                  })}
-              </>
-            ) : (
-              <>  </>
-            )}
+                    ) : (
+                      <div style={{ alignItems: "center", alignContent: "center" }}>
+                        <p
+                          style={{
+                            textAlign: "center",
+                            color: "white",
+                            fontSize: 20,
+                          }}
+                        >
+                          No Collection
+                        </p>
+                      </div>
+                    )}</>)
+                    : (<>" "</>)}
 
 
 

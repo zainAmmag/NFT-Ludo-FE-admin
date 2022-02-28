@@ -120,18 +120,24 @@ class MenageAccount extends React.Component {
     this.setState({ page: newPage })
   };
   Finduser = () => {
-
+    
+    console.log("called")
+    console.log(this.state.tableData.filter((x) => x.username?.toLowerCase().includes(this.state.Search1.toLowerCase())) )
     var temp = this.state.Search1;
-    //  temp=this.state.tableData.find ((item, index) => item.username == this.state.search)
     this.setState({ Search: temp })
   };
  
   removeuser = () => {
     console.log("dadaad", this.state.Search1.length);
-    if (this.state.Search1.length == 1)
-      this.setState({ Search: "" })
+    console.log("Search1+", this.state.Search1);
+    console.log("Search+", this.state.Search);
+     if (this.state.Search1.length == 1){
 
-  };
+     
+      this.setState({ Search: "" })
+      console.log("ajnbdanbadd",this.state.Search.length )
+    }
+    };
 
   render() {
     return (
@@ -145,7 +151,7 @@ class MenageAccount extends React.Component {
                   <input
                     type="text" required placeholder="enter name to search"
                     className="input-field1" name='search'
-                    value={this.state.Search1} onChange={(data) => { this.setState({ Search1: data.target.value }); this.removeuser() }} />
+                    value={this.state.Search} onChange={(data) => { this.Finduser();this.setState({ Search: data.target.value });this.removeuser(); }} />
                   <Search color="white" onClick={() => this.Finduser()} style={{ cursor: "pointer" }} />
                 </div>
               </p>
@@ -299,7 +305,7 @@ class MenageAccount extends React.Component {
               {
                 this.state.Search.length > 0 ? (
                   <>  {
-                    this.state.tableData.filter((x) => x.username == this.state.Search).length > 0 ? (
+                    this.state.tableData.filter((x) => x.username?.toLowerCase().includes(this.state.Search.toLowerCase())).length > 0 ? (
                       <div style={{ padding: 10 }}>
                         <TableContainer component={Paper} className="Text-white">
                           <Table
@@ -321,7 +327,9 @@ class MenageAccount extends React.Component {
                               {this.state.tableData &&
                                 this.state.tableData.length > 0 &&
                                 this.state.tableData
-                                  .filter((x) => x.username == this.state.Search)
+                                .slice(this.state.page * 5, this.state.page * 5 + 5)&&
+                                this.state.tableData.filter((x) => x.username?.toLowerCase().includes(this.state.Search.toLowerCase()))
+                           
                                   .map((value, index) => {
                                     return (
                                       <TableRow key={index} className="Text-white">
