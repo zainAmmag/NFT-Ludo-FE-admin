@@ -10,7 +10,7 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { SendHttpRequest } from "../component/utility";
 import { connect } from "react-redux";
 import swal from "sweetalert";
-import { Search } from "react-feather";
+import { Search,Heart } from "react-feather";
 
 
 import { bindActionCreators } from "redux";
@@ -52,7 +52,32 @@ class CollectionDetail extends React.Component {
       FN: "No data available",
       search: "",
       BO: null,
+      favourateNFT:[],
     };
+  }
+  async GEtmyfavourateNft() {
+    try {
+      const data = await SendHttpRequest(
+        BaseUrl1 + "/GetMyFavouriteNft", {},
+        "GET"
+      );
+      if (data.isSuccess == true) {
+        this.setState({ favourateNFT: data.data })
+        if (this.state.favourateNFT.filter((x) => x.nftTokenId == this.state.nftDATA.nftTokenId).length > 0) {
+          this.setState({ favourate: true })
+          console.log("nft is in favourate ")
+        }
+        else
+        {
+          this.setState({ favourate:false })
+         
+        }
+          console.log("nft is not favourate ")
+      }
+    } catch (error) {
+
+      return;
+    }
   }
   async GetcollectionbyId(collectionId) {
     console.log("collectiondata", localStorage.getItem("CollectionDetail"))
@@ -196,7 +221,13 @@ class CollectionDetail extends React.Component {
                         this.state.NFtData.map((playerData, k) => (
                           <>
                             <Col key={k} style={{ paddingTop: "15px" }} md={6} lg={3} >
-                              <div
+                            <Link to="/nftdetail2"
+                             onClick={() => {
+                              localStorage.setItem("NFTID", playerData.id)
+                              localStorage.setItem("NftaccountId", playerData.accountId)
+
+                            }}>
+                                                            <div
                                 className="card2NFT">
                                 <div >
                                   <div className="panel">
@@ -218,7 +249,7 @@ class CollectionDetail extends React.Component {
 
                                     <l>
 
-                                      <Link to="/nftDEtail1">
+                                      <Link to="/nftdetail2">
                                         <a
                                           onClick={() => {
                                             localStorage.setItem("NFTID", playerData.id)
@@ -230,12 +261,14 @@ class CollectionDetail extends React.Component {
                                           Detail
                                         </a>
                                       </Link>
-                                      <FavoriteIcon />   {playerData.ratings}
+                                      <Heart  onClick={()=>{ this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?this.removefavouratenft():this.addfavourateNFt(); } } color={ this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?"red":"black" } fill={this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?"red":"black"}  />
                                     </l>
 
                                   </div>
                                 </div>
                               </div>{" "}
+                              
+</Link>
                             </Col>
                           </>
                         ))}
@@ -261,12 +294,19 @@ class CollectionDetail extends React.Component {
          {
               this.state.Search.length > 0 ? (
                 <>  {
-                  this.state.NFtData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search1.toLowerCase())).length > 0  ? (
+                  this.state.NFtData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search.toLowerCase())).length > 0  ? (
                     <>
                       {
-                        this.state.NFtData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search1.toLowerCase())).map((playerData, k) => (
+                        this.state.NFtData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search.toLowerCase())).map((playerData, k) => (
                           <>
-                            <Col key={k} style={{ paddingTop: "15px" }} md={6} lg={3} >
+                            <Col key={k} style={{ paddingTop: "15px" }} md={6} lg={3}  >
+                            <Link to="/nftdetail2"
+                             onClick={() => {
+                              localStorage.setItem("NFTID", playerData.id)
+                              localStorage.setItem("NftaccountId", playerData.accountId)
+
+                            }}>
+                              
                               <div
                                 className="card2NFT">
                                 <div >
@@ -289,7 +329,7 @@ class CollectionDetail extends React.Component {
 
                                     <l>
 
-                                      <Link to="/nftDEtail1">
+                                      <Link to="/nftdetail2">
                                         <a
                                           onClick={() => {
                                             localStorage.setItem("NFTID", playerData.id)
@@ -301,13 +341,14 @@ class CollectionDetail extends React.Component {
                                           Detail
                                         </a>
                                       </Link>
-                                      <FavoriteIcon />   {playerData.ratings}
+                                      <Heart  onClick={()=>{ this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?this.removefavouratenft():this.addfavourateNFt(); } } color={ this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?"red":"black" } fill={this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?"red":"black"}  />
                                     </l>
 
                                   </div>
                                 </div>
                               </div>{" "}
-                            </Col>
+                              </Link>
+                                                         </Col>
                           </>
                         ))}
                     </>

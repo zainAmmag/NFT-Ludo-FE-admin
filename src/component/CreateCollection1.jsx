@@ -138,7 +138,7 @@ class CreateCollection extends React.Component {
     }
     submit = (data) => {
 
-        const name = /^[a-zA-Z]*$/;
+        const name = /^[a-zA-Z0-9_ ]*$/;
          if(this.state.Name==""){{this.setState({vname:false});return ;} }
         if (this.state.Name.match(name)) this.setState({vname:true})   
         if (!this.state.Name.match(name)) {this.setState({vname:false});return ;} 
@@ -171,8 +171,14 @@ class CreateCollection extends React.Component {
             this.setState({ vBannerImage: false })
             return
         } 
+
         else  this.setState({ vBannerImage: true })
-             
+          if(this.state.CategoryId==0)    
+          {
+            this.setState({ ImageModal: true })
+            this.setState({ errormessage:"Category not selected" })
+            return
+          }  
  
    
             this.setState({ falsemessage: "" })
@@ -182,7 +188,7 @@ class CreateCollection extends React.Component {
             this.props.setIsLoaderActive(true);
             var bodyFormData = new FormData();
             bodyFormData.append("Name", this.state.Name);
-            bodyFormData.append("Url", this.state.UrlL);
+            bodyFormData.append("Url", this.state.ExternalLink);
             bodyFormData.append("Description", this.state.Description);
             bodyFormData.append("WebsiteLink", this.state.WebsiteLink);
             bodyFormData.append("DiscordLink", this.state.DiscordLink);
@@ -211,6 +217,7 @@ class CreateCollection extends React.Component {
     
                 }
             }).then((response) => {
+                this.props.setIsLoaderActive(false);
                 this.setState({ ImageModal: true })
                 console.log(response.data.message);
                 if (response.data.message == "Collection already exist") {
@@ -286,7 +293,6 @@ class CreateCollection extends React.Component {
             this.setState({ ImageModal: false })
            if(this.state.successmessage!="") 
            return this.props.history.push("/manageCollection");
-          
         };
         return (
             <>
@@ -489,7 +495,7 @@ class CreateCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Logo Image
                                 </p>
-                                <input type="file" onChange={this.LogoImageset} className="inputimage" />
+                                <input type="file" onChange={this.LogoImageset} className="inputimage" accept=".png, .jpg, .jpeg" />
                                 <div style={{ height: "55%" }}>
                                     <div className='prevItmImgSec' >
                                            { <img
@@ -507,7 +513,7 @@ class CreateCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Featured Image
                                 </p>
-                                <input type="file" onChange={this.FeatureImageSet} className="inputimage" />
+                                <input type="file" onChange={this.FeatureImageSet} className="inputimage" accept=".png, .jpg, .jpeg" />
                                 <div style={{ height: "55%" }}>
                                     <div className='prevItmImgSec' >
                                         <img src={this.state.featureimageset?this.state.FeatPreview:' '} className="avatar-immage" />
@@ -523,7 +529,7 @@ class CreateCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Banner Image
                                 </p>
-                                <input type="file" onChange={this.uploadPicture} className="inputimage" />
+                                <input type="file" onChange={this.uploadPicture} className="inputimage"  accept=".png, .jpg, .jpeg"/>
                                 <div style={{ height: "55%" }}>
 
                                     <div className='prevItmImgSec'>

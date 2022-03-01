@@ -324,8 +324,8 @@ class NFTDetail extends React.Component {
 
 
               <p style={{ fontWeight: "bold" }}> {this.state.nftDATA.collectionName} </p>
-              <p >price:{this.state.nftDATA.bidInitialMinimumAmount ? this.state.nftDATA.bidInitialMaximumAmount : this.state.nftDATA.buyPrice} </p>
-              <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart onClick={()=> { this.state.favourate?this.removefavouratenft():this.addfavourateNFt(); } } color={this.state.favourate?"red":"black"} fill={this.state.favourate?"red":"black"}  /> {" "}{this.state.favcount}     </p>
+              <p >Price:{this.state.nftDATA.bidInitialMinimumAmount ? this.state.nftDATA.bidInitialMaximumAmount : this.state.nftDATA.buyPrice} </p>
+              <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart style={{cursor:"pointer"}} onClick={()=> { this.state.favourate?this.removefavouratenft():this.addfavourateNFt(); } } color={this.state.favourate?"red":"black"} fill={this.state.favourate?"red":"black"}  /> {" "}{this.state.favcount}     </p>
             </div>
             <div className="detail-card">
 

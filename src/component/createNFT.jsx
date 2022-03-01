@@ -185,7 +185,7 @@ class CreateNt extends React.Component {
     }
    
     submit = (data) => {
-        const name = /^[a-zA-Z0-9]*$/;
+        const name = /^[a-zA-Z0-9_ ]*$/;
         const price= /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
          const temp=this.state.Name
          const temp1=this.state.Price
@@ -732,11 +732,11 @@ class CreateNt extends React.Component {
                             <p style={{ cursor: "pointer" }}>
                                 Image Preview
                             </p>
-                            <input type="file" onChange={this.uploadPicture} className='inputimage' />
+                            <input type="file" onChange={this.uploadPicture} className='inputimage' accept=".png, .jpg, .jpeg"/>
                             <div className='prevItmImgSecs'>
                                 <img
                                     src={this.state.imageset != "" ? this.state.ImagePreview : ' '}
-                                    className=""
+                                    className="avatar-immagelogo"
                                 />
                             </div>
                             {!this.state.imageok && (

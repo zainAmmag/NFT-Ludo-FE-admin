@@ -220,7 +220,7 @@ class UpdateNFT extends React.Component {
     this.setState({ MediumLink: "" })
   }
   submit = (data) => {
-    const name = /^[a-zA-Z0-9]*$/;
+    const name = /^[a-zA-Z0-9_ ]*$/;
     const price = /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
     const temp = this.state.Name1
     console.log(this.state.Price, "kedwwd")
@@ -255,7 +255,7 @@ class UpdateNFT extends React.Component {
     bodyFormData.append("SensitiveContent", this.state.SesitiveData1);
     bodyFormData.append("Supply", this.state.Supply1);
     bodyFormData.append("CurrencyId", this.state.PrevNftdata.currencyId);
-    bodyFormData.append("CollectionId", this.state.PrevNftdata.collectionId);
+    bodyFormData.append("CollectionId", this.state.collectionId1);
     bodyFormData.append("BlockChainName", this.state.defaultcurrencyname);
     bodyFormData.append("Price", this.state.Price);
     bodyFormData.append("ChainId", this.state.Blockchaindata1.find((item, index) => item.name == this.state.defaultcurrencyname).chainID);
@@ -348,7 +348,7 @@ class UpdateNFT extends React.Component {
       bodyFormData1.append("SensitiveContent", this.state.SesitiveData1);
       bodyFormData1.append("Supply", this.state.Supply1);
       bodyFormData1.append("CurrencyId", this.state.PrevNftdata.currencyId);
-      bodyFormData1.append("CollectionId", this.state.PrevNftdata.collectionId);
+      bodyFormData1.append("CollectionId", this.state.collectionId1);
       bodyFormData1.append("BlockChainName", this.state.defaultcurrencyname);
       bodyFormData1.append("Price", this.state.Price);
       bodyFormData1.append("ChainId", this.state.Blockchaindata1.find((item, index) => item.name == this.state.defaultcurrencyname).chainID);
@@ -496,7 +496,7 @@ class UpdateNFT extends React.Component {
             </div>
             <div className='input-fields'>
               <p>Collection</p>
-              <select className='dropDown' name='Category' onChange={(data) => { console.log("dmkdsmmsd", this.state.BlockChainname_); this.setState({ CategoryId: data.target.value }); }}>
+              <select className='dropDown' name='Category' onChange={(data) => { console.log("dmkdsmmsd", this.state.BlockChainname_); this.setState({ collectionId1: data.target.value }); }}>
                 <option value="none" selected disabled hidden>{this.state.defaultcollctionname}</option>
                 {
                   this.state.CategoryData1.map((playerData, k) => {
@@ -586,7 +586,7 @@ class UpdateNFT extends React.Component {
               <p style={{ cursor: "pointer" }}>
                 Image Preview
               </p>
-              <input type="file" onChange={this.uploadPicture} className="inputimage" />
+              <input type="file" onChange={this.uploadPicture} className="inputimage" accept=".png, .jpg, .jpeg" />
               <div style={{ height: "55%" }}>
 
                 <div className='prevItmImgSec'>

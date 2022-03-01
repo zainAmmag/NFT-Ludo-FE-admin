@@ -104,12 +104,12 @@ const Pages = () => {
                 ></PrivateRoute>{" "}
                 <PrivateRoute
                   exact
-                  path="/nftDetail2"
+                  path="/nftdetail1"
                   component={NFTDetail2}
                 ></PrivateRoute>{" "}
                 <PrivateRoute
                   exact
-                  path="/nftDEtail1"
+                  path="/nftdetail2"
                   component={NFTDetail1}
                 ></PrivateRoute>{" "}
 

@@ -138,22 +138,35 @@ class EditCollection extends React.Component {
                 console.log("Collection data1", this.state.collectiondata);
                 console.log("Collection data2", this.state.collectiondata);
                 temp = this.state.collectiondata.name;
+                if(temp==null) temp=""
                 this.setState({ Name: temp })
                 temp = this.state.collectiondata.url;
+                if(temp==null) temp=""
                 this.setState({ ExternalLink: temp })
                 temp = this.state.collectiondata.description;
+                if(temp==null) temp=""
+
                 this.setState({ Description: temp })
                 temp = this.state.collectiondata.percentageFee;
                 this.setState({ Price: temp })
                 temp = this.state.collectiondata.discordLink;
+                if(temp==null) temp=""
                 this.setState({ DiscordLink: temp })
                 temp = this.state.collectiondata.twitterLink;
+                if(temp==null) temp=""
+
                 this.setState({ TwitterLink: temp })
                 temp = this.state.collectiondata.instagramLink;
+                if(temp==null) temp=""
+
                 this.setState({ InstagramLink: temp })
                 temp = this.state.collectiondata.tLink;
+                if(temp==null) temp=""
+
                 this.setState({ TLink: temp })
                 temp = this.state.collectiondata.mediumLink;
+                if(temp==null) temp=""
+
                 this.setState({ MediumLink: temp })
                 temp = this.state.collectiondata.bannerImage;
                 this.setState({ BannerImage: temp })
@@ -217,13 +230,14 @@ class EditCollection extends React.Component {
     }
     submit = (data) => {
 
-        const name = /^[a-zA-Z]*$/;
+        const name = /^[a-zA-Z0-9_ ]*$/;
          if(this.state.Name!=""){
         if (this.state.Name.match(name)) this.setState({vname:true})   
         if (!this.state.Name.match(name)) {this.setState({vname:false});return ;} }
         if (this.urlPatternValidation(this.state.ExternalLink))  this.setState({vExternalLink:true})
         if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); return; }
         if (this.urlPatternValidation(this.state.DiscordLink))  this.setState({discordok:true})
+         console.log("his.state.DiscordLink",this.state.DiscordLink)
         if (!this.urlPatternValidation(this.state.DiscordLink)) {this.setState({discordok:false}); return; }
         if (this.urlPatternValidation(this.state.InstagramLink))  this.setState({instagramok:true})
         if (!this.urlPatternValidation(this.state.InstagramLink)) {this.setState({instagramok:false}); return; }
@@ -241,14 +255,14 @@ class EditCollection extends React.Component {
         this.props.setIsLoaderActive(true);
         var bodyFormData = new FormData();
         bodyFormData.append("Name", this.state.Name);
-        bodyFormData.append("Url", this.state.ExternalLink);
-        bodyFormData.append("Description", this.state.Description);
-        bodyFormData.append("WebsiteLink", this.state.WebsiteLink);
-        bodyFormData.append("DiscordLink", this.state.DiscordLink);
-        bodyFormData.append("TwitterLink", this.state.TwitterLink);
-        bodyFormData.append("InstagramLink", this.state.InstagramLink);
-        bodyFormData.append("MediumLink", this.state.MediumLink);
-        bodyFormData.append("TLink", this.state.TLink);
+        bodyFormData.append("Url", this.state.ExternalLink?this.state.ExternalLink:null);
+        bodyFormData.append("Description", this.state.Description==null||this.state.Description.length<1?null:this.state.Description);
+        bodyFormData.append("WebsiteLink", this.state.WebsiteLink==null||this.state.WebsiteLink.length<1?null:this.state.WebsiteLink);
+        bodyFormData.append("DiscordLink", this.state.DiscordLink==null||this.state.DiscordLink.length<1?null:this.state.DiscordLink);
+        bodyFormData.append("TwitterLink", this.state.TwitterLink==null||this.state.TwitterLink.length<1?null:this.state.TwitterLink);
+        bodyFormData.append("InstagramLink", this.state.InstagramLink==null||this.state.InstagramLink.length<1?null:this.state.InstagramLink);
+        bodyFormData.append("MediumLink", this.state.MediumLink==null||this.state.MediumLink.length<1?null:this.state.MediumLink);
+        bodyFormData.append("TLink", this.state.TLink==null||this.state.TLink.length<1?null:this.state.TLink);
         bodyFormData.append("PercentageFee", this.state.PercentageFee);
         bodyFormData.append("CategoryId", this.state.CategoryId);
         bodyFormData.append("ChainId", this.state.collectiondata.chainID);
@@ -270,17 +284,17 @@ class EditCollection extends React.Component {
 
             }
         }).then((response) => {
-
+            this.props.setIsLoaderActive(false); 
             this.setState({ ImageModal: true })
             console.log(response.data.message);
             if (response.data.message == "Collection already exist") {
+
                 this.setState({ falsemessage: response.data.message })
 
             }
-            else if (response.data.message == "Data successfully Updated") {  
-                this.props.setIsLoaderActive(true); 
+            else if (response.data.message == "Data successfully updated") {  
+                this.props.setIsLoaderActive(false); 
                 this.setState({ successmessage: response.data.message })
-                this.props.history.push("/ShowCollectionDetail");   
             }
             
             else {
@@ -313,6 +327,8 @@ class EditCollection extends React.Component {
     }
 
     urlPatternValidation = URL => {
+        if(URL=="") return true
+        if(URL==null) return true
         const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
         return regex.test(URL);
     };
@@ -556,7 +572,7 @@ class EditCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Logo Image
                                 </p>
-                                <input type="file" accept="image/*" onChange={this.LogoImageset} className="inputimage" />
+                                <input type="file" accept="image/*" onChange={this.LogoImageset} className="inputimage" accept=".png, .jpg, .jpeg"/>
                                 <div style={{ height: "55%" }}>
                                     <div className='prevItmImgSec'>
                                         <img src={this.state.LogoPreview} alt="profileImage" className="avatar-immagelogo" />
@@ -568,7 +584,7 @@ class EditCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Featured Image
                                 </p>
-                                <input type="file" accept="image/*" onChange={this.FeatureImageSet} className="inputimage" />
+                                <input type="file" accept="image/*" onChange={this.FeatureImageSet} className="inputimage" accept=".png, .jpg, .jpeg" />
                                 <div style={{ height: "55%" }}>
                                     <div className='prevItmImgSec'>
                                         <img src={this.state.FeatPreview} alt="profileImage" className="avatar-immage" />
@@ -580,7 +596,7 @@ class EditCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Banner Image
                                 </p>
-                                <input type="file" accept="image/*" onChange={this.uploadPicture} className="inputimage" />
+                                <input type="file" accept="image/*" onChange={this.uploadPicture} className="inputimage" accept=".png, .jpg, .jpeg" />
 
                                 <div style={{ height: "55%" }}>
 
