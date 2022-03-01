@@ -328,6 +328,7 @@ class EditCollection extends React.Component {
 
     urlPatternValidation = URL => {
         if(URL=="") return true
+        
         if(URL==null) return true
         const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
         return regex.test(URL);

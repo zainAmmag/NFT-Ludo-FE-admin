@@ -104,6 +104,7 @@ class UpdateNFT extends React.Component {
       successmessage: "",
       errormessage: "",
       PrevNftdata: [],
+      vdescription:true,
 
     };
 
@@ -240,6 +241,10 @@ class UpdateNFT extends React.Component {
     this.setState({ falsemessage: "" })
     this.setState({ successmessage: "" })
     this.setState({ errormessage: "" })
+    if(this.state.Description?.length > 30) 
+    {this.setState({vdescription:false});return ;}
+    else
+    {this.setState({vdescription:true});}
     var bodyFormData = new FormData();
     console.log("state.CurrencyId1", this.state.PrevNftdata.currencyId)
     console.log("state.CategoryId1", this.state.PrevNftdata.collectionId)
@@ -493,6 +498,9 @@ class UpdateNFT extends React.Component {
                 value={this.state.Description1}
                 onChange={(data) => { this.setState({ Description1: data.target.value }) }}
               />
+               {!this.state.vdescription && (
+                                      <div style={{ color: "#F61C04" }}>Description Can not be greater than 30.</div>
+                                 )}
             </div>
             <div className='input-fields'>
               <p>Collection</p>

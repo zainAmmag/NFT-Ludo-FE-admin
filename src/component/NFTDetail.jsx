@@ -142,7 +142,8 @@ class NFTDetail extends React.Component {
       if (data.isSuccess == true) {
         await   this.GetFavourateNFtcount();
         await this.GEtmyfavourateNft()
-        await  this.getnft();
+        this.getnft();
+        this.props.setIsLoaderActive(false); 
       }
     } catch (error) {
 
@@ -157,8 +158,9 @@ class NFTDetail extends React.Component {
       );
       if (data.isSuccess == true) {
         await   this.GetFavourateNFtcount();
-        await this.GEtmyfavourateNft()
-        await  this.getnft();
+        await  this.GEtmyfavourateNft()
+            this.getnft();
+        this.props.setIsLoaderActive(false); 
       }
     } catch (error) {
 
@@ -324,8 +326,9 @@ class NFTDetail extends React.Component {
 
 
               <p style={{ fontWeight: "bold" }}> {this.state.nftDATA.collectionName} </p>
-              <p >Price:{this.state.nftDATA.bidInitialMinimumAmount ? this.state.nftDATA.bidInitialMaximumAmount : this.state.nftDATA.buyPrice} </p>
-              <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart style={{cursor:"pointer"}} onClick={()=> { this.state.favourate?this.removefavouratenft():this.addfavourateNFt(); } } color={this.state.favourate?"red":"black"} fill={this.state.favourate?"red":"black"}  /> {" "}{this.state.favcount}     </p>
+              <p >Price:{this.state.nftDATA.sellPrice ? this.state.nftDATA.sellPrice : this.state.nftDATA.buyPrice} </p>
+              <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart  style={{cursor:"pointer"}} onClick={()=> { 
+    this.props.setIsLoaderActive(true); this.state.favourate?this.removefavouratenft():this.addfavourateNFt(); } } color={this.state.favourate?"red":"black"} fill={this.state.favourate?"red":"black"}  /> {" "}{this.state.favcount}     </p>
             </div>
             <div className="detail-card">
 
@@ -338,7 +341,7 @@ class NFTDetail extends React.Component {
               <div className="full-div" style={{ textAlign: "end" }}>
                 {this.state.nftDATA.isMinted ? (
                   <>
-                    {this.state.nftDATA.staus !== "ReadyForSell" && this.state.nftDATA.isAdminNft ? (
+                    {this.state.nftDATA.staus === "Hold" && this.state.nftDATA.isAdminNft && localStorage.getItem("AdminaccountId")==this.state.nftDATA.accountId ? (
                       <Button
                         className="collection-button"
                         style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder", }}
@@ -376,12 +379,12 @@ class NFTDetail extends React.Component {
             </div>
             <Modal
               centered
-              size="lg"
+              size="sm"
               show={this.state.ImageModal}
             >
               <Modal.Body>
                 <div style={{ textAlign: "center" }} className="">
-                  <p> Price</p>
+                  <p style={{color:"black"}}> Selling Price</p>
                   <input
                     type="text"
                     required

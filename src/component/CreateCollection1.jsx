@@ -118,6 +118,9 @@ class CreateCollection extends React.Component {
             tLinkok:true,
             successmessage: "",
             errormessage: "",
+            vcategory:true,
+            vblockchain:true,
+            vpaymenttoken:true,
         };
     }
     async componentDidMount() {
@@ -175,11 +178,34 @@ class CreateCollection extends React.Component {
         else  this.setState({ vBannerImage: true })
           if(this.state.CategoryId==0)    
           {
-            this.setState({ ImageModal: true })
-            this.setState({ errormessage:"Category not selected" })
+            this.setState({ vcategory: false })
             return
           }  
- 
+          else
+          {
+            this.setState({ vcategory: true })
+            
+          }  
+          if(this.state.BlockChainName==0)
+          {
+            this.setState({ vblockchain: false })
+            return
+          }  
+          else
+          {
+            this.setState({ vblockchain: true })
+            
+          }  
+          if(this.state.CurrencyId==0)
+          {
+            this.setState({vpaymenttoken: false })
+            return
+          }  
+          else
+          {
+            this.setState({ vpaymenttoken: true })
+            
+          }  
    
             this.setState({ falsemessage: "" })
             this.setState({ successmessage: "" })
@@ -225,7 +251,7 @@ class CreateCollection extends React.Component {
                     this.props.setIsLoaderActive(false);
                 }
                 else if (response.data.message == "Data successfully added") {
-                    this.setState({ successmessage: response.data.message })
+                    this.setState({ successmessage: "Collection Created Successfully" })
                     this.props.setIsLoaderActive(false);
                 }
                 else {
@@ -384,6 +410,9 @@ class CreateCollection extends React.Component {
                                     }
 
                                 </select>
+                                {!this.state.vcategory && (
+               <div style={{ color: "#F61C04" }}>Category not Selected </div>
+          )}
                             </div>
                             <div className='input-fields'>
                                 <p>Blockchain</p>
@@ -397,6 +426,9 @@ class CreateCollection extends React.Component {
                                         })
                                     }
                                 </select>
+                                {!this.state.vblockchain && (
+               <div style={{ color: "#F61C04" }}>BlockChian not Selected </div>
+          )}
                             </div>
                             <div className='input-fields'>
                                 <p>Payment tokens</p>
@@ -410,6 +442,9 @@ class CreateCollection extends React.Component {
                                         })
                                     }
                                 </select>
+                                {!this.state.vpaymenttoken && (
+               <div style={{ color: "#F61C04" }}>Payment not Selected </div>
+          )}
                             </div>
                             <div className='input-fields'>
                                 <p>Links </p >

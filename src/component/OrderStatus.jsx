@@ -36,8 +36,7 @@ const OrderStatus = function () {
        const [errormessage1,seterrormessage1]=useState("");
     const location = useLocation()
     const { value } = location.state
-
-
+    console.log("adadadadadadadadada",value)
     useEffect(() => {
         switch (value.orderStatus) {
             case "OrderPending":
@@ -199,6 +198,11 @@ const OrderStatus = function () {
                
                     <h4>{value.name}</h4>
                     <h4>{value.email}</h4>
+                    <img src={"http://198.187.28.244:7577/" + value.nftImage} alt="profileImage" style={{maxHeight:"50vh"}}/>
+                    <div className="pt-2"></div>
+                    <h4>{value.nftName}</h4>
+                    <h4>Price: {value.nftPrice} BNB</h4>
+                    <h4>{value.placeOfAddress}</h4>
                 </div>
 
                 <div>
@@ -213,13 +217,13 @@ const OrderStatus = function () {
               <Modal.Body>
                 <div style={{ textAlign: "center" }} className="">
                      {errormessage1==""?<>
-                  <p> Enter Tracking ID</p>
+                     <p style={{color:"black"}}>Enter Tracking ID</p>
                   <input
                     type="text"
                     required
                     placeholder="Enter Tracking ID"
                     width={50}
-                    className="input-field"
+                    className="input-field1"
                     name='Price'
                     value={Tokenorder}
                     onChange={(data) => { SetTokenorder(data.target.value) }}
@@ -231,7 +235,7 @@ const OrderStatus = function () {
                 <Modal.Footer>
                 
                 <button className='Modal-div-cancel-button' onClick={()=>{SubmitToken()}} > OK </button>
-                <button className='Modal-div-cancel-button' onClick={()=>{cancel()}} > cancel </button>
+                <button className='Modal-div-cancel-button' onClick={()=>{cancel()}} > Cancel </button>
        
               </Modal.Footer>
               </Modal.Body>

@@ -183,7 +183,7 @@ class UserDetail extends React.Component {
                                   <div className="panal">
 
                                     <img
-                                      src={playerData.bannerImage? "http://198.187.28.244:7577/" + playerData.bannerImage: defaultImg}
+                                      src={playerData.bannerImage? "http://198.187.28.244:7577/" + playerData.featuredImage: defaultImg}
                                       alt="profileImage"
                                       className="NFT-immage-NFT"
                                      
@@ -256,7 +256,7 @@ class UserDetail extends React.Component {
                                       <div className="panal">
     
                                         <img
-                                          src={playerData.bannerImage? "http://198.187.28.244:7577/" + playerData.bannerImage: defaultImg}
+                                          src={playerData.bannerImage? "http://198.187.28.244:7577/" + playerData.featuredImage: defaultImg}
                                           alt="profileImage"
                                           className="NFT-immage-NFT"
                                           onClick={() => {

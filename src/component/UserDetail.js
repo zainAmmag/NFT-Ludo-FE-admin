@@ -196,7 +196,7 @@ class UserDetail extends React.Component {
                               <div className="panel">
 
                                 <img
-                                  src={"http://198.187.28.244:7577/" + playerData.bannerImage}
+                                  src={"http://198.187.28.244:7577/" + playerData.featuredImage}
                                   alt="profileImage"
                                   className="NFT-immage-NFT"
                                   onClick={() => {
@@ -293,7 +293,7 @@ class UserDetail extends React.Component {
                                     className="NFT-immage3"
                                   />
                                 </div>
-                                <h5 className="nft-heading">  price</h5>
+                                <h5 className="nft-heading">   {playerData.name + " "}</h5>
                                 <p className="note"> Price {playerData.buyPrice + " "}BNB </p>
                                 <l>
 

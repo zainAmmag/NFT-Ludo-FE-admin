@@ -41,6 +41,8 @@ class MenageAccount extends React.Component {
       page: 0,
       tableData: [],
       blockstatus: true,
+      lastcopy:"",
+      copied:false,
     };
   }
   async updateuserblockstatus(id, status, status2) {
@@ -189,9 +191,9 @@ class MenageAccount extends React.Component {
                                         {/* {this.state.copied ? <span style={{ fontSize: 12, marginLeft: '1%' }}>Copied.</span> : null} */}
                                         <TableCell className="Text-white">{value.username}</TableCell>
 
-                                        <CopyToClipboard text={localStorage.getItem("address")}
-                                          onCopy={() => this.setState({ copied: true })}>
-                                          <TableCell className="Text-white" title={this.state.copied?"copyed":"click to copy"}> {value.address.slice(1, 5) + '...' + value.address.slice(- 5)}  </TableCell>
+                                        <CopyToClipboard text={value.address} 
+                                          onCopy={() => this.setState({ lastcopy: value.address })  }      >
+                                          <TableCell className="Text-white" title={this.state.lastcopy==value.address?"Copied":"click to copy"} style={{cursor:"pointer"}}> {value.address.slice(1, 5) + '...' + value.address.slice(- 5)}  </TableCell>
                                         </CopyToClipboard>
 
 

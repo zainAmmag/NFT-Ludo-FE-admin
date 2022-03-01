@@ -24,6 +24,7 @@ import {
 } from "../Constants/BusinessManager";
 
 import { Search,Heart } from "react-feather";
+import { Button } from "bootstrap";
 const mapStateToProps = (state) => {
   return {};
 };
@@ -63,6 +64,9 @@ class CollectionDetail extends React.Component {
       BO: null,
       favcount:0,
       favourateNFT:[],
+      startslice:0,
+      endSlice:8,
+      vnomore:true,
     };
   }
   async GetNFTS() {
@@ -139,7 +143,11 @@ class CollectionDetail extends React.Component {
     this.GEtmyfavourateNft()
   }
   Finduser = () => {
-    
+          if(this.state.vnomore==false)
+          {
+             this.setState({endSlice:8})
+             this.setState({vnomore:true})
+          }  
     console.log("called")
     console.log(this.state.tableData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search1.toLowerCase())) )
         // console.log("Present")
@@ -151,7 +159,18 @@ class CollectionDetail extends React.Component {
   //  temp=this.state.tableData.find ((item, index) => item.username == this.state.search)
     this.setState({ Search: temp })
   };
- 
+    mapSlice=()=>{
+             let temp1=this.state.startslice
+             let temp2=this.state.endSlice
+             if(this.state.vnomore==false) return
+              if(this.state.NFtData.length<temp2+8)
+                   {
+                    temp2=this.state.endSlice-this.state.NFtData.length
+                    this.setState({endSlice:temp2})
+                    this.setState({vnomore:false}); return
+                   } 
+            this.setState({endSlice:temp2+8})   
+            };
   removeuser = () => {
     console.log("dadaad", this.state.Search1.length);
     if (this.state.Search1.length == 1)
@@ -273,7 +292,7 @@ class CollectionDetail extends React.Component {
             {this.state.NFtData.length > 0 ? (
               <>
                 {
-                  this.state.NFtData.map((playerData, k) => (
+                  this.state.NFtData.slice(this.state.startslice, this.state.endSlice).map((playerData, k) => (
                     <>
                       <Col key={k} style={{ paddingTop: "15px" }}  lg={3} md={4}   style={{display:"flex",justifyContent:"center",marginTop:"20px"}}>
                       <Link to="/nftdetail1"
@@ -323,9 +342,11 @@ class CollectionDetail extends React.Component {
                         </div>{" "}
                         </Link>
                       </Col>
-                     
+                      
+        
                     </>
                   ))}
+                                    
               </>
             ) : (
               <div className="card" style={{ alignItems: "center", alignContent: "center", width: "100%" }}>
@@ -342,8 +363,8 @@ class CollectionDetail extends React.Component {
               </div>
             )}</>)
             : (<>" "</>)}
-
-{
+                      
+         {
               this.state.Search.length > 0 ? (
                 <>
             {this.state.NFtData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search.toLowerCase())).length > 0 ? (
@@ -420,6 +441,12 @@ class CollectionDetail extends React.Component {
           </div>
           </div>
         </div>
+        <div id="container" className="text-center" style={{marginLeft:"0"}}>
+                                     <button   onClick={()=> this.mapSlice() }   className="Link create-list" style={{ width:"10%",fontSize:'17px'}}> Load More </button >
+                                     {!this.state.vnomore && (
+            <div style={{ color: "#F61C04" }}>No More Data To Load</div>
+          )}  
+                                   </div>
        </div>
     );
   }
