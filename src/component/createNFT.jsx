@@ -48,7 +48,7 @@ class CreateNt extends React.Component {
             Unlockablecontentnote: "",
             SesitiveData: false,
             Supply: 0,
-            propertytyppe:"",
+            propertytype:"",
             propertyname:"",
             Feetransitiondata: "",
             CategoryId: 0,
@@ -189,6 +189,7 @@ class CreateNt extends React.Component {
         const price= /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
          const temp=this.state.Name
          const temp1=this.state.Price
+         if(this.state.Name==""){this.setState({vname:false});return ;}
         if (temp.match(name)) this.setState({vname:true})   
         if (!temp.match(name)) {this.setState({vname:false});return ;}
         if (this.urlPatternValidation(this.state.ExternalLink))  this.setState({vExternalLink:true})
@@ -209,9 +210,34 @@ class CreateNt extends React.Component {
         else {
             this.setState({ imageok: true })
         }
+        if(this.state.chainID == 0)
+        {   
+            this.setState({ ImageModal: true }) 
+            this.setState({ falsemessage: "Block chain not found" })
+            return
+        }
+        if(this.state.chainID == 0)
+        {
+            this.setState({ ImageModal: true }) 
+            this.setState({ falsemessage: "Block chain not found" })
+           return;
+        }
+        if(this.state.CategoryId == 0  )
+        {      
+            this.setState({ ImageModal: true }) 
+            this.setState({ falsemessage: "collection not selected" })
+            return
+        }
+        
+        if(this.state.CurrencyId == 0  )
+        {
+            this.setState({ ImageModal: true }) 
+            
+            this.setState({ falsemessage: "Currency not found" })
+            return 
+        }
+        
         var bodyFormData = new FormData();
-        this.props.setIsLoaderActive(true);
-
         bodyFormData.append("Name", this.state.Name);
         bodyFormData.append("TokenId", this.state.TokenId);
         bodyFormData.append("ContractAddress", this.state.ContractAddress);
@@ -232,9 +258,13 @@ class CreateNt extends React.Component {
         bodyFormData.append("NftLevels", this.state.NftLevels);
         bodyFormData.append("NftStats", this.state.NftStats);
         bodyFormData.append("Image", this.state.Image);
+        
         if (this.state.CurrencyId == 0 || this.state.CategoryId == 0 || this.state.chainID == 0) {
-            this.setState({ ImageModal: true })
+            
             this.setState({ errormessage: "Fill Form Correctly" })
+            this.setState({ ImageModal: true }) 
+            return
+
         }
         else {
             this.props.setIsLoaderActive(true);
@@ -255,19 +285,19 @@ class CreateNt extends React.Component {
                 console.log(response.data.message);
                 
                 console.log("daadd" + response.statusText);
-                if (response.data.message == "Collection already exist") {
+                if (response.data.message == "blockChain not found") {
                     this.setState({ falsemessage: response.data.message })
-                    this.setState({ ImageModal: true })
+                    this.setState({ ImageModal: true }) 
                 }
 
                 else if (response.data.message == "Data successfully added") {
-                    this.setState({ nftModel: true })
-
+                    this.setState({ ImageModal: true })            
                     this.setState({ successmessage: response.data.message })
 
                 }
                 else {
                     this.setState({ errormessage: response.data.message })
+                    
                 }
                 // console.log(");
             })
@@ -294,15 +324,24 @@ class CreateNt extends React.Component {
 
     }; 
        savePropertiesList = () => {
-        // console.log(addPropertiesList);
-        // console.log("prooopertttieeeeess",addPropertiesList);
-    
+       
+        this.setState({proprttydiv:false})
+         console.log(this.state.addPropertiesList);
+         console.log("prooopertttieeeeess",this.state.addPropertiesList);
+            console.log("save is called")
         const filter = this.state.addPropertiesList?.filter((item, index) => {
           return item?.name && item?.type;
         });
-    
-                this.state.addPropertiesList.push([...filter]);
+
+        this.state.addPropertiesList.push([...filter]);
         this.state.finalCreatedProperties.push([...filter]);
+        console.log(this.state.finalCreatedProperties);
+        this.state.addPropertiesList.map((value,index)=>
+        {
+            console.log(value.type,value.name)
+
+        }
+        )
        
       };
       
@@ -317,20 +356,19 @@ class CreateNt extends React.Component {
         this.state.addPropertiesList[ind].type = e.target.value;
         const data = [... this.state.addPropertiesList];
         console.log("itemToChange", data);
-     this.state.addPropertiesList.push(data)
+        this.state.addPropertiesList[ind]=data
         // setAddPropertiesList(data);
       };
       
    characterCahngeHandler = (e, index) => {
-    const itemToChange = this.state.addPropertiesList.find((item, i) => index === i);
-    const ind = this.state.addPropertiesList.indexOf(itemToChange);
+       const itemToChange = this.state.addPropertiesList.find((item, i) => index === i);
+       const ind = this.state.addPropertiesList.indexOf(itemToChange);
     this.state.addPropertiesList[ind].name = e.target.value;
     const data = [...this.state.addPropertiesList];
     console.log("itemToChange", data);
-    this.state.addPropertiesList.push(data);
+    this.state.addPropertiesList[ind]=data
   };
  removeProperty = (index) => {
-
     if (this.state.addPropertiesList.length == 0) return;
     else {
       let filteredList = [...this.state.addPropertiesList.filter((item, i) => i != index)];
@@ -345,13 +383,13 @@ class CreateNt extends React.Component {
   }
     render() 
     {
-        const handleClose1 = () => this.setState({ ImageModal: false });
-        const handleClose2 = () => {
+        const handleClose1 = () =>{ 
+            this.setState({ ImageModal: false })
+           if(this.state.successmessage!="") 
+           return this.props.history.push("/ManageNFt");
 
-            this.setState({ nftModel: false })
-            return this.props.history.push("/ManageNFt");
-
-        }
+          
+        }; 
 
         return (
             <div className="container">
@@ -388,29 +426,7 @@ class CreateNt extends React.Component {
                             </div>
 
                             {/* create nft success model */}
-                            {this.state.nftModel && (<>
-                                <div className="col-md-12">
-
-                                    <Modal
-                                        centered
-                                        size="lg"
-                                        show={this.state.nftModel}
-                                    >
-                                        <Modal.Body>
-                                            <div style={{ textAlign: "center" }} className="Modal-div">
-                                                <div className='Modal-div-created'>
-                                                    NFT Added successfully
-                                                </div>
-
-
-                                            </div>
-                                        </Modal.Body>
-                                        <Modal.Footer>
-                                            <button className='Modal-div-cancel-button' onClick={handleClose2} > OK </button>
-                                        </Modal.Footer>
-                                    </Modal>
-                                </div>
-                            </>)}
+                           
 
                             <div className="col-md-12">
                                 <div className='input-fields'>
@@ -546,8 +562,9 @@ class CreateNt extends React.Component {
                             placeholder="Character"
                             type="text"
                             className="form-control"
-                            value={item.name}
+                            value={this.state.propertytype}
                             onChange={(e) => {
+                                this.setState({propertytype:e.target.value})
                                 this.characterCahngeHandler(e, index);
                             }}
                             style={{
@@ -560,10 +577,11 @@ class CreateNt extends React.Component {
                           <input
                             placeholder="Name"
                             onChange={(e) => {
+                                this.setState({propertyname:e.target.value})
                                 this.maleCahngeHandler(e, index);
                             }}
                             className="form-control"
-                            value={item.type}
+                            value={this.state.propertyname}
                             type="text"
                             style={{
                               border: "none",

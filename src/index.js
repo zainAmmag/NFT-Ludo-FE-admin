@@ -20,6 +20,8 @@ import OrderDetail from "./component/OrderDetail";
 import ManageCollection from "./component/ManageCollection";
 import CreateNFT from "./component/createNFT";
 import NFTDetail from "./component/NFTDetail";
+import NFTDetail1 from "./component/NFTDetail";
+import NFTDetail2 from "./component/NFTDetail";
 import ShowCollectionDetail from './component/ShowCollectionDetail'
 import CreateCollection from "./component/CreateCollection1"
 import EditCollection from "./component/EditCollection";
@@ -100,6 +102,17 @@ const Pages = () => {
                   path="/nftdetail"
                   component={NFTDetail}
                 ></PrivateRoute>{" "}
+                <PrivateRoute
+                  exact
+                  path="/nftDetail2"
+                  component={NFTDetail2}
+                ></PrivateRoute>{" "}
+                <PrivateRoute
+                  exact
+                  path="/nftDEtail1"
+                  component={NFTDetail1}
+                ></PrivateRoute>{" "}
+
 
                 <PrivateRoute
                   exact

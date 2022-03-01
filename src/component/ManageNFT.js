@@ -227,7 +227,7 @@ class CollectionDetail extends React.Component {
                               <p className="note"> Price {playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
                               <l>
 
-                                <Link to="/nftdetail">
+                                <Link to="/nftDetail2">
                                   <a
                                     onClick={() => {
                                       localStorage.setItem("NFTID", playerData.id)
@@ -295,7 +295,7 @@ class CollectionDetail extends React.Component {
                               <p className="note"> Price {playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
                               <l>
 
-                                <Link to="/nftdetail">
+                                <Link to="/nftDetail2">
                                   <a
                                     onClick={() => {
                                       localStorage.setItem("NFTID", playerData.id)

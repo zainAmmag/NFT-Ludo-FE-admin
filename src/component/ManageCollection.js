@@ -139,8 +139,7 @@ class UserDetail extends React.Component {
                       this.state.collectiondata.map((playerData, k) => {
                         return (
                           <>
-                            <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3
-                            } sm={1}  >
+                            <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3}  style={{display:"flex",justifyContent:"center",marginTop:"20px"}}  >
                               <div
                                 className="card2NFT">
                                 <div >
@@ -209,7 +208,7 @@ class UserDetail extends React.Component {
                             return (
                               <>
                                 <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3
-                                } sm={1}  >
+                                }  style={{display:"flex",justifyContent:"center",marginTop:"20px"}}  >
                                   <div
                                     className="card2NFT">
                                     <div >

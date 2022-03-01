@@ -218,7 +218,7 @@ class CollectionDetail extends React.Component {
 
                                     <l>
 
-                                      <Link to="/nftdetail">
+                                      <Link to="/nftDEtail1">
                                         <a
                                           onClick={() => {
                                             localStorage.setItem("NFTID", playerData.id)
@@ -289,7 +289,7 @@ class CollectionDetail extends React.Component {
 
                                     <l>
 
-                                      <Link to="/nftdetail">
+                                      <Link to="/nftDEtail1">
                                         <a
                                           onClick={() => {
                                             localStorage.setItem("NFTID", playerData.id)
