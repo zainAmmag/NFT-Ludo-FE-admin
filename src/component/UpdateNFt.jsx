@@ -9,6 +9,7 @@ import { mint } from './metamask'
 import {
   BaseUrl, BaseUrl1,
 } from "../Constants/BusinessManager";
+
 import { SendHttpRequest } from "../component/utility";
 
 import { connect, useDispatch, useSelector } from "react-redux";
@@ -221,6 +222,14 @@ class UpdateNFT extends React.Component {
     this.setState({ MediumLink: "" })
   }
   submit = (data) => {
+    if(localStorage.getItem("chainidofconnectedmetamask")!="0x61")
+    {
+     swal({
+       icon: "error",
+       text: "Selected Metamask is not supported",
+     });
+     return;
+    }
     const name = /^[a-zA-Z0-9_ ]*$/;
     const price = /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
     const temp = this.state.Name1
@@ -267,7 +276,9 @@ class UpdateNFT extends React.Component {
     bodyFormData.append("FreezeData", this.state.freezedata);
     bodyFormData.append("Image", this.state.Image1);
     console.log("WHYYY BRO", this.state.isSwitchOn);
-    if (this.state.isSwitchOn === true) {
+     
+        
+      if (this.state.isSwitchOn === true) {
       const payload = [
         {
           to: this.props.walletAddress.accounts[0],

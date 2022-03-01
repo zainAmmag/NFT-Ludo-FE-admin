@@ -204,6 +204,14 @@ class NFTDetail extends React.Component {
   //   console.log("dgfsgrrsfhgdgfsgrrsfhg" + this.state);
   // }
   async sellNft(nftTokenId, contractAddress, id) {
+    if(localStorage.getItem("chainidofconnectedmetamask")!="0x61")
+    {
+     swal({
+       icon: "error",
+       text: "Selected Metamask is not supported",
+     });
+     return;
+    }
     const price = /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
     const temp = this.state.Price.toString();
     if (!temp?.match(price)) { this.setState({ vprice: false }); return; }
