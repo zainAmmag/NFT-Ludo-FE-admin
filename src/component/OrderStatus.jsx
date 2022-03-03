@@ -7,9 +7,9 @@ import ordericon4 from "../Assets/images/order-icon-4.png";
 
 import {
     Modal,
-  
-  } from "react-bootstrap";
-  
+
+} from "react-bootstrap";
+
 import { useDispatch, useSelector } from "react-redux";
 import { SendHttpRequest } from "./utility";
 
@@ -30,13 +30,13 @@ const OrderStatus = function () {
     const [status, setStatus] = useState(1)
 
     const orderStatus = { 1: "Order Processed", 2: "Order Shipped", 3: "Order On Route", 4: "Order Delivered", }
-    const [ImageModal,SetImageModal] =useState(false);
-    const [Tokenorder,SetTokenorder] =useState("");
-       const [errormessage,seterrormessage]=useState("");
-       const [errormessage1,seterrormessage1]=useState("");
+    const [ImageModal, SetImageModal] = useState(false);
+    const [Tokenorder, SetTokenorder] = useState("");
+    const [errormessage, seterrormessage] = useState("");
+    const [errormessage1, seterrormessage1] = useState("");
     const location = useLocation()
     const { value } = location.state
-    console.log("adadadadadadadadada",value)
+    console.log("adadadadadadadadada", value)
     useEffect(() => {
         switch (value.orderStatus) {
             case "OrderPending":
@@ -60,68 +60,64 @@ const OrderStatus = function () {
 
 
     const changeStatus = (statusNum) => {
-               
-        if(statusNum===2) 
-       {  
-        SetImageModal(true)
-       }
-       if(statusNum>status+1)
-        {  
-       return
-       }
-         else{ 
+
+        if (statusNum === 2) {
+            SetImageModal(true)
+        }
+        if (statusNum > status + 1) {
+            return
+        }
+        else {
+            var t = localStorage.getItem(AuthenticationTokenId);
+            const data = {
+                OrderId: value.nftOrderId,
+                AccountId: value.ownerAccountId,
+                NftId: value.nftId,
+                Status: statusNum
+            }
+
+            axios.put(
+                BaseUrl + "/Amin/UpdateNftOrderStatus", data, {
+                headers: {
+                    "authorization": "Barear " + t
+                }
+            }
+            ).then((resp) => {
+                setStatus(statusNum)
+                console.log("this is response")
+                console.log("dsjahfdsahjsalkjfdlkdhfsahb", resp)
+
+            }).catch((error) => {
+                console.log("this is error")
+                console.log(error)
+
+            })
+        }
+
+    }
+    const cancel = () => {
+        SetImageModal(false)
+        seterrormessage("")
+    }
+    const SubmitToken = () => {
+
+
+        console.log("SubmitToken calld")
+        if (Tokenorder == "") {
+            seterrormessage("Fill The Field")
+            return;
+        }
+        SetImageModal(false)
+        seterrormessage("")
         var t = localStorage.getItem(AuthenticationTokenId);
         const data = {
             OrderId: value.nftOrderId,
             AccountId: value.ownerAccountId,
             NftId: value.nftId,
-            Status: statusNum
-                     }
-  
-        axios.put(
-            BaseUrl + "/Amin/UpdateNftOrderStatus", data, {
-            headers: {
-                "authorization": "Barear " + t
-            }
-        }
-        ).then((resp) => {
-            setStatus(statusNum)
-            console.log("this is response")
-            console.log( "dsjahfdsahjsalkjfdlkdhfsahb" ,resp)
-
-        }).catch((error) => {
-            console.log("this is error")
-            console.log(error)
-
-        })
-    }
-
-    }
-    const cancel=()=>
-   {
-    SetImageModal(false)
-    seterrormessage("")
-   }
-    const SubmitToken = () => {
-       
-
-            console.log("SubmitToken calld")
-        if(Tokenorder=="")
-        {          
-                   seterrormessage("Fill The Field")
-                   return;
-        }
-        SetImageModal(false)
-        seterrormessage("")
-            var t = localStorage.getItem(AuthenticationTokenId);
-        const data = {
-            OrderId: value.nftOrderId,
-            AccountId: value.ownerAccountId,
-            NftId: value.nftId,
-            trackingURL:Tokenorder,
+            trackingURL: Tokenorder,
             Status: 2
-                     }
-  
+        }
+
         axios.put(
             BaseUrl + "/Amin/UpdateNftOrderStatus", data, {
             headers: {
@@ -143,7 +139,7 @@ const OrderStatus = function () {
     const OrderStatusItem = ({ statusNum, imgSrc }) => {
         return (
             <div
-                className="col-3">
+                className="col-lg-3 col-md-6 col-sm-12 col-12">
                 <div className="row" style={{ display: "flex", alignItems: "center" }}>
 
                     <div className="col-6" style={{ display: "flex", alignItems: "center" }}>
@@ -152,7 +148,7 @@ const OrderStatus = function () {
                             <div className="text-center">
                                 <div>
                                     <i className="fa fa-check" style={{
-                                        backgroundColor: status >= statusNum ? "blue" : "#a9a6ad",
+                                        backgroundColor: status >= statusNum ? "green" : "#a9a6ad",
                                         borderRadius: "50%", padding: "6px", marginBottom: "10px", color: "white"
                                     }} />
                                 </div>
@@ -179,7 +175,7 @@ const OrderStatus = function () {
                             <div
                                 className="col-6 mt-4 pl-2"
                                 style={{
-                                    height: "8px", backgroundColor: status > statusNum ? "blue" : "#a9a6ad",
+                                    height: "8px", backgroundColor: status > statusNum ? "green" : "#a9a6ad",
                                     borderRadius: "6px"
                                 }} /> : null
                     }
@@ -195,10 +191,10 @@ const OrderStatus = function () {
             <div className="container pb-16" >
 
                 <div className="col-lg-12 col-sm-12 col-md-12 text-center">
-               
+
                     <h4>{value.name}</h4>
                     <h4>{value.email}</h4>
-                    <img src={"http://198.187.28.244:7577/" + value.nftImage} alt="profileImage" style={{maxHeight:"50vh"}}/>
+                    <img src={"http://198.187.28.244:7577/" + value.nftImage} alt="profileImage" style={{ maxHeight: "50vh" }} />
                     <div className="pt-2"></div>
                     <h4>{value.nftName}</h4>
                     <h4>Price: {value.nftPrice} BNB</h4>
@@ -209,45 +205,45 @@ const OrderStatus = function () {
                     <p>Order #{value.nftOrderId}</p>
                 </div>
                 <Modal
-               centered
-              size="sm"
-              show={ImageModal}
-              style={{left:'155px'}}
-            >
-              <Modal.Body>
-                <div style={{ textAlign: "center" }} className="">
-                     {errormessage1==""?<>
-                     <p style={{color:"black"}}>Enter Tracking ID</p>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Enter Tracking ID"
-                    width={50}
-                    className="input-field1"
-                    name='Price'
-                    value={Tokenorder}
-                    onChange={(data) => { SetTokenorder(data.target.value) }}
-                  /></>:<>
-                     {errormessage1}
-                       </> }
-                   <p style={{textAlign:"centered",color:"red"}}>{errormessage==""?'':errormessage}</p>
-                </div>
-                <Modal.Footer>
-                
-                <button className='Modal-div-cancel-button' onClick={()=>{SubmitToken()}} > OK </button>
-                <button className='Modal-div-cancel-button' onClick={()=>{cancel()}} > Cancel </button>
-       
-              </Modal.Footer>
-              </Modal.Body>
-         
-            </Modal>
+                    centered
+                    size="sm"
+                    show={ImageModal}
+                    style={{ left: '155px' }}
+                >
+                    <Modal.Body>
+                        <div style={{ textAlign: "center" }} className="">
+                            {errormessage1 == "" ? <>
+                                <p style={{ color: "black" }}>Enter Tracking ID</p>
+                                <input
+                                    type="text"
+                                    required
+                                    placeholder="Enter Tracking ID"
+                                    width={50}
+                                    className="input-field1"
+                                    name='Price'
+                                    value={Tokenorder}
+                                    onChange={(data) => { SetTokenorder(data.target.value) }}
+                                /></> : <>
+                                {errormessage1}
+                            </>}
+                            <p style={{ textAlign: "centered", color: "red" }}>{errormessage == "" ? '' : errormessage}</p>
+                        </div>
+                        <Modal.Footer>
+
+                            <button className='Modal-div-cancel-button' onClick={() => { SubmitToken() }} > OK </button>
+                            <button className='Modal-div-cancel-button' onClick={() => { cancel() }} > Cancel </button>
+
+                        </Modal.Footer>
+                    </Modal.Body>
+
+                </Modal>
                 <div style={{
                     display: "flex", alignItems: "center", justifyContent: "space-between",
-                    backgroundColor: "#6d7fcc", padding: "20px", borderRadius: 10
+                    backgroundColor: "#308afb", padding: "20px", borderRadius: 10
                 }}
                     className="row">
                     <OrderStatusItem statusNum={1} imgSrc={ordericon1} />
-                    <OrderStatusItem statusNum={2} imgSrc={ordericon2}    /> 
+                    <OrderStatusItem statusNum={2} imgSrc={ordericon2} />
                     <OrderStatusItem statusNum={3} imgSrc={ordericon3} />
                     <OrderStatusItem statusNum={4} imgSrc={ordericon4} />
 
@@ -256,7 +252,7 @@ const OrderStatus = function () {
             </div>
 
 
-        
+
         </>
     )
 }
