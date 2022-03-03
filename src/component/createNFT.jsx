@@ -21,6 +21,7 @@ import { setIsLoaderActive } from "../actions/index";
 
 
 import Modal from "react-bootstrap/Modal";
+import SharedLayout from './shared/SharedLayout';
 
 const mapStateToProps = (state) => {
     return {};
@@ -102,6 +103,7 @@ class CreateNt extends React.Component {
             proprttydiv:false,
             nftpropertycount:0,
             vdescription:true,
+            validationcount:0,
             Vblockchain:true,
             vcollection:true,
             vpayment:true,
@@ -196,14 +198,15 @@ class CreateNt extends React.Component {
         const price= /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
          const temp=this.state.Name
          const temp1=this.state.Price
-         if (temp1==null)  { this.setState({vprice:false});return;}
-         if(this.state.Name==""){this.setState({vname:false});return ;}
+         let validationcount=0
+         if (temp1==null)  { this.setState({vprice:false});validationcount=validationcount+1;}
+         if(this.state.Name==""){this.setState({vname:false});validationcount=validationcount+1 ;}
         if (temp.match(name)) this.setState({vname:true})   
-        if (!temp.match(name)) {this.setState({vname:false});return ;}
+        if (!temp.match(name)) {this.setState({vname:false});validationcount=validationcount+1 ;}
         if (this.urlPatternValidation(this.state.ExternalLink))  this.setState({vExternalLink:true})
-        if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); return; }
+        if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); validationcount=validationcount+1; }
         if (temp1?.match(price)) this.setState({vprice:true})
-        if (!temp1?.match(price))  { this.setState({vprice:false});return;}
+        if (!temp1?.match(price))  { this.setState({vprice:false});validationcount=validationcount+1;}
         console.log("block", this.state.BlockChainname_)
         console.log("chain", this.state.ChainId)
         console.log("categoty", this.state.CategoryId)
@@ -213,7 +216,7 @@ class CreateNt extends React.Component {
         this.setState({ errormessage: "" })
         if (!this.state.imageset) {
             this.setState({ imageok: false })
-            return
+            validationcount=validationcount+1
         }
         else {
             this.setState({ imageok: true })
@@ -222,7 +225,7 @@ class CreateNt extends React.Component {
         if(this.state.BlockChainname_=="" )
         {
             this.setState({ Vblockchain: false }) 
-           return;
+            validationcount=validationcount+1
         }
         else
         this.setState({ Vblockchain: true }) 
@@ -230,7 +233,7 @@ class CreateNt extends React.Component {
         if(this.state.CategoryId == 0  )
         {      
             this.setState({ vcollection: false }) 
-            return
+            validationcount=validationcount+1
         }
         else 
         this.setState({ vcollection: true }) 
@@ -239,15 +242,15 @@ class CreateNt extends React.Component {
         if(this.state.CurrencyId == 0  )
         {
             this.setState({ vpayment: false }) 
-            return 
+            validationcount=validationcount+1
         }
         else
         this.setState({ vpayment: true }) 
         if(this.state.Description?.length > 30) 
-        {this.setState({vdescription:false});return ;}
+        {this.setState({vdescription:false});validationcount=validationcount+1 ;}
         else
         {this.setState({vdescription:true});}
-      
+      if(validationcount>0) return
         var bodyFormData = new FormData();
         bodyFormData.append("Name", this.state.Name);
         bodyFormData.append("TokenId", this.state.TokenId);
@@ -303,7 +306,7 @@ class CreateNt extends React.Component {
 
                 else if (response.data.message == "Data successfully added") {
                     this.setState({ ImageModal: true })            
-                    this.setState({ successmessage: response.data.message })
+                    this.setState({ successmessage: "NFT created successfully"})
 
                 }
                 else {
@@ -404,7 +407,7 @@ class CreateNt extends React.Component {
 
         return (
             <div className="container">
-                <div className="row">
+                                 <div className="row">
                     <div className='col-md-12'> <h1 className='f-Heading'>Create NFT</h1></div>
                     <div className="col-md-8 col-sm-12 col-lg-8">
                         <div className='row'>
@@ -412,7 +415,7 @@ class CreateNt extends React.Component {
 
                                 <Modal
                                     centered
-                                    size="lg"
+                                    size="sm"
                                     show={this.state.ImageModal}
                                 >
                                     <Modal.Body>
@@ -776,6 +779,7 @@ class CreateNt extends React.Component {
                         </div>
                     </div>
                 </div>
+                 
             </div>
         );
     }

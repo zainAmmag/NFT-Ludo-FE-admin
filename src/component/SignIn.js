@@ -110,16 +110,18 @@ class SignIn extends React.Component {
         "POST"
       );
       // console.log(data)
-      if (data.isSuccess == true) {
+      if (data.isSuccess == true) 
+      {
            localStorage.setItem("TokenofAdminsigned",data.data.token);
-           localStorage.setItem("AdminaccountId",data.data.userInfo.id)
+           localStorage.setItem("AdminaccountId",data.data.userInfo.address)
           console.log("account id",localStorage.getItem("AdminaccountId"))
            SetUser(data.data.token, {
           name: data.data.userInfo.username,
           email: data.data.userInfo.email,
         });
         this.props.setIsLoaderActive(false);
-        return this.props.history.push("/ProjectManagement");
+         return this.props.history.push("/manageAccount");
+         
       } else {
         this.props.setIsLoaderActive(false);
         this.setState({ invalidLogin: data?.message || "Invalid Login" });
@@ -135,7 +137,7 @@ class SignIn extends React.Component {
   render() {
     return (
       <>
-
+ 
         <div id="wrapper">
           <div className="card login-card card-authentication1 mx-auto my-5">
             <div className="card-body">

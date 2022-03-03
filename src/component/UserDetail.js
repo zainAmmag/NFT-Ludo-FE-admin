@@ -19,6 +19,7 @@ import {
 } from "../Constants/BusinessManager";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SharedLayout from "./shared/SharedLayout";
 
 
 const mapStateToProps = (state) => {
@@ -103,6 +104,7 @@ class UserDetail extends React.Component {
 
     return (
       <div className="container-fluid body-content" id="">
+         
         <div className="row">
           <div className="card" style={{ flex: 1 }}>
             <div
@@ -118,7 +120,7 @@ class UserDetail extends React.Component {
               {" "}
             </div>
             <div style={{ textAlign: "center" }}>
-              <h3>profile</h3>
+              <h3>Profile</h3>
             </div>
             <div className="row">
               <div
@@ -253,7 +255,7 @@ class UserDetail extends React.Component {
 
 
 
-        <h1>NFT's:</h1>
+        <h1>NFTs:</h1>
         {!this.state.collectionset ? (
           <div className="card" style={{ alignItems: "center", alignContent: "center", width: "100%" }}>
             <p
@@ -264,7 +266,7 @@ class UserDetail extends React.Component {
                 fontSize: 20,
               }}
             >
-              <h2> Click on a Collection to view NFT's  </h2>
+              <h2> Click on a Collection to view NFTs  </h2>
             </p>
           </div>
         ) : (
@@ -337,6 +339,7 @@ class UserDetail extends React.Component {
             </div>
           </div>
         )}
+         
       </div>
 
     );

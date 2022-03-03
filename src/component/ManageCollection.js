@@ -24,6 +24,7 @@ import {
   
   BaseUrl1,
 } from "../Constants/BusinessManager";
+import SharedLayout from "./shared/SharedLayout";
 
 const mapStateToProps = (state) => {
   return {};
@@ -53,6 +54,9 @@ class UserDetail extends React.Component {
       RenderFinished: false,
       FN: "No data available",
       BO: null,
+      startslice:0,
+      endSlice:8,
+      vnomore:true,
     };
   }
   async componentDidMount() {
@@ -84,8 +88,22 @@ class UserDetail extends React.Component {
     }
 
   }
+  mapSlice=()=>{
+    let temp1=this.state.startslice
+    let temp2=this.state.endSlice
+    if(this.state.vnomore==false) return
+     if(this.state.NFtData.length<temp2+8)
+          {
+           this.setState({vnomore:false}); 
+          } 
+   this.setState({endSlice:temp2+8})   
+   };
   Finduser = () => {
-    
+    if(this.state.vnomore==false)
+    {
+       this.setState({endSlice:8})
+       this.setState({vnomore:true})
+    }  
     console.log("called")
     console.log(this.state.tableData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search1.toLowerCase())) )
         // console.log("Present")
@@ -136,7 +154,7 @@ class UserDetail extends React.Component {
 
     return (
       <div className="container-fluid body-content" id="">
-
+ 
 
         <h1>Collections :</h1>
         <p style={{ whiteSpace: "nowrap", textAlign: "center" }}>
@@ -157,13 +175,13 @@ class UserDetail extends React.Component {
         <div id="container" className="text-center">
           <Link to="/createNFT" className="Link create-list">  Create NFT  </Link>
           <Link to="/CreateCollection" className="Link create-list">Create Collection </Link>
-          <div className="row">
+          <div className="row row12">
             {
               this.state.Search.length == 0 ? (
                 <>  {this.state.collectiondata.length > 0 ? (
                   <>
                     {
-                      this.state.collectiondata.map((playerData, k) => {
+                      this.state.collectiondata.slice(this.state.startslice, this.state.endSlice).map((playerData, k) => {
                         return (
                           <>
 
@@ -315,6 +333,17 @@ class UserDetail extends React.Component {
 
           </div>
         </div>
+        { this.state.collectiondata.length>8?   
+        <div id="container" className="text-center" style={{marginLeft:"0"}}>                          
+             <button   onClick={()=> this.mapSlice() }   className="Link create-list" style={{ width:"10%",fontSize:'17px'}}> Load More </button >
+                                     {!this.state.vnomore && (
+            <div style={{ color: "#F61C04" }}>No More Data To Load</div>
+          )}  
+                                   </div>:
+                                   <div id="container" className="text-center" style={{marginLeft:"0"}}>                          
+                                                         </div>
+                }
+       
       </div>
     );
   }

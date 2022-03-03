@@ -25,6 +25,7 @@ import {
 
 import { Search,Heart } from "react-feather";
 import { Button } from "bootstrap";
+import SharedLayout from "./shared/SharedLayout";
 const mapStateToProps = (state) => {
   return {};
 };
@@ -165,9 +166,7 @@ class CollectionDetail extends React.Component {
              if(this.state.vnomore==false) return
               if(this.state.NFtData.length<temp2+8)
                    {
-                    temp2=this.state.endSlice-this.state.NFtData.length
-                    this.setState({endSlice:temp2})
-                    this.setState({vnomore:false}); return
+                    this.setState({vnomore:false}); 
                    } 
             this.setState({endSlice:temp2+8})   
             };
@@ -237,7 +236,7 @@ class CollectionDetail extends React.Component {
     }
     return (
       <div className="container-fluid body-content" id="">
- <p style={{ whiteSpace: "nowrap", textAlign: "center" }}>
+          <p style={{ whiteSpace: "nowrap", textAlign: "center" }}>
           <div className="search-panel">
             <input
               type="text"
@@ -256,7 +255,7 @@ class CollectionDetail extends React.Component {
           
           <Link to="/createNFT" className="Link create-list">  Create NFT  </Link>
         </div>
-        <h1>NFT's:</h1>
+        <h1>NFTs:</h1>
 
         <div id="container">
           <Modal
@@ -285,7 +284,7 @@ class CollectionDetail extends React.Component {
 
           </Modal>
           <div className="">
-          <div className="row" >
+          <div className="row row12" >
           {
               this.state.Search.length == 0 ? (
                 <>
@@ -320,7 +319,7 @@ class CollectionDetail extends React.Component {
                                 />
                               </div>
                               <h5 className="nft-heading">   {playerData.name + " "}</h5>
-                              <p className="note"> Price {playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
+                              <p className="note"> Price {playerData.sellPrice ? playerData.sellPrice : playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
                               <l>
                                 <Link to="/nftdetail1">
                                   <a
@@ -398,7 +397,7 @@ class CollectionDetail extends React.Component {
                                 />
                               </div>
                               <h5 className="nft-heading">   {playerData.name + " "}</h5>
-                              <p className="note"> Price {playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
+                              <p className="note"> Price {playerData.sellPrice ? playerData.sellPrice : playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
                               <l>
 
                                 <Link to="/nftdetail1">
@@ -441,13 +440,19 @@ class CollectionDetail extends React.Component {
           </div>
           </div>
         </div>
-        <div id="container" className="text-center" style={{marginLeft:"0"}}>
-                                     <button   onClick={()=> this.mapSlice() }   className="Link create-list" style={{ width:"10%",fontSize:'17px'}}> Load More </button >
+        { this.state.NFtData.length>8?   
+        <div id="container" className="text-center" style={{marginLeft:"0"}}>                          
+             <button   onClick={()=> this.mapSlice() }   className="Link create-list" style={{ width:"10%",fontSize:'17px'}}> Load More </button >
                                      {!this.state.vnomore && (
             <div style={{ color: "#F61C04" }}>No More Data To Load</div>
           )}  
-                                   </div>
-       </div>
+                                   </div>:
+                                   <div id="container" className="text-center" style={{marginLeft:"0"}}>                          
+                                                         </div>
+                }
+     
+
+    </div>
     );
   }
 }

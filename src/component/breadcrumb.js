@@ -91,6 +91,14 @@ export default function CollapsedBreadcrumbs() {
                         </Link>
                     )
                 }
+                    {
+                    window.location.pathname === '/nftdetail2' && (
+                        <Link to="/nftdetail2" className="waves-effect">
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}><Link to="/ShowCollectionDetail1">  Collection Details</Link> / Nft Detail</p>
+                        </Link>
+                     )
+                    }
+
                 {
                     window.location.pathname === "/createNFT" && (
                         <Link to="/createNFT" className="waves-effect">

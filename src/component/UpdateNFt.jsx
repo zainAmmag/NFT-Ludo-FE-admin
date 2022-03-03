@@ -25,6 +25,7 @@ import {
   Col,
   Form as Formm,
 } from "react-bootstrap";
+import SharedLayout from './shared/SharedLayout';
 
 
 
@@ -226,7 +227,7 @@ class UpdateNFT extends React.Component {
     {
      swal({
        icon: "error",
-       text: "Selected Metamask is not supported",
+       text: " Select correct Blockchain",
      });
      return;
     }
@@ -235,14 +236,15 @@ class UpdateNFT extends React.Component {
     const temp = this.state.Name1
     console.log(this.state.Price, "kedwwd")
     const temp1 = this.state.Price.toString()
+    let validationcount=0
     console.log(temp1, "kesaasasasaasasdwwd")
     if (temp?.match(name)) this.setState({ vname: true })
-    if (!temp?.match(name)) { this.setState({ vname: false }); return; }
+    if (!temp?.match(name)) { this.setState({ vname: false }); validationcount=validationcount+1; }
     if (this.urlPatternValidation(this.state.ExternalLink1)) this.setState({ vExternalLink: true })
-    if (!this.urlPatternValidation(this.state.ExternalLink1)) { this.setState({ vExternalLink: false }); return; }
+    if (!this.urlPatternValidation(this.state.ExternalLink1)) { this.setState({ vExternalLink: false }); validationcount=validationcount+1; }
     if (temp1?.match(price)) this.setState({ vprice: true })
-    if (!temp1?.match(price)) { this.setState({ vprice: false }); return; }
-    this.props.setIsLoaderActive(true);
+    if (!temp1?.match(price)) { this.setState({ vprice: false }); validationcount=validationcount+1; }
+
     console.log("block", this.state.BlockChainname_1)
     console.log("chain", this.state.ChainId)
     console.log("categoty", this.state.CategoryId)
@@ -251,9 +253,10 @@ class UpdateNFT extends React.Component {
     this.setState({ successmessage: "" })
     this.setState({ errormessage: "" })
     if(this.state.Description?.length > 30) 
-    {this.setState({vdescription:false});return ;}
+    {this.setState({vdescription:false});validationcount=validationcount+1 ;}
     else
     {this.setState({vdescription:true});}
+    if(validationcount>0) return
     var bodyFormData = new FormData();
     console.log("state.CurrencyId1", this.state.PrevNftdata.currencyId)
     console.log("state.CategoryId1", this.state.PrevNftdata.collectionId)
@@ -433,6 +436,7 @@ class UpdateNFT extends React.Component {
     }
     return (
       <div className='container'>
+         
         <div className="row">
           <div className='col-md-12'>
             <h1 className='f-Heading'>Update NFT</h1>
@@ -440,7 +444,7 @@ class UpdateNFT extends React.Component {
           <div className="col-md-8 col-sm-12 col-lg-8">
             <Modal
               centered
-              size="lg"
+              size="sm"
               show={this.state.ImageModal}
             >
               <Modal.Body>
@@ -628,6 +632,7 @@ class UpdateNFT extends React.Component {
             </div>
           </div>
         </div>
+         
       </div>
     );
   }

@@ -11,7 +11,6 @@ import {
 } from "../Constants/BusinessManager";
 import swal from "sweetalert";
 import { approveContract } from './metamask'
-
 import { Calendar, CheckSquare, Edit, Eye, Heart, MinusCircle } from "react-feather";
 import Modal from "react-bootstrap/Modal";
 import { Button, Table } from "react-bootstrap";
@@ -22,7 +21,7 @@ import "../Assets/css/custom.css";
 import DatePicker from "react-datepicker";
 import { setIsLoaderActive } from "../actions/index";
 
-// import {Loader} from './Loader'
+// import {Loader} from './Loade
 import Loader from "../component/shared/loader";
 
 import { getToken } from "../Utils/Utils";
@@ -208,7 +207,7 @@ class NFTDetail extends React.Component {
     {
      swal({
        icon: "error",
-       text: "Selected Metamask is not supported",
+       text: " Select correct Blockchain",
      });
      return;
     }
@@ -295,7 +294,7 @@ class NFTDetail extends React.Component {
             <div className="pt-4" />
             <div className="detail-card">
               <h3>Details</h3>
-              <p><b>Contract Address</b> {this.state.nftDATA.contractAddress}
+              <p><b>Contract Address</b> {this.state.nftDATA.contractAddress} {this.state.copied?" copied": ""}
                 {" "}
                 <CopyToClipboard text={localStorage.getItem("address")}
                   onCopy={() => this.setState({ copied: true })}>
@@ -332,8 +331,14 @@ class NFTDetail extends React.Component {
               <h3>{this.state.nftDATA.name}</h3>
               <p>By:{this.state.nftDATA.creatorName}</p>
 
+   
+                                          
+                <p style={{ fontWeight: "bold" }}>   
+              <Link to="/ShowCollectionDetail1" >
+                                        <a style={{cursor:"pointer"}}  onClick={() => {
+                                         localStorage.setItem("CollectionDetail", this.state.nftDATA.collectionId)
 
-              <p style={{ fontWeight: "bold" }}> {this.state.nftDATA.collectionName} </p>
+                                       }} >    {this.state.nftDATA.collectionName}  </a>     </Link></p>
               <p >Price:{this.state.nftDATA.sellPrice ? this.state.nftDATA.sellPrice : this.state.nftDATA.buyPrice} </p>
               <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart  style={{cursor:"pointer"}} onClick={()=> { 
     this.props.setIsLoaderActive(true); this.state.favourate?this.removefavouratenft():this.addfavourateNFt(); } } color={this.state.favourate?"red":"black"} fill={this.state.favourate?"red":"black"}  /> {" "}{this.state.favcount}     </p>
@@ -349,7 +354,7 @@ class NFTDetail extends React.Component {
               <div className="full-div" style={{ textAlign: "end" }}>
                 {this.state.nftDATA.isMinted ? (
                   <>
-                    {this.state.nftDATA.staus === "Hold" && this.state.nftDATA.isAdminNft && localStorage.getItem("AdminaccountId")==this.state.nftDATA.accountId ? (
+                    {this.state.nftDATA.staus === "Hold" && this.state.nftDATA.isAdminNft && !this.state.nftDATA.sellPrice ? (
                       <Button
                         className="collection-button"
                         style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder", }}
@@ -360,11 +365,15 @@ class NFTDetail extends React.Component {
                       >
                         Sell NFT
                       </Button>
-                    ) : (
-                      <p>
-                        NFT sent to marketplace
-                      </p>
-                    )}
+                    ) : (<>{      localStorage.getItem("AdminaccountId") ===this.state.nftDATA.ownerAddress?
+                                            <p>
+                                              NFT sent to marketplace
+                                            </p> : 
+                                             <p>
+                                             NFT is Sellled 
+                                           </p> 
+                                 }</>
+                                )}
                   </>
                 ) : (
                   <>

@@ -22,6 +22,7 @@ import {
   BaseUrl1,
 
 } from "../Constants/BusinessManager";
+import SharedLayout from "./shared/SharedLayout";
 
 const mapStateToProps = (state) => {
   return {};
@@ -163,6 +164,7 @@ class CollectionDetail extends React.Component {
     }
     return (
       <div className="full-div">
+         
         <div className="collectiondetail">
           {
             <div style={{
@@ -209,7 +211,7 @@ class CollectionDetail extends React.Component {
           }
         </div>
         <div className="pt-2"></div>
-        <h1>NFT's:</h1>
+        <h1>NFTs:</h1>
         <div className=" container full-div mb-txt-center" >
           <div className="row"  >
             {
@@ -370,6 +372,7 @@ class CollectionDetail extends React.Component {
 
           </div>
         </div>
+         
       </div>
     );
   }

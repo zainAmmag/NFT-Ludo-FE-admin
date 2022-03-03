@@ -79,6 +79,7 @@ class SharedLayout extends React.Component {
   async componentDidMount() {
     this.metamaskConnection();
     const provider = await detectEthereumProvider();
+
     if (provider !== window.ethereum) {
       window.web3 = new Web3(provider);
     } else {
@@ -86,6 +87,7 @@ class SharedLayout extends React.Component {
     }
 
     return window.ethereum?.on("chainChanged", async function (accounts) {
+       
       if (accounts !== "0x61") {
         const chainId = window.ethereum.chainId;
         const accountss = await window.web3.eth.getAccounts();
@@ -94,17 +96,28 @@ class SharedLayout extends React.Component {
         this.setState({ metamaskData })
         swal({
           icon: "error",
-          text: "Please connect to Smart Chain-Testnet",
+          text: " Select correct Blockchain",
+          buttons: false ,
+          closeOnClickOutside: false
         });
       }
-
+      else
+      {
+        swal({
+          icon: "error",
+          text: " Select correct Blockchain",
+          buttons: false ,
+          timer:500,
+          closeOnClickOutside: false
+        });
+      }
     }.bind(this));
   }
 
 
   render() {
     return (
-      <>
+      <>  
         <ResponsiveDrawer>
           {this.props.children}
         </ResponsiveDrawer>

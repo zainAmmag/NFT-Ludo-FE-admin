@@ -1767,9 +1767,8 @@ width: 100%;
 }
 .Modal-div
 {
-   font-size: 36px;
-   height: 140px !important;
-  text-align: center;
+   font-size: 30px;
+     text-align: center;
   background-color: white !important;
 }
 .Modal-div-notcreated
@@ -1979,4 +1978,12 @@ a,
   border-radius: 10px;
   padding-bottom: 20px;
 
+}
+
+@media (min-width: 1740px) 
+{
+.row12 {
+  width: 80%;
+  margin-left: 10%;
+}
 }

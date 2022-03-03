@@ -16,6 +16,7 @@ import { Component } from 'react'
 import { contains } from 'jquery';
 import Modal from "react-bootstrap/Modal";
 import { bindActionCreators } from "redux";
+import SharedLayout from './shared/SharedLayout';
 
 
 
@@ -231,24 +232,25 @@ class EditCollection extends React.Component {
     submit = (data) => {
 
         const name = /^[a-zA-Z0-9_ ]*$/;
-         if(this.state.Name!=""){
+         let validationcount=0
         if (this.state.Name.match(name)) this.setState({vname:true})   
-        if (!this.state.Name.match(name)) {this.setState({vname:false});return ;} }
+        if(this.state.Name.length<1) {this.setState({vname:false});validationcount=validationcount+1 ;} 
+        if (!this.state.Name.match(name)) {this.setState({vname:false});validationcount=validationcount+1 ;} 
         if (this.urlPatternValidation(this.state.ExternalLink))  this.setState({vExternalLink:true})
-        if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); return; }
+        if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); validationcount=validationcount+1; }
         if (this.urlPatternValidation(this.state.DiscordLink))  this.setState({discordok:true})
          console.log("his.state.DiscordLink",this.state.DiscordLink)
-        if (!this.urlPatternValidation(this.state.DiscordLink)) {this.setState({discordok:false}); return; }
+        if (!this.urlPatternValidation(this.state.DiscordLink)) {this.setState({discordok:false}); validationcount=validationcount+1; }
         if (this.urlPatternValidation(this.state.InstagramLink))  this.setState({instagramok:true})
-        if (!this.urlPatternValidation(this.state.InstagramLink)) {this.setState({instagramok:false}); return; }
+        if (!this.urlPatternValidation(this.state.InstagramLink)) {this.setState({instagramok:false}); validationcount=validationcount+1; }
         if (this.urlPatternValidation(this.state.TLink))  this.setState({tLinkok:true})
-        if (!this.urlPatternValidation(this.state.TLink)) {this.setState({tLinkok:false}); return; }
+        if (!this.urlPatternValidation(this.state.TLink)) {this.setState({tLinkok:false}); validationcount=validationcount+1; }
         
         if (this.urlPatternValidation(this.state.TwitterLink))  this.setState({twitterok:true})
-        if (!this.urlPatternValidation(this.state.TwitterLink)) {this.setState({twitterok:false}); return; }
+        if (!this.urlPatternValidation(this.state.TwitterLink)) {this.setState({twitterok:false}); validationcount=validationcount+1; }
         if (this.urlPatternValidation(this.state.MediumLink))  this.setState({mediumLinkok:true})
-        if (!this.urlPatternValidation(this.state.MediumLink)) {this.setState({mediumLinkok:false}); return; }
-       
+        if (!this.urlPatternValidation(this.state.MediumLink)) {this.setState({mediumLinkok:false}); validationcount=validationcount+1; }
+       if(validationcount>0)  return
              this.setState({ falsemessage: "" })
         this.setState({ successmessage: "" })
         this.setState({ errormessage: "" })
@@ -370,6 +372,7 @@ class EditCollection extends React.Component {
         return (
             <>
                 <div className='container'>
+                     
                     <div className="row">
                         <div className='col-md-12'>
                             <h1 className='f-Heading'>Edit Collection</h1>
@@ -378,7 +381,7 @@ class EditCollection extends React.Component {
                             {/* <form onSubmit={this.handleSubmit}> */}
                                 <Modal
                                     centered
-                                    size="lg"
+                                    size="sm"
                                     show={this.state.ImageModal}
                                 >
                                     <Modal.Body>
@@ -621,6 +624,7 @@ class EditCollection extends React.Component {
                         </div>
 
                     </div>
+                     
                 </div>
             </>
         );

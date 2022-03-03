@@ -11,9 +11,19 @@ const mapStateToProps = state => {
     };
   };
 class PrivateRoute extends React.Component {
+
+
+// constructor(prop){
+//   super.
+
+// }
+
+
   render(){
-    const { component: Component, ...rest }=this.props;
+    const { component: Component,...rest }=this.props;
     let t=getToken();
+
+
 
   return (
     <Route

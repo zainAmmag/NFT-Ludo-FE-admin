@@ -160,6 +160,7 @@ function ResponsiveDrawer(props) {
               setisActive2(false);
               setisActive3(false);
               setisActive4(false);
+              
               }}  
               className={isActive ? 'waves-effect active': 'waves-effect'} >
             {/* <Link id='1' to="/ProjectManagement" className="waves-effect">

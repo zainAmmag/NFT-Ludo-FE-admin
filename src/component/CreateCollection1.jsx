@@ -18,6 +18,7 @@ import swal from "sweetalert";
 
 
 import { bindActionCreators } from "redux";
+import SharedLayout from './shared/SharedLayout';
 
 const mapStateToProps = (state) => {
     return {};
@@ -142,44 +143,45 @@ class CreateCollection extends React.Component {
     submit = (data) => {
 
         const name = /^[a-zA-Z0-9_ ]*$/;
-         if(this.state.Name==""){{this.setState({vname:false});return ;} }
+        let validationcount=0
         if (this.state.Name.match(name)) this.setState({vname:true})   
-        if (!this.state.Name.match(name)) {this.setState({vname:false});return ;} 
+         if(this.state.Name.length<1){{this.setState({vname:false});validationcount=validationcount+1 ;} }
+        if (!this.state.Name.match(name)) {this.setState({vname:false});validationcount=validationcount+1 ;} 
         if (this.urlPatternValidation(this.state.ExternalLink))  this.setState({vExternalLink:true})
-        if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); return; }
+        if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); validationcount=validationcount+1; }
         if (this.urlPatternValidation(this.state.DiscordLink))  this.setState({discordok:true})
-        if (!this.urlPatternValidation(this.state.DiscordLink)) {this.setState({discordok:false}); return; }
+        if (!this.urlPatternValidation(this.state.DiscordLink)) {this.setState({discordok:false}); validationcount=validationcount+1; }
         if (this.urlPatternValidation(this.state.InstagramLink))  this.setState({instagramok:true})
-        if (!this.urlPatternValidation(this.state.InstagramLink)) {this.setState({instagramok:false}); return; }
+        if (!this.urlPatternValidation(this.state.InstagramLink)) {this.setState({instagramok:false}); validationcount=validationcount+1; }
         if (this.urlPatternValidation(this.state.TLink))  this.setState({tLinkok:true})
-        if (!this.urlPatternValidation(this.state.TLink)) {this.setState({tLinkok:false}); return; }
+        if (!this.urlPatternValidation(this.state.TLink)) {this.setState({tLinkok:false}); validationcount=validationcount+1; }
         
         if (this.urlPatternValidation(this.state.TwitterLink))  this.setState({twitterok:true})
-        if (!this.urlPatternValidation(this.state.TwitterLink)) {this.setState({twitterok:false}); return; }
+        if (!this.urlPatternValidation(this.state.TwitterLink)) {this.setState({twitterok:false}); validationcount=validationcount+1; }
         if (this.urlPatternValidation(this.state.MediumLink))  this.setState({mediumLinkok:true})
-        if (!this.urlPatternValidation(this.state.MediumLink)) {this.setState({mediumLinkok:false}); return; }
+        if (!this.urlPatternValidation(this.state.MediumLink)) {this.setState({mediumLinkok:false}); validationcount=validationcount+1; }
         if (!this.state.logoset) {
             this.setState({ vLogoImage: false })
-            return
+            validationcount=validationcount+1
         }
         else this.setState({ vLogoImage: true }) 
         if (!this.state.featureset) {
             this.setState({ vFeaturedImage: false })
-            return
+            validationcount=validationcount+1
             }
             else {
                 this.setState({ vFeaturedImage: true })
             }    
         if (!this.state.bannerset) {
             this.setState({ vBannerImage: false })
-            return
+            validationcount=validationcount+1
         } 
 
         else  this.setState({ vBannerImage: true })
           if(this.state.CategoryId==0)    
           {
             this.setState({ vcategory: false })
-            return
+            validationcount=validationcount+1
           }  
           else
           {
@@ -189,7 +191,7 @@ class CreateCollection extends React.Component {
           if(this.state.BlockChainName==0)
           {
             this.setState({ vblockchain: false })
-            return
+            validationcount=validationcount+1
           }  
           else
           {
@@ -199,7 +201,7 @@ class CreateCollection extends React.Component {
           if(this.state.CurrencyId==0)
           {
             this.setState({vpaymenttoken: false })
-            return
+            validationcount=validationcount+1
           }  
           else
           {
@@ -211,6 +213,7 @@ class CreateCollection extends React.Component {
             this.setState({ successmessage: "" })
             this.setState({ errormessage: "" })
             //   this.HandleOpen();
+            if(validationcount>0) return
             this.props.setIsLoaderActive(true);
             var bodyFormData = new FormData();
             bodyFormData.append("Name", this.state.Name);
@@ -323,13 +326,13 @@ class CreateCollection extends React.Component {
         return (
             <>
                 <div className='container'>
-                    <div className="row">
+                                        <div className="row">
                         <div className='col-lg-12'>
                             <h1 className='f-Heading'>Create Collection</h1>
                         </div>
                         <div className="col-md-8 col-sm-12 col-lg-8">
                            
-                                <Modal centered size="lg" show={this.state.ImageModal}>
+                                <Modal centered size="sm" show={this.state.ImageModal}>
                                     <Modal.Body >
                                            
                                         <div style={{ textAlign: "center" }} className="Modal-div">
@@ -427,7 +430,7 @@ class CreateCollection extends React.Component {
                                     }
                                 </select>
                                 {!this.state.vblockchain && (
-               <div style={{ color: "#F61C04" }}>BlockChian not Selected </div>
+               <div style={{ color: "#F61C04" }}>Blockchian is not selected </div>
           )}
                             </div>
                             <div className='input-fields'>
@@ -443,7 +446,7 @@ class CreateCollection extends React.Component {
                                     }
                                 </select>
                                 {!this.state.vpaymenttoken && (
-               <div style={{ color: "#F61C04" }}>Payment not Selected </div>
+               <div style={{ color: "#F61C04" }}>Payment is not selected </div>
           )}
                             </div>
                             <div className='input-fields'>
@@ -586,6 +589,7 @@ class CreateCollection extends React.Component {
                             </div>
                         </div>
                     </div>
+                     
                 </div>
             </>
         );
