@@ -18,6 +18,7 @@ import swal from "sweetalert";
 
 
 import { bindActionCreators } from "redux";
+import SharedLayout from './shared/SharedLayout';
 
 const mapStateToProps = (state) => {
     return {};
@@ -118,6 +119,9 @@ class CreateCollection extends React.Component {
             tLinkok:true,
             successmessage: "",
             errormessage: "",
+            vcategory:true,
+            vblockchain:true,
+            vpaymenttoken:true,
         };
     }
     async componentDidMount() {
@@ -138,51 +142,82 @@ class CreateCollection extends React.Component {
     }
     submit = (data) => {
 
-        const name = /^[a-zA-Z]*$/;
-         if(this.state.Name==""){{this.setState({vname:false});return ;} }
+        const name = /^[a-zA-Z0-9_ ]*$/;
+        let validationcount=0
         if (this.state.Name.match(name)) this.setState({vname:true})   
-        if (!this.state.Name.match(name)) {this.setState({vname:false});return ;} 
+         if(this.state.Name.length<1){{this.setState({vname:false});validationcount=validationcount+1 ;} }
+        if (!this.state.Name.match(name)) {this.setState({vname:false});validationcount=validationcount+1 ;} 
         if (this.urlPatternValidation(this.state.ExternalLink))  this.setState({vExternalLink:true})
-        if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); return; }
+        if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); validationcount=validationcount+1; }
         if (this.urlPatternValidation(this.state.DiscordLink))  this.setState({discordok:true})
-        if (!this.urlPatternValidation(this.state.DiscordLink)) {this.setState({discordok:false}); return; }
+        if (!this.urlPatternValidation(this.state.DiscordLink)) {this.setState({discordok:false}); validationcount=validationcount+1; }
         if (this.urlPatternValidation(this.state.InstagramLink))  this.setState({instagramok:true})
-        if (!this.urlPatternValidation(this.state.InstagramLink)) {this.setState({instagramok:false}); return; }
+        if (!this.urlPatternValidation(this.state.InstagramLink)) {this.setState({instagramok:false}); validationcount=validationcount+1; }
         if (this.urlPatternValidation(this.state.TLink))  this.setState({tLinkok:true})
-        if (!this.urlPatternValidation(this.state.TLink)) {this.setState({tLinkok:false}); return; }
+        if (!this.urlPatternValidation(this.state.TLink)) {this.setState({tLinkok:false}); validationcount=validationcount+1; }
         
         if (this.urlPatternValidation(this.state.TwitterLink))  this.setState({twitterok:true})
-        if (!this.urlPatternValidation(this.state.TwitterLink)) {this.setState({twitterok:false}); return; }
+        if (!this.urlPatternValidation(this.state.TwitterLink)) {this.setState({twitterok:false}); validationcount=validationcount+1; }
         if (this.urlPatternValidation(this.state.MediumLink))  this.setState({mediumLinkok:true})
-        if (!this.urlPatternValidation(this.state.MediumLink)) {this.setState({mediumLinkok:false}); return; }
+        if (!this.urlPatternValidation(this.state.MediumLink)) {this.setState({mediumLinkok:false}); validationcount=validationcount+1; }
         if (!this.state.logoset) {
             this.setState({ vLogoImage: false })
-            return
+            validationcount=validationcount+1
         }
         else this.setState({ vLogoImage: true }) 
         if (!this.state.featureset) {
             this.setState({ vFeaturedImage: false })
-            return
+            validationcount=validationcount+1
             }
             else {
                 this.setState({ vFeaturedImage: true })
             }    
         if (!this.state.bannerset) {
             this.setState({ vBannerImage: false })
-            return
+            validationcount=validationcount+1
         } 
+
         else  this.setState({ vBannerImage: true })
-             
- 
+          if(this.state.CategoryId==0)    
+          {
+            this.setState({ vcategory: false })
+            validationcount=validationcount+1
+          }  
+          else
+          {
+            this.setState({ vcategory: true })
+            
+          }  
+          if(this.state.BlockChainName==0)
+          {
+            this.setState({ vblockchain: false })
+            validationcount=validationcount+1
+          }  
+          else
+          {
+            this.setState({ vblockchain: true })
+            
+          }  
+          if(this.state.CurrencyId==0)
+          {
+            this.setState({vpaymenttoken: false })
+            validationcount=validationcount+1
+          }  
+          else
+          {
+            this.setState({ vpaymenttoken: true })
+            
+          }  
    
             this.setState({ falsemessage: "" })
             this.setState({ successmessage: "" })
             this.setState({ errormessage: "" })
             //   this.HandleOpen();
+            if(validationcount>0) return
             this.props.setIsLoaderActive(true);
             var bodyFormData = new FormData();
             bodyFormData.append("Name", this.state.Name);
-            bodyFormData.append("Url", this.state.UrlL);
+            bodyFormData.append("Url", this.state.ExternalLink);
             bodyFormData.append("Description", this.state.Description);
             bodyFormData.append("WebsiteLink", this.state.WebsiteLink);
             bodyFormData.append("DiscordLink", this.state.DiscordLink);
@@ -211,6 +246,7 @@ class CreateCollection extends React.Component {
     
                 }
             }).then((response) => {
+                this.props.setIsLoaderActive(false);
                 this.setState({ ImageModal: true })
                 console.log(response.data.message);
                 if (response.data.message == "Collection already exist") {
@@ -218,7 +254,7 @@ class CreateCollection extends React.Component {
                     this.props.setIsLoaderActive(false);
                 }
                 else if (response.data.message == "Data successfully added") {
-                    this.setState({ successmessage: response.data.message })
+                    this.setState({ successmessage: "Collection Created Successfully" })
                     this.props.setIsLoaderActive(false);
                 }
                 else {
@@ -286,18 +322,17 @@ class CreateCollection extends React.Component {
             this.setState({ ImageModal: false })
            if(this.state.successmessage!="") 
            return this.props.history.push("/manageCollection");
-          
         };
         return (
             <>
                 <div className='container'>
-                    <div className="row">
+                                        <div className="row">
                         <div className='col-lg-12'>
                             <h1 className='f-Heading'>Create Collection</h1>
                         </div>
                         <div className="col-md-8 col-sm-12 col-lg-8">
                            
-                                <Modal centered size="lg" show={this.state.ImageModal}>
+                                <Modal centered size="sm" show={this.state.ImageModal}>
                                     <Modal.Body >
                                            
                                         <div style={{ textAlign: "center" }} className="Modal-div">
@@ -378,6 +413,9 @@ class CreateCollection extends React.Component {
                                     }
 
                                 </select>
+                                {!this.state.vcategory && (
+               <div style={{ color: "#F61C04" }}>Category not Selected </div>
+          )}
                             </div>
                             <div className='input-fields'>
                                 <p>Blockchain</p>
@@ -391,6 +429,9 @@ class CreateCollection extends React.Component {
                                         })
                                     }
                                 </select>
+                                {!this.state.vblockchain && (
+               <div style={{ color: "#F61C04" }}>Blockchian is not selected </div>
+          )}
                             </div>
                             <div className='input-fields'>
                                 <p>Payment tokens</p>
@@ -404,6 +445,9 @@ class CreateCollection extends React.Component {
                                         })
                                     }
                                 </select>
+                                {!this.state.vpaymenttoken && (
+               <div style={{ color: "#F61C04" }}>Payment is not selected </div>
+          )}
                             </div>
                             <div className='input-fields'>
                                 <p>Links </p >
@@ -489,7 +533,7 @@ class CreateCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Logo Image
                                 </p>
-                                <input type="file" onChange={this.LogoImageset} className="inputimage" />
+                                <input type="file" onChange={this.LogoImageset} className="inputimage" accept=".png, .jpg, .jpeg" />
                                 <div style={{ height: "55%" }}>
                                     <div className='prevItmImgSec' >
                                            { <img
@@ -507,7 +551,7 @@ class CreateCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Featured Image
                                 </p>
-                                <input type="file" onChange={this.FeatureImageSet} className="inputimage" />
+                                <input type="file" onChange={this.FeatureImageSet} className="inputimage" accept=".png, .jpg, .jpeg" />
                                 <div style={{ height: "55%" }}>
                                     <div className='prevItmImgSec' >
                                         <img src={this.state.featureimageset?this.state.FeatPreview:' '} className="avatar-immage" />
@@ -523,7 +567,7 @@ class CreateCollection extends React.Component {
                                 <p style={{ cursor: "pointer", textAlign: "center" }}>
                                     Banner Image
                                 </p>
-                                <input type="file" onChange={this.uploadPicture} className="inputimage" />
+                                <input type="file" onChange={this.uploadPicture} className="inputimage"  accept=".png, .jpg, .jpeg"/>
                                 <div style={{ height: "55%" }}>
 
                                     <div className='prevItmImgSec'>
@@ -545,6 +589,7 @@ class CreateCollection extends React.Component {
                             </div>
                         </div>
                     </div>
+                     
                 </div>
             </>
         );

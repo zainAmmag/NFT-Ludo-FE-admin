@@ -126,7 +126,7 @@ function TopNavbar() {
         variant="contained"
         onClick={() => {
           if (!isMetamaskConnected) {
-            connectMetaMaskaction().then((resp) => {
+             connectMetaMaskaction().then((resp) => {
               dispatch(setMetamaskAction(resp))
             }).catch(() => {
               alert("metamask connection error")

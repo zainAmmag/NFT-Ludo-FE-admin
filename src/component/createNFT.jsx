@@ -21,6 +21,7 @@ import { setIsLoaderActive } from "../actions/index";
 
 
 import Modal from "react-bootstrap/Modal";
+import SharedLayout from './shared/SharedLayout';
 
 const mapStateToProps = (state) => {
     return {};
@@ -101,6 +102,11 @@ class CreateNt extends React.Component {
             nftPrice: false,
             proprttydiv:false,
             nftpropertycount:0,
+            vdescription:true,
+            validationcount:0,
+            Vblockchain:true,
+            vcollection:true,
+            vpayment:true,
         };
 
     }
@@ -167,6 +173,9 @@ class CreateNt extends React.Component {
         this.CategoriesIdd();
     }
     urlPatternValidation = URL => {
+        if(URL=="") return true
+        
+        if(URL==null) return true
         const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
          
         return regex.test(URL);
@@ -185,17 +194,19 @@ class CreateNt extends React.Component {
     }
    
     submit = (data) => {
-        const name = /^[a-zA-Z0-9]*$/;
+        const name = /^[a-zA-Z0-9_ ]*$/;
         const price= /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
          const temp=this.state.Name
          const temp1=this.state.Price
-         if(this.state.Name==""){this.setState({vname:false});return ;}
+         let validationcount=0
+         if (temp1==null)  { this.setState({vprice:false});validationcount=validationcount+1;}
+         if(this.state.Name==""){this.setState({vname:false});validationcount=validationcount+1 ;}
         if (temp.match(name)) this.setState({vname:true})   
-        if (!temp.match(name)) {this.setState({vname:false});return ;}
+        if (!temp.match(name)) {this.setState({vname:false});validationcount=validationcount+1 ;}
         if (this.urlPatternValidation(this.state.ExternalLink))  this.setState({vExternalLink:true})
-        if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); return; }
-        if (temp1.match(price)) this.setState({vprice:true})
-        if (!temp1.match(price))  { this.setState({vprice:false});return;}
+        if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); validationcount=validationcount+1; }
+        if (temp1?.match(price)) this.setState({vprice:true})
+        if (!temp1?.match(price))  { this.setState({vprice:false});validationcount=validationcount+1;}
         console.log("block", this.state.BlockChainname_)
         console.log("chain", this.state.ChainId)
         console.log("categoty", this.state.CategoryId)
@@ -205,38 +216,41 @@ class CreateNt extends React.Component {
         this.setState({ errormessage: "" })
         if (!this.state.imageset) {
             this.setState({ imageok: false })
-            return
+            validationcount=validationcount+1
         }
         else {
             this.setState({ imageok: true })
         }
-        if(this.state.chainID == 0)
-        {   
-            this.setState({ ImageModal: true }) 
-            this.setState({ falsemessage: "Block chain not found" })
-            return
-        }
-        if(this.state.chainID == 0)
+        
+        if(this.state.BlockChainname_=="" )
         {
-            this.setState({ ImageModal: true }) 
-            this.setState({ falsemessage: "Block chain not found" })
-           return;
+            this.setState({ Vblockchain: false }) 
+            validationcount=validationcount+1
         }
+        else
+        this.setState({ Vblockchain: true }) 
+        
         if(this.state.CategoryId == 0  )
         {      
-            this.setState({ ImageModal: true }) 
-            this.setState({ falsemessage: "collection not selected" })
-            return
+            this.setState({ vcollection: false }) 
+            validationcount=validationcount+1
         }
+        else 
+        this.setState({ vcollection: true }) 
+            
         
         if(this.state.CurrencyId == 0  )
         {
-            this.setState({ ImageModal: true }) 
-            
-            this.setState({ falsemessage: "Currency not found" })
-            return 
+            this.setState({ vpayment: false }) 
+            validationcount=validationcount+1
         }
-        
+        else
+        this.setState({ vpayment: true }) 
+        if(this.state.Description?.length > 30) 
+        {this.setState({vdescription:false});validationcount=validationcount+1 ;}
+        else
+        {this.setState({vdescription:true});}
+      if(validationcount>0) return
         var bodyFormData = new FormData();
         bodyFormData.append("Name", this.state.Name);
         bodyFormData.append("TokenId", this.state.TokenId);
@@ -292,7 +306,7 @@ class CreateNt extends React.Component {
 
                 else if (response.data.message == "Data successfully added") {
                     this.setState({ ImageModal: true })            
-                    this.setState({ successmessage: response.data.message })
+                    this.setState({ successmessage: "NFT created successfully"})
 
                 }
                 else {
@@ -393,7 +407,7 @@ class CreateNt extends React.Component {
 
         return (
             <div className="container">
-                <div className="row">
+                                 <div className="row">
                     <div className='col-md-12'> <h1 className='f-Heading'>Create NFT</h1></div>
                     <div className="col-md-8 col-sm-12 col-lg-8">
                         <div className='row'>
@@ -401,7 +415,7 @@ class CreateNt extends React.Component {
 
                                 <Modal
                                     centered
-                                    size="lg"
+                                    size="sm"
                                     show={this.state.ImageModal}
                                 >
                                     <Modal.Body>
@@ -468,13 +482,16 @@ class CreateNt extends React.Component {
                                     <input
                                         type="text"
                                         required
-                                        placeholder="add limited Description' "
+                                        placeholder=""
                                         width={100}
                                         className="description-field"
                                         name='Description'
                                         value={this.state.Description}
                                         onChange={(data) => { this.setState({ Description: data.target.value }) }}
                                     />
+                                      {!this.state.vdescription && (
+                                      <div style={{ color: "#F61C04" }}>Description Can not be greater than 30.</div>
+                                 )}
                                 </div>
                                 <div className='input-fields'>
                                     <p>Collection</p>
@@ -489,6 +506,10 @@ class CreateNt extends React.Component {
                                         }
 
                                     </select>
+                                    
+                                    {!this.state.vcollection && (
+                                      <div style={{ color: "#F61C04" }}>Collection is not Selected.</div>
+                                 )}
                                 </div>
                                 <div className='input-fields'>
                                     <p>Properties</p>
@@ -694,7 +715,10 @@ class CreateNt extends React.Component {
                                             })
                                         }
                                     </select>
-                                </div>
+
+                                    {!this.state.Vblockchain && (
+                                      <div style={{ color: "#F61C04" }}>BlockChain is not Selected.</div>
+                                 )}                                </div>
                                 <div className='input-fields'>
                                     <p>Payment tokens</p>
                                     <select className='dropDown' name='Payment' onChange={(data) => { this.setState({ CurrencyId: data.target.value }); }}>
@@ -707,6 +731,9 @@ class CreateNt extends React.Component {
                                             })
                                         }
                                     </select>
+                                    {!this.state.vpayment && (
+                                      <div style={{ color: "#F61C04" }}>payment is not Selected.</div>
+                                 )}      
                                 </div>
                                 <div className='input-fields'>
                                     <p>Contract Adress(optional)</p>
@@ -732,11 +759,11 @@ class CreateNt extends React.Component {
                             <p style={{ cursor: "pointer" }}>
                                 Image Preview
                             </p>
-                            <input type="file" onChange={this.uploadPicture} className='inputimage' />
+                            <input type="file" onChange={this.uploadPicture} className='inputimage' accept=".png, .jpg, .jpeg"/>
                             <div className='prevItmImgSecs'>
                                 <img
                                     src={this.state.imageset != "" ? this.state.ImagePreview : ' '}
-                                    className=""
+                                    className="avatar-immage"
                                 />
                             </div>
                             {!this.state.imageok && (
@@ -752,6 +779,7 @@ class CreateNt extends React.Component {
                         </div>
                     </div>
                 </div>
+                 
             </div>
         );
     }

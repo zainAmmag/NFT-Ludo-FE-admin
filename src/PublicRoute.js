@@ -19,7 +19,7 @@ class PublicRoute extends React.Component {
       {...rest}
       render={prop =>
         t&&t!==''? (
-          <Redirect to="/ProjectManagement" />
+          <Redirect to="/SignIn"/>
           ) : (
             <Component {...prop} />
         )

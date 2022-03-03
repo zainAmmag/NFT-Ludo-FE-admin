@@ -21,7 +21,10 @@ import { bindActionCreators } from "redux";
 
 import {
   BaseUrl,
+  
+  BaseUrl1,
 } from "../Constants/BusinessManager";
+import SharedLayout from "./shared/SharedLayout";
 
 const mapStateToProps = (state) => {
   return {};
@@ -47,9 +50,13 @@ class UserDetail extends React.Component {
       IsTickerHovered: false,
       categoryNumber: 0,
       BaseCurrency: 0,
+      favourateNFT:[],
       RenderFinished: false,
       FN: "No data available",
       BO: null,
+      startslice:0,
+      endSlice:8,
+      vnomore:true,
     };
   }
   async componentDidMount() {
@@ -81,8 +88,22 @@ class UserDetail extends React.Component {
     }
 
   }
+  mapSlice=()=>{
+    let temp1=this.state.startslice
+    let temp2=this.state.endSlice
+    if(this.state.vnomore==false) return
+     if(this.state.NFtData.length<temp2+8)
+          {
+           this.setState({vnomore:false}); 
+          } 
+   this.setState({endSlice:temp2+8})   
+   };
   Finduser = () => {
-    
+    if(this.state.vnomore==false)
+    {
+       this.setState({endSlice:8})
+       this.setState({vnomore:true})
+    }  
     console.log("called")
     console.log(this.state.tableData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search1.toLowerCase())) )
         // console.log("Present")
@@ -95,6 +116,30 @@ class UserDetail extends React.Component {
     this.setState({ Search: temp })
   };
  
+  async GEtmyfavourateNft() {
+    try {
+      const data = await SendHttpRequest(
+        BaseUrl1 + "/GetMyFavouriteNft", {},
+        "GET"
+      );
+      if (data.isSuccess == true) {
+        this.setState({ favourateNFT: data.data })
+        if (this.state.favourateNFT.filter((x) => x.nftTokenId == this.state.nftDATA.nftTokenId).length > 0) {
+          this.setState({ favourate: true })
+          console.log("nft is in favourate ")
+        }
+        else
+        {
+          this.setState({ favourate:false })
+         
+        }
+          console.log("nft is not favourate ")
+      }
+    } catch (error) {
+
+      return;
+    }
+  }
   removeuser = () => {
     console.log("dadaad", this.state.Search1.length);
     if (this.state.Search1.length == 1)
@@ -109,7 +154,7 @@ class UserDetail extends React.Component {
 
     return (
       <div className="container-fluid body-content" id="">
-
+ 
 
         <h1>Collections :</h1>
         <p style={{ whiteSpace: "nowrap", textAlign: "center" }}>
@@ -130,29 +175,36 @@ class UserDetail extends React.Component {
         <div id="container" className="text-center">
           <Link to="/createNFT" className="Link create-list">  Create NFT  </Link>
           <Link to="/CreateCollection" className="Link create-list">Create Collection </Link>
-          <div className="row">
+          <div className="row row12">
             {
               this.state.Search.length == 0 ? (
                 <>  {this.state.collectiondata.length > 0 ? (
                   <>
                     {
-                      this.state.collectiondata.map((playerData, k) => {
+                      this.state.collectiondata.slice(this.state.startslice, this.state.endSlice).map((playerData, k) => {
                         return (
                           <>
-                            <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3}  style={{display:"flex",justifyContent:"center",marginTop:"20px"}}  >
+
+
+                            <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3
+                            } style={{display:"flex",justifyContent:"center",marginTop:"20px"}} >
+                               <Link to="/ShowCollectionDetail"
+                                       
+                                          onClick={() => {
+                                            localStorage.setItem("CollectionDetail", playerData.id)
+
+                                          }}>   
+                                       
                               <div
                                 className="card2NFT">
                                 <div >
                                   <div className="panal">
 
                                     <img
-                                      src={playerData.bannerImage? "http://198.187.28.244:7577/" + playerData.bannerImage: defaultImg}
+                                      src={playerData.bannerImage? "http://198.187.28.244:7577/" + playerData.featuredImage: defaultImg}
                                       alt="profileImage"
                                       className="NFT-immage-NFT"
-                                      onClick={() => {
-                                        this.props.setIsLoaderActive(true);
-                                        this.GetNFTbycollectionId(playerData.id)
-                                      }}
+                                     
                                     />
                                     <div className="">
                                       <img
@@ -178,6 +230,7 @@ class UserDetail extends React.Component {
                                   </div>
                                 </div>
                               </div>{" "}
+                              </Link> 
                             </Col>
 
 
@@ -208,14 +261,20 @@ class UserDetail extends React.Component {
                             return (
                               <>
                                 <Col key={k} style={{ paddingTop: "15px" }} md={4} lg={3
-                                }  style={{display:"flex",justifyContent:"center",marginTop:"20px"}}  >
+                                } style={{display:"flex",justifyContent:"center",marginTop:"20px"}} >
+                                  <Link to="/ShowCollectionDetail"
+                                       
+                                       onClick={() => {
+                                         localStorage.setItem("CollectionDetail", playerData.id)
+
+                                       }}>   
                                   <div
                                     className="card2NFT">
                                     <div >
                                       <div className="panal">
     
                                         <img
-                                          src={playerData.bannerImage? "http://198.187.28.244:7577/" + playerData.bannerImage: defaultImg}
+                                          src={playerData.bannerImage? "http://198.187.28.244:7577/" + playerData.featuredImage: defaultImg}
                                           alt="profileImage"
                                           className="NFT-immage-NFT"
                                           onClick={() => {
@@ -247,6 +306,7 @@ class UserDetail extends React.Component {
                                       </div>
                                     </div>
                                   </div>{" "}
+                                  </Link>
                                 </Col>
     
     
@@ -273,6 +333,17 @@ class UserDetail extends React.Component {
 
           </div>
         </div>
+        { this.state.collectiondata.length>8?   
+        <div id="container" className="text-center" style={{marginLeft:"0"}}>                          
+             <button   onClick={()=> this.mapSlice() }   className="Link create-list" style={{ width:"10%",fontSize:'17px'}}> Load More </button >
+                                     {!this.state.vnomore && (
+            <div style={{ color: "#F61C04" }}>No More Data To Load</div>
+          )}  
+                                   </div>:
+                                   <div id="container" className="text-center" style={{marginLeft:"0"}}>                          
+                                                         </div>
+                }
+       
       </div>
     );
   }

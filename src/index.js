@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/index";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -8,6 +8,8 @@ import "../src/Assets/css/custom.css";
 import "font-awesome/css/font-awesome.min.css";
 import "../src/Assets/css/new.css";
 import SignIn from "./component/SignIn";
+
+import SignIn1 from "./component/SignIn";
 import SharedLayout from "./component/shared/SharedLayout";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
@@ -23,13 +25,13 @@ import NFTDetail from "./component/NFTDetail";
 import NFTDetail1 from "./component/NFTDetail";
 import NFTDetail2 from "./component/NFTDetail";
 import ShowCollectionDetail from './component/ShowCollectionDetail'
+import ShowCollectionDetail1 from './component/ShowCollectionDetail'
 import CreateCollection from "./component/CreateCollection1"
 import EditCollection from "./component/EditCollection";
 import ManageNFt from "./component/ManageNFT"
 import UpdateNFt from "./component/UpdateNFt";
 import OrderStatus from "./component/OrderStatus";
 const Pages = () => {
-
 
   return (
     <Loader
@@ -40,27 +42,25 @@ const Pages = () => {
       <BrowserRouter basename={"/"}>
         <div>
           <Switch>
-            <PublicRoute restricted={true} exact path="/" component={SignIn} />{" "}
             <PublicRoute restricted={true} exact path="/SignIn" component={SignIn} />{" "}
+
+
+            {/* <Route path="*">
+        
+        </Route> */}
+
+{/* <Route  component={SignIn}/> */}
+
+{/* <PrivateRoute
+                  exact
+                  path="/manageAccount"
+                  component={MenageAccount}
+                ></PrivateRoute>{" "} */}
+
+
+
             <Fragment>
-              <SharedLayout>
-
-                <PrivateRoute
-                  exact
-                  path="/"
-                  component={SignIn}
-                >
-                </PrivateRoute>{" "}
-
-                {/* <PrivateRoute
-                  exact
-                  path="/ProjectManagement"
-                  component={ProjectManagement}
-                >
-                </PrivateRoute>{" "} */}
-
-
-                <PrivateRoute
+              <SharedLayout>                <PrivateRoute
                   exact
                   path="/manageAccount"
                   component={MenageAccount}
@@ -104,12 +104,12 @@ const Pages = () => {
                 ></PrivateRoute>{" "}
                 <PrivateRoute
                   exact
-                  path="/nftDetail2"
+                  path="/nftdetail1"
                   component={NFTDetail2}
                 ></PrivateRoute>{" "}
                 <PrivateRoute
                   exact
-                  path="/nftDEtail1"
+                  path="/nftdetail2"
                   component={NFTDetail1}
                 ></PrivateRoute>{" "}
 
@@ -130,6 +130,11 @@ const Pages = () => {
                   path="/ShowCollectionDetail"
                   component={ShowCollectionDetail}
                 ></PrivateRoute>{" "}
+                 <PrivateRoute
+                  exact
+                  path="/ShowCollectionDetail1"
+                  component={ShowCollectionDetail1}
+                ></PrivateRoute>{" "}
                 <PrivateRoute
                   exact
                   path="/EditCollection"
@@ -146,9 +151,8 @@ const Pages = () => {
                   path="/orderstatus"
                   component={OrderStatus}
                 ></PrivateRoute>{" "}
+            </SharedLayout>
 
-
-              </SharedLayout>{" "}
             </Fragment>{" "}
           </Switch>{" "}
         </div>{" "}

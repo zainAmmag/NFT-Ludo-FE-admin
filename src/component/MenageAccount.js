@@ -22,6 +22,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
+import SharedLayout from "./shared/SharedLayout";
 const mapStateToProps = (state) => {
   return {};
 };
@@ -41,6 +42,8 @@ class MenageAccount extends React.Component {
       page: 0,
       tableData: [],
       blockstatus: true,
+      lastcopy:"",
+      copied:false,
     };
   }
   async updateuserblockstatus(id, status, status2) {
@@ -89,12 +92,13 @@ class MenageAccount extends React.Component {
     }
   }
   async componentDidMount() {
+    
     this.props.setIsLoaderActive(true);
 
     try {
       let t = getToken();
       var data = await SendHttpRequest(
-        BaseUrl + "/Amin/GetAllAccounts",
+        BaseUrl + "/Amin/GetAllAccounts?PageSize=0&CurrentPage=0",
         {},
         "GET"
       );
@@ -140,8 +144,10 @@ class MenageAccount extends React.Component {
     };
 
   render() {
+    
     return (
       <div>
+         
         <div className="row">
           <div className="col-lg-12 col-md-12 col-xl-12 col-12 order-2 order-lg-2 order-xl-1">
             <div className="card p-t-30">
@@ -189,9 +195,9 @@ class MenageAccount extends React.Component {
                                         {/* {this.state.copied ? <span style={{ fontSize: 12, marginLeft: '1%' }}>Copied.</span> : null} */}
                                         <TableCell className="Text-white">{value.username}</TableCell>
 
-                                        <CopyToClipboard text={localStorage.getItem("address")}
-                                          onCopy={() => this.setState({ copied: true })}>
-                                          <TableCell className="Text-white" title={this.state.copied?"copyed":"click to copy"}> {value.address.slice(1, 5) + '...' + value.address.slice(- 5)}  </TableCell>
+                                        <CopyToClipboard text={value.address} 
+                                          onCopy={() => this.setState({ lastcopy: value.address })  }      >
+                                          <TableCell className="Text-white" title={this.state.lastcopy==value.address?"Copied":"click to copy"} style={{cursor:"pointer"}}> {value.address.slice(1, 5) + '...' + value.address.slice(- 5)}  </TableCell>
                                         </CopyToClipboard>
 
 
@@ -445,6 +451,7 @@ class MenageAccount extends React.Component {
             </div>
           </div>
         </div>
+         
       </div>
     );
   }

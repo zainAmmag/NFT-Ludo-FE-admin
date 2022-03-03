@@ -20,6 +20,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Search } from "react-feather";
+import SharedLayout from "./shared/SharedLayout";
 
 
 const mapStateToProps = (state) => {
@@ -50,7 +51,7 @@ class OrderDetail extends React.Component {
     this.props.setIsLoaderActive(true);
     try {
       var data = await SendHttpRequest(
-        BaseUrl + "/Amin/GetAllOrderNft",
+        BaseUrl + "/Amin/GetAllOrderNft?PageSize=0&CurrentPage=0",
         {},
         "GET"
       );
@@ -101,6 +102,7 @@ class OrderDetail extends React.Component {
   render() {
     return (
       <div>
+         
         <div className="row">
           <div className="col-lg-12 col-md-12 col-xl-12 col-12 order-2 order-lg-2 order-xl-1">
             <div className="card p-t-30">
@@ -166,7 +168,7 @@ class OrderDetail extends React.Component {
                                         pathname: "orderstatus",
                                         state: {
                                             value,
-                                        }
+                                              }
                                     }}>
                                             <button
                                               style={{ padding: 8, background: 'transparent', border: 0 }}
@@ -220,7 +222,7 @@ class OrderDetail extends React.Component {
 {
                 this.state.Search.length > 0 ? (
                   <>  {
-                    this.state.tableData.filter((x) => x.nftOwnerName?.toLowerCase().includes(this.state.Search.toLowerCase())).length > 0  ? (
+                    this.state.tableData.filter((x) => x.nftName?.toLowerCase().includes(this.state.Search.toLowerCase())).length > 0  ? (
                       <div style={{ padding: 10 }}>
                         <TableContainer component={Paper} className="Text-white">
                           <Table
@@ -245,7 +247,7 @@ class OrderDetail extends React.Component {
                                 &&
                                 this.state.tableData
                                   .slice(this.state.page * 5, this.state.page * 5 + 5) &&
-                                this.state.tableData.filter((x) => x.nftOwnerName?.toLowerCase().includes(this.state.Search.toLowerCase()))
+                                this.state.tableData.filter((x) => x.nftName?.toLowerCase().includes(this.state.Search.toLowerCase()))
                                   .map((value, index) => {
                                     return (
                                       <TableRow key={index} className="Text-white">
@@ -317,6 +319,7 @@ class OrderDetail extends React.Component {
             </div>
           </div>
         </div>
+         
       </div>
     );
   }

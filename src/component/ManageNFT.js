@@ -23,7 +23,9 @@ import {
 
 } from "../Constants/BusinessManager";
 
-import { Search } from "react-feather";
+import { Search,Heart } from "react-feather";
+import { Button } from "bootstrap";
+import SharedLayout from "./shared/SharedLayout";
 const mapStateToProps = (state) => {
   return {};
 };
@@ -61,6 +63,11 @@ class CollectionDetail extends React.Component {
       NftcollectionId: 0,
       FN: "No data available",
       BO: null,
+      favcount:0,
+      favourateNFT:[],
+      startslice:0,
+      endSlice:8,
+      vnomore:true,
     };
   }
   async GetNFTS() {
@@ -86,6 +93,22 @@ class CollectionDetail extends React.Component {
         icon: "error",
         text: "Something went wrong, try to relogin",
       });
+    }
+  } 
+  async GetFavourateNFtcount(temp) {
+    try {
+      const data = await SendHttpRequest(
+        BaseUrl1 + "/GetFavouriteNftCount?nftId=" + temp, {},
+        "GET"
+      );
+      if (data.isSuccess == true) {
+        console.log("View muhazibCount" + data.data)
+        this.setState({favcount:data.data})
+        return data.data
+      }
+    } catch (error) {
+
+      return;
     }
   }
   async GetNFTbycollectionId(collectionId) {
@@ -118,9 +141,14 @@ class CollectionDetail extends React.Component {
   async componentDidMount() {
     this.GetNFTS();
     this.props.setIsLoaderActive(true);
+    this.GEtmyfavourateNft()
   }
   Finduser = () => {
-    
+          if(this.state.vnomore==false)
+          {
+             this.setState({endSlice:8})
+             this.setState({vnomore:true})
+          }  
     console.log("called")
     console.log(this.state.tableData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search1.toLowerCase())) )
         // console.log("Present")
@@ -132,13 +160,74 @@ class CollectionDetail extends React.Component {
   //  temp=this.state.tableData.find ((item, index) => item.username == this.state.search)
     this.setState({ Search: temp })
   };
- 
+    mapSlice=()=>{
+             let temp1=this.state.startslice
+             let temp2=this.state.endSlice
+             if(this.state.vnomore==false) return
+              if(this.state.NFtData.length<temp2+8)
+                   {
+                    this.setState({vnomore:false}); 
+                   } 
+            this.setState({endSlice:temp2+8})   
+            };
   removeuser = () => {
     console.log("dadaad", this.state.Search1.length);
     if (this.state.Search1.length == 1)
       this.setState({ Search: "" })
 
   };
+  async GEtmyfavourateNft() {
+    try {
+      const data = await SendHttpRequest(
+        BaseUrl1 + "/GetMyFavouriteNft", {},
+        "GET"
+      );
+      if (data.isSuccess == true) {
+        this.setState({ favourateNFT: data.data })
+        if (this.state.favourateNFT.filter((x) => x.nftTokenId == this.state.nftDATA.nftTokenId).length > 0) {
+          this.setState({ favourate: true })
+          console.log("nft is in favourate ")
+        }
+        else
+        {
+          this.setState({ favourate:false })
+         
+        }
+          console.log("nft is not favourate ")
+      }
+    } catch (error) {
+
+      return;
+    }
+  }
+  async addfavourateNFt() {
+    try {
+      const data = await SendHttpRequest(
+        BaseUrl1 + "/AddFavouriteNft", { nftId: this.state.nftDATA.id, nftAddress: " " },
+        "POST"
+      );
+      if (data.isSuccess == true) {
+        
+      }
+    } catch (error) {
+
+      return;
+    }
+  }
+  async removefavouratenft() {
+    try {
+      const data = await SendHttpRequest(
+        BaseUrl1 + "/RemoveFavouriteNft", { nftId: this.state.nftDATA.id, nftAddress: " " },
+        "PUT"
+      );
+      if (data.isSuccess == true) {
+         
+      }
+    } catch (error) {
+
+      return;
+    }
+  }
   render() {
     var arr = [];
     const handleClose1 = () => this.setState({ ImageModal: false });
@@ -147,7 +236,7 @@ class CollectionDetail extends React.Component {
     }
     return (
       <div className="container-fluid body-content" id="">
- <p style={{ whiteSpace: "nowrap", textAlign: "center" }}>
+          <p style={{ whiteSpace: "nowrap", textAlign: "center" }}>
           <div className="search-panel">
             <input
               type="text"
@@ -166,7 +255,7 @@ class CollectionDetail extends React.Component {
           
           <Link to="/createNFT" className="Link create-list">  Create NFT  </Link>
         </div>
-        <h1>NFT's:</h1>
+        <h1>NFTs:</h1>
 
         <div id="container">
           <Modal
@@ -195,16 +284,22 @@ class CollectionDetail extends React.Component {
 
           </Modal>
           <div className="">
-          <div className="row" >
+          <div className="row row12" >
           {
               this.state.Search.length == 0 ? (
                 <>
             {this.state.NFtData.length > 0 ? (
               <>
                 {
-                  this.state.NFtData.map((playerData, k) => (
+                  this.state.NFtData.slice(this.state.startslice, this.state.endSlice).map((playerData, k) => (
                     <>
                       <Col key={k} style={{ paddingTop: "15px" }}  lg={3} md={4}   style={{display:"flex",justifyContent:"center",marginTop:"20px"}}>
+                      <Link to="/nftdetail1"
+                       onClick={() => {
+                        localStorage.setItem("NFTID", playerData.id)
+                        localStorage.setItem("NftaccountId", playerData.accountId)
+                       }}
+                      >
                         <div
                           className="card2NFT">
                           <div >
@@ -224,12 +319,11 @@ class CollectionDetail extends React.Component {
                                 />
                               </div>
                               <h5 className="nft-heading">   {playerData.name + " "}</h5>
-                              <p className="note"> Price {playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
+                              <p className="note"> Price {playerData.sellPrice ? playerData.sellPrice : playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
                               <l>
-
-                                <Link to="/nftDetail2">
+                                <Link to="/nftdetail1">
                                   <a
-                                    onClick={() => {
+                                      onClick={() => {
                                       localStorage.setItem("NFTID", playerData.id)
                                       localStorage.setItem("NftaccountId", playerData.accountId)
 
@@ -239,14 +333,19 @@ class CollectionDetail extends React.Component {
                                     Details
                                   </a>
                                 </Link>
-                                <FavoriteIcon />   {playerData.ratings}
+                                <Heart  onClick={()=>{ this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?this.removefavouratenft():this.addfavourateNFt(); } } color={ this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?"red":"black" } fill={this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?"red":"black"}  />  { ()=>{ this.GetFavourateNFtcount(playerData.id); }}
+                               
                               </l>
                             </div>
                           </div>
                         </div>{" "}
+                        </Link>
                       </Col>
+                      
+        
                     </>
                   ))}
+                                    
               </>
             ) : (
               <div className="card" style={{ alignItems: "center", alignContent: "center", width: "100%" }}>
@@ -263,16 +362,22 @@ class CollectionDetail extends React.Component {
               </div>
             )}</>)
             : (<>" "</>)}
-
-{
+                      
+         {
               this.state.Search.length > 0 ? (
                 <>
-            {this.state.NFtData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search1.toLowerCase())).length > 0 ? (
+            {this.state.NFtData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search.toLowerCase())).length > 0 ? (
               <>
                 {
-                  this.state.NFtData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search1.toLowerCase())).map((playerData, k) => (
+                  this.state.NFtData.filter((x) => x.name ?.toLowerCase().includes(this.state.Search.toLowerCase())).map((playerData, k) => (
                     <>
                       <Col key={k} style={{ paddingTop: "15px" }}  lg={3} md={4}   style={{display:"flex",justifyContent:"center",marginTop:"20px"}}>
+                      <Link to="/nftdetail1"
+                       onClick={() => {
+                        localStorage.setItem("NFTID", playerData.id)
+                        localStorage.setItem("NftaccountId", playerData.accountId)
+                       }}
+                      >
                         <div
                           className="card2NFT">
                           <div >
@@ -292,10 +397,10 @@ class CollectionDetail extends React.Component {
                                 />
                               </div>
                               <h5 className="nft-heading">   {playerData.name + " "}</h5>
-                              <p className="note"> Price {playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
+                              <p className="note"> Price {playerData.sellPrice ? playerData.sellPrice : playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
                               <l>
 
-                                <Link to="/nftDetail2">
+                                <Link to="/nftdetail1">
                                   <a
                                     onClick={() => {
                                       localStorage.setItem("NFTID", playerData.id)
@@ -307,11 +412,12 @@ class CollectionDetail extends React.Component {
                                     Details
                                   </a>
                                 </Link>
-                                <FavoriteIcon />   {playerData.ratings}
+                                <Heart  onClick={()=>{ this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?this.removefavouratenft():this.addfavourateNFt(); } } color={ this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?"red":"black" } fill={this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?"red":"black"}  />
                               </l>
                             </div>
                           </div>
                         </div>{" "}
+                        </Link>
                       </Col>
                     </>
                   ))}
@@ -334,7 +440,19 @@ class CollectionDetail extends React.Component {
           </div>
           </div>
         </div>
-       </div>
+        { this.state.NFtData.length>8?   
+        <div id="container" className="text-center" style={{marginLeft:"0"}}>                          
+             <button   onClick={()=> this.mapSlice() }   className="Link create-list" style={{ width:"10%",fontSize:'17px'}}> Load More </button >
+                                     {!this.state.vnomore && (
+            <div style={{ color: "#F61C04" }}>No More Data To Load</div>
+          )}  
+                                   </div>:
+                                   <div id="container" className="text-center" style={{marginLeft:"0"}}>                          
+                                                         </div>
+                }
+     
+
+    </div>
     );
   }
 }

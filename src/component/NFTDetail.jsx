@@ -11,7 +11,6 @@ import {
 } from "../Constants/BusinessManager";
 import swal from "sweetalert";
 import { approveContract } from './metamask'
-
 import { Calendar, CheckSquare, Edit, Eye, Heart, MinusCircle } from "react-feather";
 import Modal from "react-bootstrap/Modal";
 import { Button, Table } from "react-bootstrap";
@@ -22,7 +21,7 @@ import "../Assets/css/custom.css";
 import DatePicker from "react-datepicker";
 import { setIsLoaderActive } from "../actions/index";
 
-// import {Loader} from './Loader'
+// import {Loader} from './Loade
 import Loader from "../component/shared/loader";
 
 import { getToken } from "../Utils/Utils";
@@ -142,7 +141,8 @@ class NFTDetail extends React.Component {
       if (data.isSuccess == true) {
         await   this.GetFavourateNFtcount();
         await this.GEtmyfavourateNft()
-        await  this.getnft();
+        this.getnft();
+        this.props.setIsLoaderActive(false); 
       }
     } catch (error) {
 
@@ -157,8 +157,9 @@ class NFTDetail extends React.Component {
       );
       if (data.isSuccess == true) {
         await   this.GetFavourateNFtcount();
-        await this.GEtmyfavourateNft()
-        await  this.getnft();
+        await  this.GEtmyfavourateNft()
+            this.getnft();
+        this.props.setIsLoaderActive(false); 
       }
     } catch (error) {
 
@@ -202,6 +203,14 @@ class NFTDetail extends React.Component {
   //   console.log("dgfsgrrsfhgdgfsgrrsfhg" + this.state);
   // }
   async sellNft(nftTokenId, contractAddress, id) {
+    if(localStorage.getItem("chainidofconnectedmetamask")!="0x61")
+    {
+     swal({
+       icon: "error",
+       text: " Select correct Blockchain",
+     });
+     return;
+    }
     const price = /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
     const temp = this.state.Price.toString();
     if (!temp?.match(price)) { this.setState({ vprice: false }); return; }
@@ -285,7 +294,7 @@ class NFTDetail extends React.Component {
             <div className="pt-4" />
             <div className="detail-card">
               <h3>Details</h3>
-              <p><b>Contract Address</b> {this.state.nftDATA.contractAddress}
+              <p><b>Contract Address</b> {this.state.nftDATA.contractAddress} {this.state.copied?" copied": ""}
                 {" "}
                 <CopyToClipboard text={localStorage.getItem("address")}
                   onCopy={() => this.setState({ copied: true })}>
@@ -322,10 +331,17 @@ class NFTDetail extends React.Component {
               <h3>{this.state.nftDATA.name}</h3>
               <p>By:{this.state.nftDATA.creatorName}</p>
 
+   
+                                          
+                <p style={{ fontWeight: "bold" }}>   
+              <Link to="/ShowCollectionDetail1" >
+                                        <a style={{cursor:"pointer"}}  onClick={() => {
+                                         localStorage.setItem("CollectionDetail", this.state.nftDATA.collectionId)
 
-              <p style={{ fontWeight: "bold" }}> {this.state.nftDATA.collectionName} </p>
-              <p >price:{this.state.nftDATA.bidInitialMinimumAmount ? this.state.nftDATA.bidInitialMaximumAmount : this.state.nftDATA.buyPrice} </p>
-              <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart onClick={()=> { this.state.favourate?this.removefavouratenft():this.addfavourateNFt(); } } color={this.state.favourate?"red":"black"} fill={this.state.favourate?"red":"black"}  /> {" "}{this.state.favcount}     </p>
+                                       }} >    {this.state.nftDATA.collectionName}  </a>     </Link></p>
+              <p >Price:{this.state.nftDATA.sellPrice ? this.state.nftDATA.sellPrice : this.state.nftDATA.buyPrice} </p>
+              <p><Eye />{" "}{this.state.nftDATA.viewCount} <Heart  style={{cursor:"pointer"}} onClick={()=> { 
+    this.props.setIsLoaderActive(true); this.state.favourate?this.removefavouratenft():this.addfavourateNFt(); } } color={this.state.favourate?"red":"black"} fill={this.state.favourate?"red":"black"}  /> {" "}{this.state.favcount}     </p>
             </div>
             <div className="detail-card">
 
@@ -338,7 +354,7 @@ class NFTDetail extends React.Component {
               <div className="full-div" style={{ textAlign: "end" }}>
                 {this.state.nftDATA.isMinted ? (
                   <>
-                    {this.state.nftDATA.staus !== "ReadyForSell" && this.state.nftDATA.isAdminNft ? (
+                    {this.state.nftDATA.staus === "Hold" && this.state.nftDATA.isAdminNft && !this.state.nftDATA.sellPrice ? (
                       <Button
                         className="collection-button"
                         style={{ borderRadius: "20px", fontSize: '20px', fontWeight: "bolder", }}
@@ -349,11 +365,15 @@ class NFTDetail extends React.Component {
                       >
                         Sell NFT
                       </Button>
-                    ) : (
-                      <p>
-                        NFT sent to marketplace
-                      </p>
-                    )}
+                    ) : (<>{      localStorage.getItem("AdminaccountId") ===this.state.nftDATA.ownerAddress?
+                                            <p>
+                                              NFT sent to marketplace
+                                            </p> : 
+                                             <p>
+                                             NFT is Sellled 
+                                           </p> 
+                                 }</>
+                                )}
                   </>
                 ) : (
                   <>
@@ -376,12 +396,12 @@ class NFTDetail extends React.Component {
             </div>
             <Modal
               centered
-              size="lg"
+              size="sm"
               show={this.state.ImageModal}
             >
               <Modal.Body>
                 <div style={{ textAlign: "center" }} className="">
-                  <p> Price</p>
+                  <p style={{color:"black"}}> Selling Price</p>
                   <input
                     type="text"
                     required

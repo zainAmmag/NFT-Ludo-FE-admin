@@ -85,12 +85,20 @@ export default function CollapsedBreadcrumbs() {
                     )
                   }
                   {
-                    window.location.pathname === '/nftDEtail1' && (
-                        <Link to="/nftDEtail1" className="waves-effect">
+                    window.location.pathname === '/nftdetail2' && (
+                        <Link to="/nftdetail2" className="waves-effect">
                             <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}><Link to="/ShowCollectionDetail">  Collection Details</Link> / Nft Detail</p>
                         </Link>
                     )
                 }
+                    {
+                    window.location.pathname === '/nftdetail2' && (
+                        <Link to="/nftdetail2" className="waves-effect">
+                            <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}><Link to="/ShowCollectionDetail1">  Collection Details</Link> / Nft Detail</p>
+                        </Link>
+                     )
+                    }
+
                 {
                     window.location.pathname === "/createNFT" && (
                         <Link to="/createNFT" className="waves-effect">
@@ -108,9 +116,9 @@ export default function CollapsedBreadcrumbs() {
                     )
                 }
 
-{
-                    window.location.pathname === '/nftDetail2' && (
-                        <Link to="/nftDetail2" className="waves-effect">
+                {
+                    window.location.pathname === '/nftdetail1' && (
+                        <Link to="/nftdetail1" className="waves-effect">
                             <p className="LINK_OVERVIEW" style={{ fontSize: "15px" }}><Link to="/ManageNFt">  Manage NFt</Link> / Nft Detail</p>
                         </Link>
                     )
