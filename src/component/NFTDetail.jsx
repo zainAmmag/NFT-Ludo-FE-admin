@@ -203,14 +203,6 @@ class NFTDetail extends React.Component {
   //   console.log("dgfsgrrsfhgdgfsgrrsfhg" + this.state);
   // }
   async sellNft(nftTokenId, contractAddress, id) {
-    if(localStorage.getItem("chainidofconnectedmetamask")!="0x61")
-    {
-     swal({
-       icon: "error",
-       text: " Select correct Blockchain",
-     });
-     return;
-    }
     const price = /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
     const temp = this.state.Price.toString();
     if (!temp?.match(price)) { this.setState({ vprice: false }); return; }
@@ -296,7 +288,7 @@ class NFTDetail extends React.Component {
               <h3>Details</h3>
               <p><b>Contract Address</b> {this.state.nftDATA.contractAddress} {this.state.copied?" copied": ""}
                 {" "}
-                <CopyToClipboard text={localStorage.getItem("address")}
+                <CopyToClipboard text={this.state.nftDATA.contractAddress}
                   onCopy={() => this.setState({ copied: true })}>
                   <Copy style={{ cursor: "pointer" }} />
                 </CopyToClipboard >
@@ -370,7 +362,7 @@ class NFTDetail extends React.Component {
                                               NFT sent to marketplace
                                             </p> : 
                                              <p>
-                                             NFT is Sellled 
+                                             NFT is Sold 
                                            </p> 
                                  }</>
                                 )}
@@ -439,7 +431,7 @@ class NFTDetail extends React.Component {
                     <th>Price</th>
                     <th>Us Price</th>
                     <th>Expiration</th>
-                    <th>Form</th>
+                    <th>From</th>
                   </tr>
                 </thead>
               </table>
@@ -455,7 +447,7 @@ class NFTDetail extends React.Component {
                     <th>Price</th>
                     <th>UsD</th>
                     <th>Expiration</th>
-                    <th>Form</th>
+                    <th>From</th>
                   </tr>
                 </thead>
               </table>

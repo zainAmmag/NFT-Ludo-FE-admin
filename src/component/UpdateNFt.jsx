@@ -155,10 +155,11 @@ class UpdateNFT extends React.Component {
         console.log("Edit Collection " + data.data.name);
         console.log("Collection data1", this.state.collectiondata);
         console.log("Collection data2", this.state.collectiondata)
+        if(temp==null) temp=""
         this.setState({ Name1: this.state.PrevNftdata.name })
         this.setState({ TokenId1: this.state.PrevNftdata.nftTokenId })
-        this.setState({ ExternalLink1: this.state.PrevNftdata.externalLink })
-        this.setState({ Description1: this.state.PrevNftdata.description })
+        this.setState({ ExternalLink1: this.state.PrevNftdata.externalLink==null?"":this.state.PrevNftdata.externalLink })
+        this.setState({ Description1: this.state.PrevNftdata.description==null?"":this.state.PrevNftdata.description})
         this.setState({ unlockableContent1: this.state.PrevNftdata.unlockableContent })
         this.setState({ unlockableContentNote1: this.state.PrevNftdata.unlockableContentNote })
         this.setState({ SesitiveData1: this.state.PrevNftdata.sensitiveContent })
@@ -207,6 +208,9 @@ class UpdateNFT extends React.Component {
 
   }
   urlPatternValidation = URL => {
+    if(URL=="") return true
+        
+    if(URL==null) return true
     const regex = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
 
     return regex.test(URL);
@@ -223,14 +227,6 @@ class UpdateNFT extends React.Component {
     this.setState({ MediumLink: "" })
   }
   submit = (data) => {
-    if(localStorage.getItem("chainidofconnectedmetamask")!="0x61")
-    {
-     swal({
-       icon: "error",
-       text: " Select correct Blockchain",
-     });
-     return;
-    }
     const name = /^[a-zA-Z0-9_ ]*$/;
     const price = /^(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
     const temp = this.state.Name1
@@ -265,8 +261,8 @@ class UpdateNFT extends React.Component {
     bodyFormData.append("NftId", localStorage.getItem("Updatenftid"));
     bodyFormData.append("Name", this.state.Name1);
     bodyFormData.append("TokenId", this.state.TokenId1);
-    bodyFormData.append("ExternalLink", this.state.ExternalLink1);
-    bodyFormData.append("Description", this.state.Description1);
+    bodyFormData.append("ExternalLink",this.state.ExternalLink1==null||this.state.ExternalLink1.length<1||this.state.ExternalLink1=="null"?"":this.state.ExternalLink1);
+    bodyFormData.append("Description", this.state.Description1==null||this.state.Description1.length<1||this.state.Description1=="null"?"":this.state.Description1);
     bodyFormData.append("UnlockableContent", this.state.Unlockablecontent1);
     bodyFormData.append("UnlockableContentNote", this.state.Unlockablecontentnote1);
     bodyFormData.append("SensitiveContent", this.state.SesitiveData1);

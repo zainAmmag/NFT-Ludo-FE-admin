@@ -335,7 +335,7 @@ class CreateCollection extends React.Component {
                                 <Modal centered size="sm" show={this.state.ImageModal}>
                                     <Modal.Body >
                                            
-                                        <div style={{ textAlign: "center" }} className="Modal-div">
+                                        <div style={{ textAlign: "center" }} className="Modal-div1">
                                             <div className='Modal-div-notcreated'>
                                                 {this.state.falsemessage === "" ? "" : this.state.falsemessage}
                                             </div>
@@ -414,7 +414,7 @@ class CreateCollection extends React.Component {
 
                                 </select>
                                 {!this.state.vcategory && (
-               <div style={{ color: "#F61C04" }}>Category not Selected </div>
+               <div style={{ color: "#F61C04" }}>Category is not selected </div>
           )}
                             </div>
                             <div className='input-fields'>
@@ -430,7 +430,7 @@ class CreateCollection extends React.Component {
                                     }
                                 </select>
                                 {!this.state.vblockchain && (
-               <div style={{ color: "#F61C04" }}>Blockchian is not selected </div>
+               <div style={{ color: "#F61C04" }}>BlockChian is not selected </div>
           )}
                             </div>
                             <div className='input-fields'>
@@ -446,7 +446,7 @@ class CreateCollection extends React.Component {
                                     }
                                 </select>
                                 {!this.state.vpaymenttoken && (
-               <div style={{ color: "#F61C04" }}>Payment is not selected </div>
+               <div style={{ color: "#F61C04" }}>Payment token is not selected </div>
           )}
                             </div>
                             <div className='input-fields'>

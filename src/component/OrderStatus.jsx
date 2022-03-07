@@ -193,12 +193,15 @@ const OrderStatus = function () {
                 <div className="col-lg-12 col-sm-12 col-md-12 text-center">
 
                     <h4>{value.name}</h4>
-                    <h4>{value.email}</h4>
+                  
                     <img src={"http://198.187.28.244:7577/" + value.nftImage} alt="profileImage" style={{ maxHeight: "50vh" }} />
                     <div className="pt-2"></div>
+                    <h4>{value.email}</h4>
                     <h4>{value.nftName}</h4>
                     <h4>Price: {value.nftPrice} BNB</h4>
                     <h4>{value.placeOfAddress}</h4>
+                    <h4>{value.contactNumber}</h4>
+                    
                 </div>
 
                 <div>

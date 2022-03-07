@@ -117,6 +117,7 @@ function ResponsiveDrawer(props) {
   const [isActive2, setisActive2] = React.useState(false);
   const [isActive3, setisActive3] = React.useState(false);
   const [isActive4, setisActive4] = React.useState(false);
+  const [routepage, setroutepage] = React.useState(false);
   
   useEffect(()=>{
     console.log("loc", routes[0].path)
@@ -227,12 +228,15 @@ function ResponsiveDrawer(props) {
               setisActive2(false);
               setisActive3(false);
               setisActive4(true);
+             
               }}
             className={isActive4 ? 'waves-effect active': 'waves-effect'}>
-            <Link id='5' to="/ManageNFt" className="waves-effect">
-              <FilePlus className="sidebarIcons mt-0" color="white" size={30} />
-              <p className="LINK_OVERVIEW">Manage NFT</p>
-            </Link>
+        <Link id='5' to="/ManageNFt" className="waves-effect">
+                     <FilePlus className="sidebarIcons mt-0" color="white" size={30} />
+                     <p className="LINK_OVERVIEW">Manage NFT</p>
+                   </Link>
+
+
           </ListItem>
         </List>
         {/* {

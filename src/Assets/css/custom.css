@@ -1771,14 +1771,22 @@ width: 100%;
      text-align: center;
   background-color: white !important;
 }
+.Modal-div1
+{
+   font-size: 24px;
+     text-align: center;
+  background-color: white !important;
+}
 .Modal-div-notcreated
 {
   color: rgb(0, 0, 0) !important;
+  white-space: nowrap;
 }
 
 .Modal-div-created
 {
   color:green !important;
+  white-space: nowrap;
 }
 .Modal-div-cancel-button
 {

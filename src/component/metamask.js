@@ -463,7 +463,7 @@ export async function approveContract(payload, contractAddress, payloadMarket) {
         const provider1 = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider1.getSigner();
         console.log("PAYLOAD for market", payloadMarket);
-        const priceVal = window.web3.utils.toWei(payloadMarket.price, "ether");
+        const priceVal = window.web3.utils.toWei(String(payloadMarket.price, "ether"));
         console.log("PAYLOAD PRICEEEE", priceVal);
         console.log("contract market", contractAddress);
 

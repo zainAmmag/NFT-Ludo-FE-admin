@@ -256,7 +256,6 @@ class CollectionDetail extends React.Component {
           <Link to="/createNFT" className="Link create-list">  Create NFT  </Link>
         </div>
         <h1>NFTs:</h1>
-
         <div id="container">
           <Modal
             centered
@@ -320,7 +319,7 @@ class CollectionDetail extends React.Component {
                               </div>
                               <h5 className="nft-heading">   {playerData.name + " "}</h5>
                               <p className="note"> Price {playerData.sellPrice ? playerData.sellPrice : playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
-                              <l>
+                              <l style={{marginLeft:"9%"}}>
                                 <Link to="/nftdetail1">
                                   <a
                                       onClick={() => {
@@ -398,7 +397,8 @@ class CollectionDetail extends React.Component {
                               </div>
                               <h5 className="nft-heading">   {playerData.name + " "}</h5>
                               <p className="note"> Price {playerData.sellPrice ? playerData.sellPrice : playerData.buyPrice + " "}  {this.state.Blockchaindata.find((item, index) => playerData.blockChainName == item.name).shortName + " "} </p>
-                              <l>
+                              
+                              <p  style={{marginLeft:"9%"}}>
 
                                 <Link to="/nftdetail1">
                                   <a
@@ -413,7 +413,7 @@ class CollectionDetail extends React.Component {
                                   </a>
                                 </Link>
                                 <Heart  onClick={()=>{ this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?this.removefavouratenft():this.addfavourateNFt(); } } color={ this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?"red":"black" } fill={this.state.favourateNFT.filter((x) => x.nftTokenId == playerData.nftTokenId).length>0?"red":"black"}  />
-                              </l>
+                              </p>
                             </div>
                           </div>
                         </div>{" "}

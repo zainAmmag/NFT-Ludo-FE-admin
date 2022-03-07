@@ -58,6 +58,7 @@ class CreateNt extends React.Component {
             BlockChainname_: "",
             Price: null,
             vprice: true,
+            vpricenull: true,
             ChainId: 0,
             NftProperties: [],
             imageset: "",
@@ -66,7 +67,7 @@ class CreateNt extends React.Component {
             NftStats: [],
             Image: {},
             finalCreatedProperties:[],
-            addPropertiesList:[{ name: "", type: "" },],
+            addPropertiesList:{ name: "", type: "" } ,
             ImagePreview: {},
             imageok: true,
             Blockchaindata: [
@@ -199,14 +200,19 @@ class CreateNt extends React.Component {
          const temp=this.state.Name
          const temp1=this.state.Price
          let validationcount=0
-         if (temp1==null)  { this.setState({vprice:false});validationcount=validationcount+1;}
+        if(temp1==null){this.setState({vpricenull:false});validationcount=validationcount+1; }
+         else { this.setState({vpricenull:true}); }
          if(this.state.Name==""){this.setState({vname:false});validationcount=validationcount+1 ;}
-        if (temp.match(name)) this.setState({vname:true})   
+         if (temp.match(name)) this.setState({vname:true})   
         if (!temp.match(name)) {this.setState({vname:false});validationcount=validationcount+1 ;}
+        
         if (this.urlPatternValidation(this.state.ExternalLink))  this.setState({vExternalLink:true})
         if (!this.urlPatternValidation(this.state.ExternalLink)) {this.setState({vExternalLink:false}); validationcount=validationcount+1; }
+        if(temp1!=null)
+        {
         if (temp1?.match(price)) this.setState({vprice:true})
         if (!temp1?.match(price))  { this.setState({vprice:false});validationcount=validationcount+1;}
+        }
         console.log("block", this.state.BlockChainname_)
         console.log("chain", this.state.ChainId)
         console.log("categoty", this.state.CategoryId)
@@ -340,55 +346,56 @@ class CreateNt extends React.Component {
        savePropertiesList = () => {
        
         this.setState({proprttydiv:false})
-         console.log(this.state.addPropertiesList);
-         console.log("prooopertttieeeeess",this.state.addPropertiesList);
-            console.log("save is called")
-        const filter = this.state.addPropertiesList?.filter((item, index) => {
-          return item?.name && item?.type;
-        });
+             console.log(this.state.propertyname)
+            console.log(this.state.propertytype)
+            this.state.addPropertiesList.name=this.state.propertyname
+            this.state.addPropertiesList.type=this.state.propertytype
+            console.log(this.state.addPropertiesList)
+            this.state.NftProperties.push(this.state.addPropertiesList)
+            console.log(this.state.NftProperties)
+            this.setState({propertyname:""})
+            this.setState({propertytype:""})
+        //  console.log(this.state.addPropertiesList);
+        //  console.log("prooopertttieeeeess",this.state.addPropertiesList);
+        //     console.log("save is called")
+        // const filter = this.state.addPropertiesList?.filter((item, index) => {
+        //   return item?.name && item?.type;
+        // });
 
-        this.state.addPropertiesList.push([...filter]);
-        this.state.finalCreatedProperties.push([...filter]);
-        console.log(this.state.finalCreatedProperties);
-        this.state.addPropertiesList.map((value,index)=>
-        {
-            console.log(value.type,value.name)
+        // this.state.addPropertiesList.push([...filter]);
+        // this.state.finalCreatedProperties.push([...filter]);
+        // console.log(this.state.finalCreatedProperties);
+        // this.state.addPropertiesList.map((value,index)=>
+        // {
+        //     console.log(value.type,value.name)
 
-        }
-        )
+        // }
+        // )
        
       };
       
-     addMoreProperty = () => {
-        this.state.addPropertiesList.push ( (prev) => {
-       return [...prev, { name: "", type: "" }];
-     } )
-    }  
+
     maleCahngeHandler = (e, index) => {
-        const itemToChange = this.state.addPropertiesList.find((item, i) => index === i);
-        const ind = this.state.addPropertiesList.indexOf(itemToChange);
-        this.state.addPropertiesList[ind].type = e.target.value;
-        const data = [... this.state.addPropertiesList];
-        console.log("itemToChange", data);
-        this.state.addPropertiesList[ind]=data
-        // setAddPropertiesList(data);
+        // const itemToChange = this.state.addPropertiesList.find((item, i) => index === i);
+        // const ind = this.state.addPropertiesList.indexOf(itemToChange);
+        // this.state.addPropertiesList[ind].type = e.target.value;
+        // const data = [... this.state.addPropertiesList];
+        // console.log("itemToChange", data);
+        // this.state.addPropertiesList[ind]=data
+        // // setAddPropertiesList(data);
       };
       
    characterCahngeHandler = (e, index) => {
-       const itemToChange = this.state.addPropertiesList.find((item, i) => index === i);
-       const ind = this.state.addPropertiesList.indexOf(itemToChange);
-    this.state.addPropertiesList[ind].name = e.target.value;
-    const data = [...this.state.addPropertiesList];
-    console.log("itemToChange", data);
-    this.state.addPropertiesList[ind]=data
+    //    const itemToChange = this.state.addPropertiesList.find((item, i) => index === i);
+    //    const ind = this.state.addPropertiesList.indexOf(itemToChange);
+    // this.state.addPropertiesList[ind].name = e.target.value;
+    // const data = [...this.state.addPropertiesList];
+    // console.log("itemToChange", data);
+    // this.state.addPropertiesList[ind]=data
   };
  removeProperty = (index) => {
-    if (this.state.addPropertiesList.length == 0) return;
-    else {
-      let filteredList = [...this.state.addPropertiesList.filter((item, i) => i != index)];
-    //   this.state.addPropertiesList.push(data);
-    }
-  };
+    console.log(this.state.NftProperties.findIndex(obj=>obj.name==="za"))
+};
     
 
   hidemodal()
@@ -430,12 +437,12 @@ class CreateNt extends React.Component {
                                             <div className='Modal-div-notcreated'>
                                                 {this.state.errormessage === "" ? "" : this.state.errormessage}
                                             </div>
-
-                                        </div>
-                                    </Modal.Body>
-                                    <Modal.Footer>
+                                            <Modal.Footer>
                                         <button className='Modal-div-cancel-button' onClick={handleClose1} > OK </button>
                                     </Modal.Footer>
+                                        </div>
+                                    </Modal.Body>
+                                   
                                 </Modal>
                             </div>
 
@@ -454,7 +461,7 @@ class CreateNt extends React.Component {
                                         width={100}
                                         className="input-field"
                                         name='Name'
-                                        value={this.state.Name}
+                                        value={ this.state.Name }
                                         onChange={(data) => { this.setState({ Name: data.target.value }) }}
                                     />
                                     {!this.state.vname && (
@@ -508,13 +515,29 @@ class CreateNt extends React.Component {
                                     </select>
                                     
                                     {!this.state.vcollection && (
-                                      <div style={{ color: "#F61C04" }}>Collection is not Selected.</div>
+                                      <div style={{ color: "#F61C04" }}>Collection is not sSelected.</div>
                                  )}
                                 </div>
-                                <div className='input-fields'>
+                          {/*     <div className='input-fields'>
                                     <p>Properties</p>
                                     <span style={{color:"white" } }>
-                                  Textual traits that show up as rectangles     
+                                 {
+                                this.state.NftProperties.length > 0 ? (
+                                    this.state.NftProperties.map((value, index) => {
+                                      return (
+                                        <div style={{whiteSpace:'nowrap',background:"red" }} >
+                                           Name :{value.name} {' '}
+                                            Type :{value.type}
+                                          <span style={{marginLeft:'75%',color:"black",cursor:"pointer" }}  onClick={()=>this.removeProperty()}> remove</span>
+                                        </div>
+                                      )
+                                    })
+                  
+                                  ) :
+                                    (
+                                      <p>No Property to Show </p>
+                                    )
+                                 }  
                                 </span>  
                                 <PlusSquare color='white' onClick={()=>this.showproperty()}/>
                                 <Modal show={this.state.proprttydiv}  animation={true} centered>
@@ -545,15 +568,14 @@ class CreateNt extends React.Component {
                   overflowX: "hidden",
                 }}
               >
-                {this.state.addPropertiesList.map((item, index) => {
-                  return (
+                {
+                   
                     <div
                       style={{
                         border: "1px solid #c7a7a7b9",
                         borderRadius: "4px",
                         // marginTop: "10px",
                       }}
-                      key={index}
                     >
                       <Row style={{ height: "40px" }}>
                         <Col xs={1}>
@@ -564,9 +586,7 @@ class CreateNt extends React.Component {
                               cursor: "pointer",
                               marginTop: "8px",
                             }}
-                            onClick={() => {
-                              this.removeProperty(index);
-                            }}
+                          
                           >
                             <cross />
                           </div>
@@ -586,7 +606,7 @@ class CreateNt extends React.Component {
                             value={this.state.propertytype}
                             onChange={(e) => {
                                 this.setState({propertytype:e.target.value})
-                                this.characterCahngeHandler(e, index);
+                               
                             }}
                             style={{
                               border: "none",
@@ -599,7 +619,7 @@ class CreateNt extends React.Component {
                             placeholder="Name"
                             onChange={(e) => {
                                 this.setState({propertyname:e.target.value})
-                                this.maleCahngeHandler(e, index);
+                               
                             }}
                             className="form-control"
                             value={this.state.propertyname}
@@ -612,25 +632,9 @@ class CreateNt extends React.Component {
                         </Col>
                       </Row>
                     </div>
-                  );
-                })}
+                  
+                }
               </div>
-
-              <button
-                onClick={()=>this.addMoreProperty()}
-                style={{
-                  padding: "10px",
-                  border: "2px solid #308AFB",
-                  color: "#308AFB",
-                  fontWeight: "bold",
-                  background: "transparent",
-                  borderRadius: "6px",
-                  marginTop: "12px",
-                  cursor: "pointer",
-                }}
-              >
-                Add more
-              </button>
             </Modal.Body>
             <Modal.Footer className="modal-footer-color">
               <div style={{ textAlign: "center", width: "100%" }}>
@@ -685,8 +689,9 @@ class CreateNt extends React.Component {
                                           No property added
                                           </>
                                      )
-                                  }      */}
-                                </div>
+                                 </div> }      */}
+                                   
+                                 
                                 <div className='input-fields'>
                                     <p>Price</p>
                                     <input
@@ -701,6 +706,9 @@ class CreateNt extends React.Component {
                                     />
                                    {!this.state.vprice && (
                                       <div style={{ color: "#F61C04" }}>Price is not valid.</div>
+                                 )}
+                                   {!this.state.vpricenull && (
+                                      <div style={{ color: "#F61C04" }}>Price cannot be null.</div>
                                  )}
                                      </div>
                                 <div className='input-fields'>
@@ -717,7 +725,7 @@ class CreateNt extends React.Component {
                                     </select>
 
                                     {!this.state.Vblockchain && (
-                                      <div style={{ color: "#F61C04" }}>BlockChain is not Selected.</div>
+                                      <div style={{ color: "#F61C04" }}>Blockchain is not selected.</div>
                                  )}                                </div>
                                 <div className='input-fields'>
                                     <p>Payment tokens</p>
@@ -732,11 +740,11 @@ class CreateNt extends React.Component {
                                         }
                                     </select>
                                     {!this.state.vpayment && (
-                                      <div style={{ color: "#F61C04" }}>payment is not Selected.</div>
+                                      <div style={{ color: "#F61C04" }}>Payment is not selected.</div>
                                  )}      
                                 </div>
                                 <div className='input-fields'>
-                                    <p>Contract Adress(optional)</p>
+                                    <p>Contract Address(optional)</p>
                                     <input
                                         type="text"
                                         required

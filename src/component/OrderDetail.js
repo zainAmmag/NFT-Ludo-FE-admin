@@ -137,10 +137,11 @@ class OrderDetail extends React.Component {
                               <TableCell className="Text-white">No</TableCell>
                                 <TableCell className="Text-white">Nft Owner Name</TableCell>
                                 <TableCell className="Text-white">NFT Name</TableCell>
-              
+                                <TableCell className="Text-white">Order No</TableCell>
                                 <TableCell className="Text-white">Order Date</TableCell>
                                 <TableCell className="Text-white">Order Time</TableCell>
                                 <TableCell className="Text-white">Order Status</TableCell>
+              
                                 {/* <TableCell className="Text-white">Detail</TableCell> */}
                               </TableRow>
                             </TableHead>
@@ -155,6 +156,7 @@ class OrderDetail extends React.Component {
                                             <TableCell className="Text-white">{this.state.page * 5+index+1 } </TableCell>
                                         <TableCell className="Text-white">{value.nftOwnerName}</TableCell>
                                         <TableCell className="Text-white">{value.nftName} </TableCell>
+                                        <TableCell className="Text-white">{value.nftOrderId} </TableCell>
                                         <TableCell className="Text-white">{value.orderCreatedTime.slice(0, 10)}</TableCell>
                                         <TableCell className="Text-white">{value.orderCreatedTime.slice(11, 19)}</TableCell>
                                         <TableCell className="Text-white">{value.orderStatus} </TableCell>
