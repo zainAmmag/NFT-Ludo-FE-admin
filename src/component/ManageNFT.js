@@ -304,7 +304,7 @@ class CollectionDetail extends React.Component {
                           <div >
                             <div className="panel">
                               <img
-                                src={"http://198.187.28.244:7577/" + playerData.image}
+                                src={"https://api.fineoriginal.com/" + playerData.image}
                                 alt="profileImage"
                                 className="NFT-immage-NFT"
                               />
@@ -312,7 +312,7 @@ class CollectionDetail extends React.Component {
                               <div className="">
                                 <img
 
-                                  src={playerData.logoImage ? "http://198.187.28.244:7577/" + playerData.logoImage : defaultImg}
+                                  src={playerData.logoImage ? "https://api.fineoriginal.com/" + playerData.logoImage : defaultImg}
                                   alt="profileImage"
                                   className="NFT-immage3"
                                 />
@@ -382,7 +382,7 @@ class CollectionDetail extends React.Component {
                           <div >
                             <div className="panel">
                               <img
-                                src={"http://198.187.28.244:7577/" + playerData.image}
+                                src={"https://api.fineoriginal.com/" + playerData.image}
                                 alt="profileImage"
                                 className="NFT-immage-NFT"
                               />
@@ -390,7 +390,7 @@ class CollectionDetail extends React.Component {
                               <div className="">
                                 <img
 
-                                  src={playerData.logoImage ? "http://198.187.28.244:7577/" + playerData.logoImage : defaultImg}
+                                  src={playerData.logoImage ? "https://api.fineoriginal.com/" + playerData.logoImage : defaultImg}
                                   alt="profileImage"
                                   className="NFT-immage3"
                                 />

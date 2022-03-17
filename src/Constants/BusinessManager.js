@@ -1,11 +1,9 @@
-export const BaseUrl = "http://198.187.28.244:7577/api/v1";
-export const BaseUrl1 = "http://198.187.28.244:7577/api/v1/Nft";
+export const BaseUrl = "https://api.fineoriginal.com/api/v1";
+export const BaseUrl1 = "https://api.fineoriginal.com/api/v1/Nft";
 
-export const IMAGE_BASE_URL = "http://198.187.28.244:7577";
+export const IMAGE_BASE_URL = "https://api.fineoriginal.com";
 export const AuthenticationTokenId = "b1a531fc052c9e7fb2419c6ed8b9ce12";
 export const UserDetailId = "asd871nsd91nd91jni23us21d81";
-
-
 
 // export const RawUrl = "https://api.doxpad.com/";
 // export const BaseUrl = RawUrl + "api/";

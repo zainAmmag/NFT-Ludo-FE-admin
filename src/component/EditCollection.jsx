@@ -171,13 +171,13 @@ class EditCollection extends React.Component {
                 this.setState({ MediumLink: temp })
                 temp = this.state.collectiondata.bannerImage;
                 this.setState({ BannerImage: temp })
-                this.setState({ BannerPreview: "http://198.187.28.244:7577/" + temp })
+                this.setState({ BannerPreview: "https://api.fineoriginal.com/" + temp })
                 temp = this.state.collectiondata.logoImage;
                 this.setState({ LogoImage: temp })
-                this.setState({ LogoPreview: "http://198.187.28.244:7577/" + temp })
+                this.setState({ LogoPreview: "https://api.fineoriginal.com/" + temp })
                 this.setState({ featuredImage: temp })
                 temp = this.state.collectiondata.featuredImage;
-                this.setState({ FeatPreview: "http://198.187.28.244:7577/" + temp })
+                this.setState({ FeatPreview: "https://api.fineoriginal.com/" + temp })
                 this.setState({ categoryname: this.state.CategoryData.find((item, index) => item.id == this.state.collectiondata.categoryId).name })
                 this.setState({ BlockChainName: this.state.Blockchaindata.find((item, index) => item.chainID == this.state.collectiondata.chainID).name })
                 this.setState({ paymentname: this.state.Currencydata.find((item, index) => item.id == this.state.collectiondata.currencyId).name })
@@ -276,13 +276,13 @@ class EditCollection extends React.Component {
 
         axios({
             method: "PUT",
-            url: "http://198.187.28.244:7577/api/v1/Nft/UpdateNftCollection?collectionId=" + localStorage.getItem("CollectionDetail"),
+            url: "https://api.fineoriginal.com/api/v1/Nft/UpdateNftCollection?collectionId=" + localStorage.getItem("CollectionDetail"),
 
             data: bodyFormData,
             headers: {
                 accept: "text/plain",
                 "Content-Type": "multipart/form-data",
-                Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
+                Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigneD"),
 
             }
         }).then((response) => {

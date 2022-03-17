@@ -290,13 +290,13 @@ class CreateNt extends React.Component {
             this.props.setIsLoaderActive(true);
             axios({
                 method: "POST",
-                url: "http://198.187.28.244:7577/api/v1/Nft/AddNft",
+                url: "https://api.fineoriginal.com/api/v1/Nft/AddNft",
 
                 data: bodyFormData,
                 headers: {
                     accept: "text/plain",
                     "Content-Type": "multipart/form-data",
-                    Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
+                    Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigneD"),
 
                 }
             }).then((response) => {
@@ -413,7 +413,11 @@ class CreateNt extends React.Component {
         }; 
 
         return (
-            <div className="container">
+            <>
+            <SharedLayout>
+
+            
+                        <div className="container">
                                  <div className="row">
                     <div className='col-md-12'> <h1 className='f-Heading'>Create NFT</h1></div>
                     <div className="col-md-8 col-sm-12 col-lg-8">
@@ -789,6 +793,8 @@ class CreateNt extends React.Component {
                 </div>
                  
             </div>
+            </SharedLayout>
+    </>
         );
     }
 }

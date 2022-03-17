@@ -201,14 +201,14 @@ class UserDetail extends React.Component {
                                   <div className="panal">
 
                                     <img
-                                      src={playerData.bannerImage? "http://198.187.28.244:7577/" + playerData.featuredImage: defaultImg}
+                                      src={playerData.bannerImage? "https://api.fineoriginal.com/" + playerData.featuredImage: defaultImg}
                                       alt="profileImage"
                                       className="NFT-immage-NFT"
                                      
                                     />
                                     <div className="">
                                       <img
-                                        src={playerData.logoImage? "http://198.187.28.244:7577/" + playerData.logoImage: defaultImg}
+                                        src={playerData.logoImage? "https://api.fineoriginal.com/" + playerData.logoImage: defaultImg}
                                         alt="profileImage"
                                         className="NFT-immage3"
                                       />
@@ -274,7 +274,7 @@ class UserDetail extends React.Component {
                                       <div className="panal">
     
                                         <img
-                                          src={playerData.bannerImage? "http://198.187.28.244:7577/" + playerData.featuredImage: defaultImg}
+                                          src={playerData.bannerImage? "https://api.fineoriginal.com/" + playerData.featuredImage: defaultImg}
                                           alt="profileImage"
                                           className="NFT-immage-NFT"
                                           onClick={() => {
@@ -284,7 +284,7 @@ class UserDetail extends React.Component {
                                         />
                                         <div className="">
                                           <img
-                                            src={playerData.logoImage? "http://198.187.28.244:7577/" + playerData.logoImage: defaultImg}
+                                            src={playerData.logoImage? "https://api.fineoriginal.com/" + playerData.logoImage: defaultImg}
                                             alt="profileImage"
                                             className="NFT-immage3"
                                           />

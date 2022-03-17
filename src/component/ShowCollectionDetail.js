@@ -171,14 +171,14 @@ class CollectionDetail extends React.Component {
               width: "100%",
             }}>
               <img
-                src={"http://198.187.28.244:7577/" + this.state.collectiondata.bannerImage}
+                src={"https://api.fineoriginal.com/" + this.state.collectiondata.bannerImage}
                 alt="profileImage"
                 className="img-hght"
                 style={{
                   width: "100%",
                 }} />
               <img
-                src={"http://198.187.28.244:7577/" + this.state.collectiondata.logoImage}
+                src={"https://api.fineoriginal.com/" + this.state.collectiondata.logoImage}
                 alt="profileImage"
                 className="logostyle" />
               <div style={{ width: "80%", textAlign: "center", paddingLeft: '20%' }}>
@@ -234,14 +234,14 @@ class CollectionDetail extends React.Component {
                                 <div >
                                   <div className="panel">
                                     <img
-                                      src={"http://198.187.28.244:7577/" + playerData.image}
+                                      src={"https://api.fineoriginal.com/" + playerData.image}
                                       alt="profileImage"
                                       className="NFT-immage-NFT"
                                     />
 
                                     <div className="">
                                       <img
-                                        src={"http://198.187.28.244:7577/" + playerData.logoImage}
+                                        src={"https://api.fineoriginal.com/" + playerData.logoImage}
                                         alt="profileImage"
                                         className="NFT-immage3"
                                       />
@@ -314,14 +314,14 @@ class CollectionDetail extends React.Component {
                                 <div >
                                   <div className="panel">
                                     <img
-                                      src={"http://198.187.28.244:7577/" + playerData.image}
+                                      src={"https://api.fineoriginal.com/" + playerData.image}
                                       alt="profileImage"
                                       className="NFT-immage-NFT"
                                     />
 
                                     <div className="">
                                       <img
-                                        src={"http://198.187.28.244:7577/" + playerData.logoImage}
+                                        src={"https://api.fineoriginal.com/" + playerData.logoImage}
                                         alt="profileImage"
                                         className="NFT-immage3"
                                       />

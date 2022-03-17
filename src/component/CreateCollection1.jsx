@@ -126,7 +126,7 @@ class CreateCollection extends React.Component {
     }
     async componentDidMount() {
 
-        console.log(localStorage.getItem("TokenofAdminsigned"))
+        console.log(localStorage.getItem("TokenofAdminsigneD"))
         this.setState({ ImageModal: false });
     }
     clearall = () => {
@@ -236,13 +236,13 @@ class CreateCollection extends React.Component {
     
             axios({
                 method: "POST",
-                url: "http://198.187.28.244:7577/api/v1/Amin/AddAdminNftCollection",
+                url: "https://api.fineoriginal.com/api/v1/Amin/AddAdminNftCollection",
     
                 data: bodyFormData,
                 headers: {
                     accept: "text/plain",
                     "Content-Type": "multipart/form-data",
-                    Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
+                    Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigneD"),
     
                 }
             }).then((response) => {

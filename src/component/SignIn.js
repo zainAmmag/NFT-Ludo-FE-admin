@@ -112,15 +112,15 @@ class SignIn extends React.Component {
       // console.log(data)
       if (data.isSuccess == true) 
       {
-           localStorage.setItem("TokenofAdminsigned",data.data.token);
-           localStorage.setItem("AdminaccountId",data.data.userInfo.address)
-          console.log("account id",localStorage.getItem("AdminaccountId"))
+           localStorage.setItem("TokenofAdminsigneD",data.data.token);
+           localStorage.setItem("AdminaccountId1",data.data.userInfo.address)
+          console.log("account id",localStorage.getItem("AdminaccountId1"))
            SetUser(data.data.token, {
           name: data.data.userInfo.username,
           email: data.data.userInfo.email,
         });
         this.props.setIsLoaderActive(false);
-         return this.props.history.push("/manageAccount");
+         return this.props.history.push("/ManageBlog");
          
       } else {
         this.props.setIsLoaderActive(false);
@@ -155,9 +155,11 @@ class SignIn extends React.Component {
                   }}
                 >
                   <div className="form-group">
+                  
                     <label htmlFor="exampleInputUsername" className="sr-only">
                       Username
                     </label>
+                   
                     <div className="position-relative has-icon-right">
                       <input
                         ref={(elem) => (this.textInput = elem)}

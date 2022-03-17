@@ -170,7 +170,7 @@ class UpdateNFT extends React.Component {
         this.setState({ Price: this.state.PrevNftdata.buyPrice })
         temp = this.state.PrevNftdata.image
         this.setState({ image1: this.state.PrevNftdata.image })
-        this.setState({ ImagePreview: "http://198.187.28.244:7577/" + temp })
+        this.setState({ ImagePreview: "https://api.fineoriginal.com/" + temp })
         temp = this.state.PrevNftdata.collectionName
         this.setState({ defaultcollctionname: temp })
         temp = this.state.PrevNftdata.contractAddress
@@ -190,7 +190,7 @@ class UpdateNFT extends React.Component {
     this.CategoriesIdd();
     this.GetSelectedNft();
     this.findcurrencyid();
-    console.log(localStorage.getItem("TokenofAdminsigned"))
+    console.log(localStorage.getItem("TokenofAdminsigneD"))
   }
   findchainid = () => {
 
@@ -298,25 +298,25 @@ class UpdateNFT extends React.Component {
         delay(12000).then(async () => {
           axios({
             method: "PUT",
-            url: "http://198.187.28.244:7577/api/v1/Amin/EditNft",
+            url: "https://api.fineoriginal.com/api/v1/Amin/EditNft",
 
             data: bodyFormData,
             headers: {
               accept: "text/plain",
               "Content-Type": "multipart/form-data",
-              Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
+              Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigneD"),
 
             }
           }).then(async (response) => {
             axios({
               method: "POST",
-              url: `http://198.187.28.244:7577/api/v1/Amin/FreezeNft`,
+              url: `https://api.fineoriginal.com/api/v1/Amin/FreezeNft`,
 
               data: postBody,
               headers: {
                 // accept: "text/plain",
                 // "Content-Type": "multipart/form-data",
-                Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
+                Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigneD"),
 
               }
             }).then((resdata) => {
@@ -376,13 +376,13 @@ class UpdateNFT extends React.Component {
       this.props.setIsLoaderActive(true);
       axios({
         method: "PUT",
-        url: "http://198.187.28.244:7577/api/v1/Amin/EditNft",
+        url: "https://api.fineoriginal.com/api/v1/Amin/EditNft",
 
         data: bodyFormData1,
         headers: {
           accept: "text/plain",
           "Content-Type": "multipart/form-data",
-          Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
+          Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigneD"),
 
         }
       }).then((response) => {

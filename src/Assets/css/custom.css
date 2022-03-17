@@ -1643,7 +1643,29 @@ margin-top: 2%;
   font-weight: bolder;
   height: 40px;
 }
-.input-field1{
+.custom-input-field{
+  background-color: #8f9da2;
+  width: 20%;
+  border: 1px solid white;
+  font-size: medium; 
+  letter-spacing: 1.5px;
+  padding-left: 9px;
+  border-radius: 5px;
+  font-weight: bolder;
+  height: 40px;
+}
+.custom-input-button
+{
+   border: none !important;
+   font-weight: 100 !important;
+}
+    .custom-input-label
+    {
+      font-size: 11px;
+      padding-left: 9px;
+      font-weight: 100;
+      }
+    .input-field1{
   background-color: transparent;
   width: 100%;
   border: 1px solid rgb(83, 57, 57) !important;
@@ -1653,6 +1675,12 @@ margin-top: 2%;
   font-weight: bolder;
   height: 40px;
   color: #000;
+}
+.input-field-custom-label
+{
+margin-bottom: 0px !important;
+font-weight: 100;
+color: black !important;
 }
 
 .description-field{
@@ -1930,9 +1958,7 @@ a,
 }
 .inputimage
 {
-  padding-left: 46px;
-  width: 116px;
-  margin-left: 16px;
+  
 }
 .display_Flex
 {
@@ -1994,9 +2020,14 @@ a,
   width: 80%;
   margin-left: 10%;
 }
+
 }
-
-
+@media (min-width: 320px)  and (max-width: 1439px)
+{
+  .custom-input-field{
+  width: 60%;
+  }
+}
 
 @media (max-width: 1400px) {
   h1{font-size: 40px !important;}
@@ -2013,4 +2044,37 @@ a,
 @media (max-width: 767px) {
   h1{font-size: 28px !important;}
   h2{font-size: 24px !important;}
+}
+.ck.ck-editor__main>.ck-editor__editable {
+  background: #ffffff5c!important;
+  border-radius: 0;
+  color: black;
+}
+.mychips
+{
+padding: 4px 10px;
+    background: #0096fb;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 11px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    line-height: 19px;
+    color: #fff;
+}
+.paddingTop1
+{
+    padding-top: 8rem !important;
+}
+.displayflex
+{
+  display: flex;
+  flex-direction: row;
+  
+}
+.ck-content > *, .ck-content span
+{
+
+color: white !important
 }

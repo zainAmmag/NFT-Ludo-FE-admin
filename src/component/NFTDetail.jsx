@@ -213,11 +213,11 @@ class NFTDetail extends React.Component {
 
     axios({
       method: "GET",
-      url: "http://198.187.28.244:7577/api/v1/Nft/GetMarketNftAddress",
+      url: "https://api.fineoriginal.com/api/v1/Nft/GetMarketNftAddress",
       headers: {
         accept: "text/plain",
         "Content-Type": "multipart/form-data",
-        Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
+        Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigneD"),
 
       }
     }).then((response) => {
@@ -247,12 +247,12 @@ class NFTDetail extends React.Component {
           }
           axios({
             method: "POST",
-            url: "http://198.187.28.244:7577/api/v1/Amin/SellNftMarket",
+            url: "https://api.fineoriginal.com/api/v1/Amin/SellNftMarket",
             data: postBody,
             headers: {
               // accept: "text/plain",
               // "Content-Type": "multipart/form-data",
-              Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigned"),
+              Authorization: "Bearer " + localStorage.getItem("TokenofAdminsigneD"),
 
             }
           }).then((response) => {
@@ -282,7 +282,7 @@ class NFTDetail extends React.Component {
       <>
         <div className="row">
           <div className="col-lg-4 col-md-12 col-sm-12">
-            <img src={"http://198.187.28.244:7577/" + this.state.nftDATA.image} alt="profileImage" className="NFT-immage-NFT1 detail-img" />
+            <img src={"https://api.fineoriginal.com/" + this.state.nftDATA.image} alt="profileImage" className="NFT-immage-NFT1 detail-img" />
             <div className="pt-4" />
             <div className="detail-card">
               <h3>Details</h3>
@@ -357,7 +357,7 @@ class NFTDetail extends React.Component {
                       >
                         Sell NFT
                       </Button>
-                    ) : (<>{      localStorage.getItem("AdminaccountId") ===this.state.nftDATA.ownerAddress?
+                    ) : (<>{      localStorage.getItem("AdminaccountId1") ===this.state.nftDATA.ownerAddress?
                                             <p>
                                               NFT sent to marketplace
                                             </p> : 

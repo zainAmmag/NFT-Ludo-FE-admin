@@ -133,7 +133,7 @@ class UserDetail extends React.Component {
               >
 
                 <img
-                  src={localStorage.getItem("profileImage") === "Null" ? profilePic : "http://198.187.28.244:7577/" + localStorage.getItem("profileImage")}
+                  src={localStorage.getItem("profileImage") === "Null" ? profilePic : "https://api.fineoriginal.com/" + localStorage.getItem("profileImage")}
                   //src={profilePic}
                   alt="profileImage"
                   data-toggle="modal"
@@ -198,7 +198,7 @@ class UserDetail extends React.Component {
                               <div className="panel">
 
                                 <img
-                                  src={"http://198.187.28.244:7577/" + playerData.featuredImage}
+                                  src={"https://api.fineoriginal.com/" + playerData.featuredImage}
                                   alt="profileImage"
                                   className="NFT-immage-NFT"
                                   onClick={() => {
@@ -210,7 +210,7 @@ class UserDetail extends React.Component {
 
                                 <div className="">
                                   <img
-                                    src={"http://198.187.28.244:7577/" + playerData.logoImage}
+                                    src={"https://api.fineoriginal.com/" + playerData.logoImage}
                                     alt="profileImage"
                                     className="NFT-immage3"
                                   />
@@ -283,14 +283,14 @@ class UserDetail extends React.Component {
                             <div >
                               <div className="panel">
                                 <img
-                                  src={"http://198.187.28.244:7577/" + playerData.image}
+                                  src={"https://api.fineoriginal.com/" + playerData.image}
                                   alt="profileImage"
                                   className="NFT-immage-NFT"
                                 />
 
                                 <div className="">
                                   <img
-                                    src={"http://198.187.28.244:7577/" + playerData.logoImage}
+                                    src={"https://api.fineoriginal.com/" + playerData.logoImage}
                                     alt="profileImage"
                                     className="NFT-immage3"
                                   />

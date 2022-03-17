@@ -4,7 +4,7 @@ import Logo from "../../Assets/images/iconm.png";
 import LogoCustomer from "../../Assets/images/icon.png";
 
 import AppBar from "@material-ui/core/AppBar";
-
+import swal from "sweetalert"
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
@@ -117,6 +117,9 @@ function ResponsiveDrawer(props) {
   const [isActive2, setisActive2] = React.useState(false);
   const [isActive3, setisActive3] = React.useState(false);
   const [isActive4, setisActive4] = React.useState(false);
+  const [isActive6, setisActive6] = React.useState(false);
+  
+  const [isActive5, setisActive5] = React.useState(false);
   const [routepage, setroutepage] = React.useState(false);
   
   useEffect(()=>{
@@ -154,7 +157,7 @@ function ResponsiveDrawer(props) {
               </div>
             </div>
           </ListItem>
-
+ {/*
           <ListItem  onClick={()=>{ 
               setisActive(true);  
               setisActive1(false); 
@@ -162,20 +165,26 @@ function ResponsiveDrawer(props) {
               setisActive3(false);
               setisActive4(false);
               
+              setisActive6(false);
+              setisActive5(false);
+              
               }}  
               className={isActive ? 'waves-effect active': 'waves-effect'} >
             {/* <Link id='1' to="/ProjectManagement" className="waves-effect">
               <Clipboard className="sidebarIcons mt-0" color="white" size={30} />
               <p className="LINK_OVERVIEW">Project Management</p>
             </Link> */}
-            </ListItem>
+            {/* </ListItem> */}
 
-          <ListItem onClick={()=>{ 
+          {/* <ListItem onClick={()=>{ 
               setisActive(false);  
               setisActive1(true); 
+              setisActive5(false);
               setisActive2(false);
               setisActive3(false);
               setisActive4(false);
+              
+              setisActive6(false);
               }} 
             className={isActive1 ? 'waves-effect active': 'waves-effect'}>
             <Link id='2' to="/manageAccount"className="waves-effect" >
@@ -189,9 +198,12 @@ function ResponsiveDrawer(props) {
           <ListItem 
             onClick={()=>{ 
               setisActive(false);  
-              setisActive1(false); 
+              setisActive1(false);
+              setisActive5(false); 
               setisActive2(true);
               setisActive3(false);
+              
+              setisActive6(false);
               setisActive4(false);
               }}
             className={isActive2 ? 'waves-effect active': 'waves-effect'}>
@@ -208,8 +220,11 @@ function ResponsiveDrawer(props) {
               setisActive(false);  
               setisActive1(false); 
               setisActive2(false);
+              setisActive5(false);
               setisActive3(true);
               setisActive4(false);
+              
+              setisActive6(false);
               }}
             className={isActive3 ? 'waves-effect active': 'waves-effect'}>
             <Link id='4' to="/manageCollection" className="waves-effect">
@@ -218,17 +233,19 @@ function ResponsiveDrawer(props) {
               <p className="LINK_OVERVIEW">Manage Collection</p>
             </Link>
           </ListItem>
+ */}
 
 
-
-          <ListItem  
+          {/* <ListItem  
             onClick={()=>{ 
               setisActive(false);  
               setisActive1(false); 
               setisActive2(false);
               setisActive3(false);
               setisActive4(true);
-             
+              setisActive5(false);
+              
+              setisActive6(false);
               }}
             className={isActive4 ? 'waves-effect active': 'waves-effect'}>
         <Link id='5' to="/ManageNFt" className="waves-effect">
@@ -237,6 +254,41 @@ function ResponsiveDrawer(props) {
                    </Link>
 
 
+          </ListItem>  */}
+          <ListItem  
+            onClick={()=>{ 
+              setisActive(false);  
+              setisActive1(false); 
+              setisActive2(false);
+              setisActive3(false);
+              setisActive4(false);
+              setisActive5(true);
+              setisActive6(false);
+              }}
+            className={isActive5 ? 'waves-effect active': 'waves-effect'}>
+        <Link id='5' to="/ManageBlog" className="waves-effect">
+                     <FilePlus className="sidebarIcons mt-0" color="white" size={30} />
+                     <p className="LINK_OVERVIEW">Manage Blog</p>
+                   </Link>
+
+
+          </ListItem>
+
+          <ListItem  
+            onClick={()=>{ 
+              setisActive(false);  
+              setisActive1(false); 
+              setisActive2(false);
+              setisActive3(false);
+              setisActive4(false);
+              setisActive5(false);
+              setisActive6(true);
+              }}
+            className={isActive6 ? 'waves-effect active': 'waves-effect'}>
+               <Link id='5' to="/ManageOrganization" className="waves-effect">
+                     <FilePlus className="sidebarIcons mt-0" color="white" size={30} />
+                     <p className="LINK_OVERVIEW">Manage Organization</p>
+                   </Link>
           </ListItem>
         </List>
         {/* {

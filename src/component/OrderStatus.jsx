@@ -194,7 +194,7 @@ const OrderStatus = function () {
 
                     <h4>{value.name}</h4>
                   
-                    <img src={"http://198.187.28.244:7577/" + value.nftImage} alt="profileImage" style={{ maxHeight: "50vh" }} />
+                    <img src={"https://api.fineoriginal.com/" + value.nftImage} alt="profileImage" style={{ maxHeight: "50vh" }} />
                     <div className="pt-2"></div>
                     <h4>{value.email}</h4>
                     <h4>{value.nftName}</h4>

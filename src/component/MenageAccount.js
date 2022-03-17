@@ -392,7 +392,6 @@ class MenageAccount extends React.Component {
                                               style={{ padding: 8, background: 'transparent', border: 0 }}
                                               onClick={() => {
                                                 console.log(localStorage.getItem('useraddress'))
-
                                                 localStorage.setItem("profileImage", value.profileImage ? value.profileImage : "Null")
                                                 localStorage.setItem("address", value.address ? value.address : ' ')
                                                 localStorage.setItem("email", value.email ? value.email : ' ')
